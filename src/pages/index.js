@@ -1,13 +1,32 @@
+import {
+  Container,
+  FormStyled,
+  GridContainer,
+  GridForm,
+  GridImage,
+  LinkStyled,
+  LogoContainer,
+} from "@/styles/Login.style";
 import React from "react";
-import {ButtonStyled, Container} from "@/styles/Index.style"
-import CustomButton from "@/components/CustomButton";
 
-export default function Home() {
+export default function Login() {
   return (
     <Container>
-      <h1>Hola</h1>
-      <ButtonStyled>Botón de mui</ButtonStyled>
-      <CustomButton buttonText="Componente de boton"/>
+      <GridContainer>
+        <GridForm>
+          <LogoContainer>
+            <img src="../.././img/BookLogo.png" />
+            <span>Bookstore</span>
+          </LogoContainer>
+          <FormStyled>
+            <h1>Iniciar Sesión</h1>
+            <span>Te damos la bienvenida a nuestra biblioteca digital, donde el conocimiento espera ser explorado. </span>
+
+            <span>Aún no tienes cuenta? <LinkStyled href="#">Registrate</LinkStyled></span> 
+          </FormStyled>
+        </GridForm>
+        <GridImage></GridImage>
+      </GridContainer>
     </Container>
-  )
+  );
 }
