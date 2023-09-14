@@ -38,8 +38,8 @@ export const InputWrapper = styled.div`
 export const IconWrapper = styled.div`
   position: absolute;
   right: 10px;
-  top: 55%;
-  transform: translateY(-50%);
+  top: 50%;
+  transform: translateY(-58%);
   font-size: 24px;
   cursor: pointer;
 `;

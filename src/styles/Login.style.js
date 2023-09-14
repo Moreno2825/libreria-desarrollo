@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const Container = styled.div`
   width: 100vw;
@@ -14,15 +15,19 @@ export const GridContainer = styled.div`
 `;
 
 export const GridForm = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   width: 500px;
+  height: 100vh;
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start; 
+  flex-direction: column;
+  margin: 0 auto;
 `;
 
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
+  margin: 24px 0px;
   & img {
     width: 100px;
   }
@@ -48,6 +53,14 @@ export const FormStyled = styled.div`
     font-size: 16px;
     font-weight: 500;
   }
+  & span:nth-of-type(2){
+    margin: 16px 0px;
+  }
+`;
+
+export const EyeIcon = styled(FontAwesomeIcon)`
+  font-size: 18px;
+  color: #7d6e83;
 `;
 
 export const LinkStyled = styled(Link)`
@@ -58,5 +71,5 @@ export const LinkStyled = styled(Link)`
 `;
 
 export const GridImage = styled.div`
-  background-color: beige;
+
 `;
