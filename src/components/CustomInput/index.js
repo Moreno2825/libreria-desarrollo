@@ -8,7 +8,7 @@ import {
   LabelStyled,
 } from "./index.style";
 
-const CustomInput = ({ label, icon, error, control, name, type, ...props }) => {
+const CustomInput = ({ label, icon, error, control, name, type, onKeyDown, ...props }) => {
   const {
     field,
     fieldState: { invalid, isTouched, isDirty },
@@ -16,7 +16,6 @@ const CustomInput = ({ label, icon, error, control, name, type, ...props }) => {
   } = useController({
     name,
     control,
-    rules: { required: true },
   });
 
   return (
@@ -31,6 +30,7 @@ const CustomInput = ({ label, icon, error, control, name, type, ...props }) => {
           name={field.name}
           inputRef={field.ref}
           type={type}
+          onKeyDown={onKeyDown}
         />
         {icon && <IconWrapper>{icon}</IconWrapper>}
       </InputWrapper>

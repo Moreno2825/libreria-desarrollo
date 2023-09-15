@@ -46,6 +46,7 @@ export const IconWrapper = styled.div`
 
 export const ErrorMessage = styled.p`
   font-size: 12px;
-  padding-left: 16px;
+  padding: 0px 8px;
   color: red;
+  margin: 4px 0px 8px;
 `;

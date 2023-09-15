@@ -54,8 +54,13 @@ export const FormStyled = styled.div`
     font-weight: 500;
   }
   & span:nth-of-type(2){
-    margin: 16px 0px;
+    margin: 8px 0px;
   }
+`;
+
+export const DataContainer = styled.div`
+  width: 100%;
+  margin: 24px 0px;
 `;
 
 export const EyeIcon = styled(FontAwesomeIcon)`
