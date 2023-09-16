@@ -12,6 +12,9 @@ export const GridContainer = styled.div`
   height: 100vh;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const GridForm = styled.div`
@@ -22,6 +25,9 @@ export const GridForm = styled.div`
   align-items: flex-start; 
   flex-direction: column;
   margin: 0 auto;
+  @media (max-width: 400px) {
+    width: 300px;
+  }
 `;
 
 export const LogoContainer = styled.div`
