@@ -1,9 +1,16 @@
+import Sidebar from '@/components/Sidebar';
 import React from 'react';
+
 
 const Home = () => {
     return (
         <div>
-            COOL!
+
+
+            <Sidebar>
+
+            </Sidebar>
+            coll
         </div>
     );
 }
