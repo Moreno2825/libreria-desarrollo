@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import Image from "next/image";
 
 const registerSchema = yup.object().shape({
   name: yup.string().required("El nombre es requerido"),
@@ -30,6 +31,7 @@ const registerSchema = yup.object().shape({
 
 export default function Register() {
   const [isShowPassword, setShowPassword] = useState(false);
+  const [isShowPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const {
     control,
     handleSubmit,
@@ -54,6 +56,10 @@ export default function Register() {
     setShowPassword(!isShowPassword);
   };
 
+  const togglePasswordVisibilityConfirm = () => {
+    setShowPasswordConfirm(!isShowPasswordConfirm);
+  };
+
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
       e.preventDefault(); // Evita que el formulario se envíe automáticamente al presionar "Enter" en un campo
@@ -66,7 +72,7 @@ export default function Register() {
       <GridContainer>
         <GridForm>
           <LogoContainer>
-            <img src="../.././img/BookLogo.png" />
+          <Image src="/img/BookLogo.png" alt="logo" width={90} height={90}/>
             <span>Bookstore</span>
           </LogoContainer>
           <FormStyled onSubmit={handleSubmit(onSubmit)}>
@@ -80,21 +86,22 @@ export default function Register() {
                 label="Nombre"
                 name="name"
                 control={control}
-                // error={errors.name?.message || ""}
+                error={errors.name?.message || ""}
                 onKeyDown={handleEnterKey}
               />
               <CustomInput
                 label="Correo electronico"
                 name="email"
                 control={control}
-                // error={errors.email?.message || ""}
+                error={errors.email?.message || ""}
                 onKeyDown={handleEnterKey}
               />
               <CustomInput
                 label="Contraseña"
                 name="password"
                 control={control}
-                // error={errors.password?.message || ""}
+                error={errors.password?.message || ""}
+                type={isShowPassword ? "text" : "password"}
                 onKeyDown={handleEnterKey}
                 icon={
                   isShowPassword ? (
@@ -111,16 +118,17 @@ export default function Register() {
                 label="Confirmar contraseña"
                 name="confirmpassword"
                 control={control}
-                // error={errors.confirmpassword?.message || ""}
+                error={errors.confirmpassword?.message || ""}
+                type={isShowPasswordConfirm ? "text" : "password"}
                 onKeyDown={handleEnterKey}
                 icon={
-                  isShowPassword ? (
+                  isShowPasswordConfirm ? (
                     <EyeIcon
                       icon={faEyeSlash}
-                      onClick={togglePasswordVisibility}
+                      onClick={togglePasswordVisibilityConfirm}
                     />
                   ) : (
-                    <EyeIcon icon={faEye} onClick={togglePasswordVisibility} />
+                    <EyeIcon icon={faEye} onClick={togglePasswordVisibilityConfirm} />
                   )
                 }
               />

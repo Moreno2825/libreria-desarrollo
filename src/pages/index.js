@@ -18,6 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CustomButton from "@/components/CustomButton";
 import { users } from "@/constants";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const loginSchema = yup.object().shape({
   email: yup.string().email("Ingresa un correo electrónico válido").required("El correo electrónico es requerido"),
@@ -66,7 +67,7 @@ export default function Login() {
       <GridContainer>
         <GridForm>
           <LogoContainer>
-            <img src="../.././img/BookLogo.png" />
+            <Image src="/img/BookLogo.png" alt="logo" width={100} height={100}/>
             <span>Bookstore</span>
           </LogoContainer>
           <FormStyled onSubmit={handleSubmit(onSubmit)}>

@@ -34,9 +34,6 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   margin: 24px 0px;
-  & img {
-    width: 100px;
-  }
   & span {
     font-family: "Libre Baskerville", serif;
     font-weight: 400;
