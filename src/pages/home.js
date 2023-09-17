@@ -10,7 +10,6 @@ const Home = () => {
             <Sidebar>
 
             </Sidebar>
-            coll
         </div>
     );
 }

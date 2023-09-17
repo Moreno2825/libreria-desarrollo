@@ -24,6 +24,13 @@ export const Select = styled.div`
   color: #5E5262; 
   justify-content: flex-start;
   padding-left: 20px;
+  font-weight: bold;
+  color: #414141;
+font-family: Poppins;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal; 
 
   margin: 10% 20px;
 
@@ -31,6 +38,7 @@ export const Select = styled.div`
   :hover{
     background: #CEC9D1; 
     transition: background-color 0.3s ease; 
+    color: #5E5262; 
   }
   :active {
     transform: scale(1.0);
