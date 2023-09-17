@@ -1,1 +1,0 @@
-//esto es el comienzo de mi componente
