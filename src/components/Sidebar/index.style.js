@@ -12,6 +12,7 @@ export const Container = styled.div`
     z-index: 1;
 `;
 
+
 export const Select = styled.div`
   width: 302px;
   height: 52px;
@@ -48,6 +49,12 @@ left: -25px;
 `;
 
 export const HouseIcon = styled(FontAwesomeIcon)`
-font-size: 18px;
-color: black;
+
+color: #5E5262; 
+margin-right: 16px;
+`;
+
+export const Titule = styled.div`
+display: flex;
+margin-left: 16px;
 `;
