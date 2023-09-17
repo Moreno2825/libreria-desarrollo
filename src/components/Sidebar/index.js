@@ -3,7 +3,7 @@ import { Container, HouseIcon, Position, Select } from "./index.style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { faHome } from "@fortawesome/free-regular-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 export default function Sidebar() {
   return (
