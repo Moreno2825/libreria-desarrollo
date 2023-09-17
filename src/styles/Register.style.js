@@ -24,7 +24,8 @@ export const GridForm = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  margin: 0 auto;
+  margin: auto auto;
+  overflow-y: hidden;
   @media (max-width: 400px) {
     width: 300px;
   }
@@ -33,9 +34,6 @@ export const GridForm = styled.div`
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  & img {
-    width: 100px;
-  }
   & span {
     font-family: "Libre Baskerville", serif;
     font-weight: 400;
@@ -49,19 +47,19 @@ export const FormStyled = styled.div`
   & h1 {
     color: #414141;
     font-family: "Libre Baskerville", serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 700;
     margin: 8px 0px;
   }
   & span {
     color: #414141;
     font-family: "Poppins", serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     margin-bottom: 8px;
   }
   & span:nth-of-type(2){
-    margin: 16px 0px;
+    margin: 2px 0px;
     @media (max-width: 400px) {
     margin: 0px;
   }
