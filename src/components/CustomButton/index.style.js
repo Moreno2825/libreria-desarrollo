@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const ButtonStyled = styled.button`
-  width: auto;
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
   height: 40px;
   background: #7d6e83;
   color: #ffffff;

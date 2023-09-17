@@ -4,10 +4,10 @@ import CustomButton from "@/components/CustomButton";
 
 export default function Home() {
   return (
-    <Container>
+    <div>
       <h1>Hola</h1>
       <ButtonStyled>Botón de mui</ButtonStyled>
-      <CustomButton buttonText="Componente de boton"/>
-    </Container>
+      <CustomButton buttonText="Componente de boton" />
+    </div>
   )
 }
