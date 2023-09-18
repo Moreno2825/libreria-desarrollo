@@ -12,6 +12,7 @@ export const ButtonStyled = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 16px;
   margin: 16px 0px;
   font-family: "Poppins";
   line-height: normal; 

@@ -5,7 +5,7 @@ export const users = [
     },
 ]
 export const book = {
-    1:{
+    '5f4b5f7e8f428c6e8a62d5a1':{
         id: '5f4b5f7e8f428c6e8a62d5a1',
         name: 'Harry potter y el prisionero de Azkaban',
         author: 'J.K Rowling',
@@ -14,16 +14,16 @@ export const book = {
         category: 'Fantasia',
         price: 322.00
     },
-    2:{
+    '5f4b5f7e8f428c6e8a62d5a2':{
         id: '5f4b5f7e8f428c6e8a62d5a2',
         name: 'El señor de los anillos La comunidad del anillo',
         author: 'J.R.R Tolkien',
         image: '/img/hary2_book.png',
-        details: '',
+        details: 'Frodo Bolsón, un hobbit, hereda un anillo mágico con el poder de controlar el mundo. Junto con un grupo diverso, emprende un viaje para destruir el anillo y derrotar al malvado Sauron.',
         category: 'Fantasía Épica',
         price: 229.00
     },
-    3:{
+    '5f4b5f7e8f428c6e8a62d5a3':{
         id: '5f4b5f7e8f428c6e8a62d5a3',
         name: 'Los juegos del hambre',
         author: 'Suzanne Collins',
@@ -32,7 +32,7 @@ export const book = {
         category: 'Ciencia Ficción, Distopía',
         price: 119.00
     },
-    4:{
+    '5f4b5f7e8f428c6e8a62d5a4':{
         id: '5f4b5f7e8f428c6e8a62d5a4',
         name: 'Harry Potter y el cáliz de fuego',
         author: 'J.K Rowling',

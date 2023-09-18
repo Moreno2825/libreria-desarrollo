@@ -9,7 +9,7 @@ import {
 const CustomBook = ({ image, name, author, price }) => {
   return (
     <Container>
-      <Image src={image} alt={name} width={454} height={409} />
+      <Image src={image} alt={name} width={280} height={250} />
       <DetailsContiner>
         <div className="NameStyle">{name}</div>
         <div className="AuthorStyle">{author}</div>
