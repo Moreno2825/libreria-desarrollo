@@ -21,14 +21,14 @@ export default function Sidebar() {
             </Select>
           </Link>
 
-          <Link href="/Sidebar">
+          <Link href="/books">
             <Select>
               <HouseIcon icon={faBook} />
               Libros
             </Select>
           </Link>
 
-          <Link href="/home">
+          <Link href="/users">
             <Select>
               <HouseIcon icon={faUsers} />
               Usuarios

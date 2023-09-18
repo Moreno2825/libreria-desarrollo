@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
-  width: ${(props) => props.fullwidth ? "100%" : "auto"};
+  width: calc(100% - 280px); 
   height: 100vh;
   display: flex;
   align-items: center;
