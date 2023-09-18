@@ -1,7 +1,11 @@
 import CustomButton from "@/components/CustomButton";
 import CustomIndividualBook from "@/components/CustomIndividualBook";
 import { book } from "@/constants";
-import { ButtonContainer, ContainerBook } from "@/styles/viewBook.style";
+import {
+  ButtonContainer,
+  ContainerBook,
+  ContainerButtons,
+} from "@/styles/viewBook.style";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -27,8 +31,6 @@ export default function View() {
         details={details}
         category={category}
       />
-      
-      <CustomButton buttonText={"Agregar"}></CustomButton>
     </ContainerBook>
   );
 }

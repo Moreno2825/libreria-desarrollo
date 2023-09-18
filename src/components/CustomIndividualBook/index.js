@@ -3,10 +3,12 @@ import {
   BasicInformation,
   BasicInformationContainer,
   Container,
+  ContainerButtons,
   ContainerImageAndSpan,
   ImageContainer,
   ImageStyled,
 } from "./index.style";
+import CustomButton from "../CustomButton";
 
 const CustomIndividualBook = ({
   image,
@@ -37,8 +39,12 @@ const CustomIndividualBook = ({
               <pan className="DetailsStyled">{category}</pan>
             </div>
             <div className="DetailOptionsStyled">
-              <span className="DetailsStyled">{price ? `$${price}` : ""}</span>
+              <span className="PriceOptionsStyled">{price ? `$${price}` : ""}</span>
             </div>
+            <ContainerButtons>
+            <CustomButton buttonText="Editar"/>
+            <CustomButton buttonText="Eliminar"/>
+            </ContainerButtons>
           </BasicInformation>
         </div>
       </BasicInformationContainer>

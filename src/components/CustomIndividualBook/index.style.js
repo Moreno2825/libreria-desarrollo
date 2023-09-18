@@ -2,6 +2,9 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
   padding: 0px 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   @media (max-width: 800px) {
     padding: 16px 0px;
     width: 650px;
@@ -40,14 +43,11 @@ export const BasicInformation = styled.div`
   margin-left: 24px;
   color: #000;
   font-family: Poppins;
-  font-style: normal;
-  line-height: normal;
 
   .NameStyled {
     font-size: 22px;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
+    padding: 16px 0px;
   }
 
   .DetailOptionsStyled {
@@ -57,9 +57,23 @@ export const BasicInformation = styled.div`
     margin-bottom: 12px;
   }
 
+  .PriceOptionsStyled {
+    display: block;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
   .AutorStyled {
     color: #7d6e83;
     font-size: 16px;
     font-weight: 500;
   }
+`;
+
+export const ContainerButtons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 24px 0px;
 `;

@@ -8,3 +8,6 @@ export const ContainerBook = styled.div`
   flex-direction: column;
 `;
 
+export const ContainerButtons = styled.div`
+  background-color: aliceblue;
+`;
