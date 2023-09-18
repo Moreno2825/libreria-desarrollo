@@ -132,7 +132,7 @@ export default function Register() {
                   )
                 }
               />
-              <CustomButton buttonText="Registrarse" type="submit" onClick={handleSubmit(onSubmit)}/>
+              <CustomButton buttonText="Registrarse" type="submit" onClick={handleSubmit(onSubmit)} fullWidth/>
             </DataContainer>
             <span>
               Ya tienes cuenta? <LinkStyled href="/">Inicia sesión</LinkStyled>

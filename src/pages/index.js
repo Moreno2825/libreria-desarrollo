@@ -21,10 +21,12 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email("Ingresa un correo electrónico válido").required("El correo electrónico es requerido"),
+  email: yup
+    .string()
+    .email("Ingresa un correo electrónico válido")
+    .required("El correo electrónico es requerido"),
   password: yup.string().required("La contraseña es requerida"),
 });
-
 
 export default function Login() {
   const [isShowPassword, setShowPassword] = useState(false);
@@ -43,7 +45,9 @@ export default function Login() {
   const route = useRouter();
 
   const onSubmit = (data) => {
-    const userExists = users.some((user) => user.email === data.email && user.password === data.password);
+    const userExists = users.some(
+      (user) => user.email === data.email && user.password === data.password
+    );
 
     if (userExists) {
       route.push("/home");
@@ -67,7 +71,12 @@ export default function Login() {
       <GridContainer>
         <GridForm>
           <LogoContainer>
-            <Image src="/img/BookLogo.png" alt="logo" width={100} height={100}/>
+            <Image
+              src="/img/BookLogo.png"
+              alt="logo"
+              width={100}
+              height={100}
+            />
             <span>Bookstore</span>
           </LogoContainer>
           <FormStyled onSubmit={handleSubmit(onSubmit)}>
@@ -89,7 +98,7 @@ export default function Login() {
                 name="password"
                 control={control}
                 type={isShowPassword ? "text" : "password"}
-                error={errors.password?.message ||""}
+                error={errors.password?.message || ""}
                 onKeyDown={handleEnterKey}
                 icon={
                   isShowPassword ? (
@@ -102,10 +111,16 @@ export default function Login() {
                   )
                 }
               />
-              <CustomButton buttonText="Entrar" type="submit" onClick={handleSubmit(onSubmit)} />
+              <CustomButton
+                buttonText="Entrar"
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+                fullWidth
+              />
             </DataContainer>
             <span>
-              Aún no tienes cuenta? <LinkStyled href="/register">Registrate</LinkStyled>
+              Aún no tienes cuenta?{" "}
+              <LinkStyled href="/register">Registrate</LinkStyled>
             </span>
           </FormStyled>
         </GridForm>
