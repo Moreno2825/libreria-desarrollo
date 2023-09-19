@@ -3,10 +3,10 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
     height: 100%;
     display: flex;
-    padding: 8 px;
-    border-radius: 16px;
+    margin: 8px;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
 `;
 
@@ -14,6 +14,7 @@ export const DetailsContiner = styled.div`
  & div{
     text-overflow: ellipsis;
     text-align: center;
+    width: 200px;
  }
  
  .NameStyle{

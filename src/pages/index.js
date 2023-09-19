@@ -20,15 +20,63 @@ import { users } from "@/constants";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-const inter = Inter({ subsets: ['latin'] })
+const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Ingresa un correo electrónico válido")
+    .required("El correo electrónico es requerido"),
+  password: yup.string().required("La contraseña es requerida"),
+});
 
-export default function Home() {
+export default function Login() {
+  const [isShowPassword, setShowPassword] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isDirty },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: yupResolver(loginSchema),
+  });
+
+  const route = useRouter();
+
+  const onSubmit = (data) => {
+    const userExists = users.some(
+      (user) => user.email === data.email && user.password === data.password
+    );
+
+    if (userExists) {
+      route.push("/home");
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!isShowPassword);
+  };
+
+  // Función para manejar la tecla "Enter" en los campos de entrada
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Evita que el formulario se envíe automáticamente al presionar "Enter" en un campo
+      handleSubmit(onSubmit)(); // Ejecuta la función de envío del formulario
+    }
+  };
+
   return (
     <Container>
       <GridContainer>
         <GridForm>
           <LogoContainer>
-            <Image src="/img/BookLogo.png" alt="logo" width={100} height={100}/>
+            <Image
+              src="/img/BookLogo.png"
+              alt="logo"
+              width={100}
+              height={100}
+            />
             <span>Bookstore</span>
           </LogoContainer>
           <FormStyled onSubmit={handleSubmit(onSubmit)}>
@@ -50,7 +98,7 @@ export default function Home() {
                 name="password"
                 control={control}
                 type={isShowPassword ? "text" : "password"}
-                error={errors.password?.message ||""}
+                error={errors.password?.message || ""}
                 onKeyDown={handleEnterKey}
                 icon={
                   isShowPassword ? (
@@ -63,10 +111,16 @@ export default function Home() {
                   )
                 }
               />
-              <CustomButton buttonText="Entrar" type="submit" onClick={handleSubmit(onSubmit)} />
+              <CustomButton
+                buttonText="Entrar"
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+                fullWidth
+              />
             </DataContainer>
             <span>
-              Aún no tienes cuenta? <LinkStyled href="/register">Registrate</LinkStyled>
+              Aún no tienes cuenta?{" "}
+              <LinkStyled href="/register">Registrate</LinkStyled>
             </span>
           </FormStyled>
         </GridForm>
