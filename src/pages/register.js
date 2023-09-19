@@ -1,3 +1,4 @@
+import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import {
   Container,
@@ -9,56 +10,56 @@ import {
   GridImage,
   LinkStyled,
   LogoContainer,
-} from "@/styles/Login.style";
+} from "@/styles/Register.style";
 import React, { useState } from "react";
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import CustomButton from "@/components/CustomButton";
-import { users } from "@/constants";
 import { useRouter } from "next/router";
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 
-const loginSchema = yup.object().shape({
+const registerSchema = yup.object().shape({
+  name: yup.string().required("El nombre es requerido"),
   email: yup
     .string()
     .email("Ingresa un correo electrónico válido")
     .required("El correo electrónico es requerido"),
   password: yup.string().required("La contraseña es requerida"),
+  confirmpassword: yup.string().required("La contraseña es requerida"),
 });
 
-export default function Login() {
+export default function Register() {
   const [isShowPassword, setShowPassword] = useState(false);
+  const [isShowPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const {
     control,
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      confirmpassword: "",
     },
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(registerSchema),
   });
 
   const route = useRouter();
 
   const onSubmit = (data) => {
-    const userExists = users.some(
-      (user) => user.email === data.email && user.password === data.password
-    );
-
-    if (userExists) {
-      route.push("/home");
-    }
+    route.push("/");
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!isShowPassword);
   };
 
-  // Función para manejar la tecla "Enter" en los campos de entrada
+  const togglePasswordVisibilityConfirm = () => {
+    setShowPasswordConfirm(!isShowPasswordConfirm);
+  };
+
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
       e.preventDefault(); // Evita que el formulario se envíe automáticamente al presionar "Enter" en un campo
@@ -71,21 +72,23 @@ export default function Login() {
       <GridContainer>
         <GridForm>
           <LogoContainer>
-            <Image
-              src="/img/BookLogo.png"
-              alt="logo"
-              width={100}
-              height={100}
-            />
+          <Image src="/img/BookLogo.png" alt="logo" width={90} height={90}/>
             <span>Bookstore</span>
           </LogoContainer>
           <FormStyled onSubmit={handleSubmit(onSubmit)}>
-            <h1>Iniciar Sesión</h1>
+            <h1>Registrate</h1>
             <span>
-              Te damos la bienvenida a nuestra biblioteca digital, donde el
-              conocimiento espera ser explorado.{" "}
+              ¿Listo para unirse a nuestra comunidad de lectores? ¡Regístrate
+              ahora para descubrir un mundo de libros!
             </span>
             <DataContainer>
+              <CustomInput
+                label="Nombre"
+                name="name"
+                control={control}
+                error={errors.name?.message || ""}
+                onKeyDown={handleEnterKey}
+              />
               <CustomInput
                 label="Correo electronico"
                 name="email"
@@ -97,8 +100,8 @@ export default function Login() {
                 label="Contraseña"
                 name="password"
                 control={control}
-                type={isShowPassword ? "text" : "password"}
                 error={errors.password?.message || ""}
+                type={isShowPassword ? "text" : "password"}
                 onKeyDown={handleEnterKey}
                 icon={
                   isShowPassword ? (
@@ -111,16 +114,28 @@ export default function Login() {
                   )
                 }
               />
-              <CustomButton
-                buttonText="Entrar"
-                type="submit"
-                onClick={handleSubmit(onSubmit)}
-                fullWidth
+              <CustomInput
+                label="Confirmar contraseña"
+                name="confirmpassword"
+                control={control}
+                error={errors.confirmpassword?.message || ""}
+                type={isShowPasswordConfirm ? "text" : "password"}
+                onKeyDown={handleEnterKey}
+                icon={
+                  isShowPasswordConfirm ? (
+                    <EyeIcon
+                      icon={faEyeSlash}
+                      onClick={togglePasswordVisibilityConfirm}
+                    />
+                  ) : (
+                    <EyeIcon icon={faEye} onClick={togglePasswordVisibilityConfirm} />
+                  )
+                }
               />
+              <CustomButton buttonText="Registrarse" type="submit" onClick={handleSubmit(onSubmit)} fullWidth/>
             </DataContainer>
             <span>
-              Aún no tienes cuenta?{" "}
-              <LinkStyled href="/register">Registrate</LinkStyled>
+              Ya tienes cuenta? <LinkStyled href="/">Inicia sesión</LinkStyled>
             </span>
           </FormStyled>
         </GridForm>
