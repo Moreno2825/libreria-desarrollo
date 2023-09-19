@@ -57,7 +57,6 @@ left: -25px;
 `;
 
 export const HouseIcon = styled(FontAwesomeIcon)`
-
 color: #5E5262; 
 margin-right: 16px;
 `;
@@ -65,4 +64,5 @@ margin-right: 16px;
 export const Titule = styled.div`
 display: flex;
 margin-left: 16px;
+margin-top: 43px;
 `;
