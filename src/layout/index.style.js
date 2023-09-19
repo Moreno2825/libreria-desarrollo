@@ -5,6 +5,6 @@ export const LayoutContainer = styled.div`
 `;
 
 export const Content = styled.div`
-  margin: 30px 310px; 
-  width: calc(100% - 280px); 
+  margin: ${props => (props.hasSidebar ? "30px 310px" : "0px")};
+  width: ${props => (props.hasSidebar ? "calc(100% - 280px)" : "100%")};
 `;

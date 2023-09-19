@@ -11,7 +11,7 @@ export default function Layout({ children }) {
   return (
     <LayoutContainer>
       {hasSidebar && <Sidebar />}
-      <Content>{children}</Content>
+      <Content hasSidebar={hasSidebar}>{children}</Content>
     </LayoutContainer>
   );
 }
