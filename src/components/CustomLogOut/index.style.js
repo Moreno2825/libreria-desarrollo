@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 26px 56px;
+  margin: 26px 0px;
 `;
 
 export const NameWindow = styled.div`

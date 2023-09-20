@@ -6,7 +6,7 @@ import React from "react";
 const Home = () => {
     
   return <div>
-    <CustomLogOut></CustomLogOut>
+    Hola
   </div>;
 };
 

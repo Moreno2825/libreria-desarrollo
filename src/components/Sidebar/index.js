@@ -9,7 +9,7 @@ export default function Sidebar() {
     <div>
       <Container>
         <Titule>
-          <Image src="/img/BookLogo.png" width={100} height={100} />
+          <Image src="/img/BookLogo.png" width={100} height={100} alt="logo"/>
           <Position>Bookstore</Position>
         </Titule>
         <div>
@@ -21,7 +21,7 @@ export default function Sidebar() {
           </Link>
           <Link href="/books">
             <Select>
-              <HouseIcon icon={faBook} />
+              <HouseIcon icon={faBook}/>
               Libros
             </Select>
           </Link>
