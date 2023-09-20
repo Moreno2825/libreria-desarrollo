@@ -28,9 +28,7 @@ export const Select = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-
   margin: 10% 20px;
-
   letter-spacing: 0.5px;
   :hover {
     background: #cec9d1;

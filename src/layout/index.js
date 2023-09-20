@@ -6,7 +6,7 @@ import { Content, LayoutContainer } from "./index.style";
 export default function Layout({ children }) {
   const router = useRouter();
 
-  const hasSidebar = router.pathname !== "/" && router.pathname !== "/register";
+  const hasSidebar = router.pathname !== "/" && router.pathname !== "/home";
 
   return (
     <LayoutContainer>

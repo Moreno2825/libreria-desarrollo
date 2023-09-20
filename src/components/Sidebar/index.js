@@ -12,7 +12,6 @@ export default function Sidebar() {
           <Image src="/img/BookLogo.png" width={100} height={100} />
           <Position>Bookstore</Position>
         </Titule>
-
         <div>
           <Link href="/home">
             <Select>
@@ -20,14 +19,12 @@ export default function Sidebar() {
               Home
             </Select>
           </Link>
-
           <Link href="/books">
             <Select>
               <HouseIcon icon={faBook} />
               Libros
             </Select>
           </Link>
-
           <Link href="/users">
             <Select>
               <HouseIcon icon={faUsers} />
