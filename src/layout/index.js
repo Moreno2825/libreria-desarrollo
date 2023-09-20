@@ -13,7 +13,7 @@ export default function Layout({ children }) {
     <LayoutContainer>
       {hasSidebar && <Sidebar />}
       <Content hasSidebar={hasSidebar}>
-        {hasSidebar && <CustomLogOut />}
+        {hasSidebar && <CustomLogOut/>}
         {children}
       </Content>
     </LayoutContainer>

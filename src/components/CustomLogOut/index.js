@@ -12,12 +12,13 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 
-export default function CustomLogOut() {
+
+export default function CustomLogOut({}) {
+  
   const [mostrarDiv, setMostrarDiv] = useState(false);
   const toggleDiv = () => {
     setMostrarDiv(!mostrarDiv);
   };
-
   const router = useRouter();
   const ruta = router.pathname.split("/").pop();
   const routeFixed = ruta.charAt(0).toUpperCase() + ruta.slice(1);
@@ -43,7 +44,7 @@ export default function CustomLogOut() {
         </NameWindow>
       </div>
       <div>
-        <NameUse onClick={toggleDiv}>
+          <NameUse onClick={toggleDiv}>
           Mariana
           <ChevronIcon icon={faChevronDown} />
         </NameUse>

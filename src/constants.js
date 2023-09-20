@@ -1,7 +1,13 @@
 export const users = [
     {
+        name: "Mariana",
         email: "mariana@hotmail.com",
         password: "mariana123"
+    },
+    {
+        name: "Rodrigo",
+        email: "rodri@hotmail.com",
+        password: "rodri123"
     },
 ]
 export const book = {
