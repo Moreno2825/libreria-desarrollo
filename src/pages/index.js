@@ -102,7 +102,7 @@ export default function Login() {
                   )
                 }
               />
-              <CustomButton buttonText="Entrar" type="submit" onClick={handleSubmit(onSubmit)} />
+              <CustomButton buttonText="Entrar" type="submit" fullWidth onClick={handleSubmit(onSubmit)} />
             </DataContainer>
             <span>
               Aún no tienes cuenta? <LinkStyled href="/register">Registrate</LinkStyled>
