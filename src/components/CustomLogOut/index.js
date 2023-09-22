@@ -11,6 +11,7 @@ import { faChevronDown, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
+import { users } from "@/constants";
 
 export default function CustomLogOut() {
   const [mostrarDiv, setMostrarDiv] = useState(false);
@@ -18,11 +19,14 @@ export default function CustomLogOut() {
     setMostrarDiv(!mostrarDiv);
   };
 
+  const Name = users[0].name;
+
   const router = useRouter();
   const ruta = router.pathname.split("/").pop();
   const routeFixed = ruta.charAt(0).toUpperCase() + ruta.slice(1);
   const [fecha, setFecha] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
+  
   useEffect(() => {
     const today = () => {
       const fechaHoy = new Date();
@@ -31,6 +35,11 @@ export default function CustomLogOut() {
     };
     today();
   }, []);
+
+  const handleLogout = () => {
+    toggleDiv(false);
+    router.push("/");
+  }
 
   return (
     <Container>
@@ -43,12 +52,12 @@ export default function CustomLogOut() {
         </NameWindow>
       </div>
       <div>
-        <NameUse onClick={toggleDiv}>
-          Mariana
+        <NameUse onClick={toggleDiv} >
+          {Name}
           <ChevronIcon icon={faChevronDown} />
         </NameUse>
-        <LogOut mostrar={mostrarDiv}>
-          <SignOutAlt icon={faSignOutAlt} />
+        <LogOut mostrar={mostrarDiv}  onClick={handleLogout}>
+          <SignOutAlt icon={faSignOutAlt}/>
           Log out
         </LogOut>
       </div>
