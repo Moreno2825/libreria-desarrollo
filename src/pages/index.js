@@ -45,13 +45,12 @@ export default function Login() {
   const route = useRouter();
 
   const onSubmit = (data) => {
-    const userExists = users.some(
+    const userExists = users.find(
       (user) => user.email === data.email && user.password === data.password
     );
 
     if (userExists) {
-      sessionStorage.setItem("userLogged", JSON.stringify(userExists));
-      console.log(userExists);
+      sessionStorage.setItem('userLogged', JSON.stringify(userExists));
       route.push("/home");
     }
   };

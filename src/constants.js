@@ -5,9 +5,14 @@ export const users = [
         password: "mariana123"
     },
     {
-        name: "Rodrigo",
+        name: "Rodrigo Careveo",
         email: "rodri@hotmail.com",
         password: "rodri123"
+    },
+    {
+        name: "Cloe",
+        email: "admi@hotmail.com",
+        password: "admi"
     },
 ]
 export const book = {

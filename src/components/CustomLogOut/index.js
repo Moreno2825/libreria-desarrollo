@@ -14,16 +14,20 @@ import { format } from "date-fns";
 
 
 export default function CustomLogOut({}) {
-  
+  const [userName, setUserName] = useState("");
+
   const [mostrarDiv, setMostrarDiv] = useState(false);
   const toggleDiv = () => {
     setMostrarDiv(!mostrarDiv);
   };
+
   const router = useRouter();
   const ruta = router.pathname.split("/").pop();
+
   const routeFixed = ruta.charAt(0).toUpperCase() + ruta.slice(1);
   const [fecha, setFecha] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
+
   useEffect(() => {
     const today = () => {
       const fechaHoy = new Date();
@@ -32,6 +36,21 @@ export default function CustomLogOut({}) {
     };
     today();
   }, []);
+
+  const handleLogOut = () => {
+    sessionStorage.clear('userLogged');
+    router.push("/");
+  };
+
+  useEffect(() => {
+    const userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
+    if (userLogged && userLogged.name) {
+      const firstName = userLogged.name.split(' ')[0]; 
+      setUserName(firstName);
+    }
+  }, []);
+
+  
 
   return (
     <Container>
@@ -45,10 +64,10 @@ export default function CustomLogOut({}) {
       </div>
       <div>
           <NameUse onClick={toggleDiv}>
-          Mariana
+          {userName}
           <ChevronIcon icon={faChevronDown} />
         </NameUse>
-        <LogOut mostrar={mostrarDiv}>
+        <LogOut mostrar={mostrarDiv} onClick={handleLogOut}>
           <SignOutAlt icon={faSignOutAlt} />
           Log out
         </LogOut>
