@@ -50,6 +50,8 @@ export default function Login() {
     );
 
     if (userExists) {
+      sessionStorage.setItem("userLogged", JSON.stringify(userExists));
+      console.log(userExists);
       route.push("/home");
     }
   };
