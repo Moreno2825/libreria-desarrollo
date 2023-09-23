@@ -2,7 +2,8 @@ export const users = [
     {
         name: "Mariana",
         email: "mariana@hotmail.com",
-        password: "mariana123"
+        password: "mariana123",
+        name: "Marianaaaa"
     },
     {
         name: "Rodrigo Careveo",
@@ -15,6 +16,7 @@ export const users = [
         password: "admi"
     },
 ]
+
 export const book = {
     '5f4b5f7e8f428c6e8a62d5a1':{
         id: '5f4b5f7e8f428c6e8a62d5a1',

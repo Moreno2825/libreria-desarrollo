@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { users } from "@/constants";
 import {
   ChevronIcon,
   Container,
@@ -8,9 +11,6 @@ import {
   SignOutAlt,
 } from "./index.style";
 import { faChevronDown, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
-import { format } from "date-fns";
 
 
 export default function CustomLogOut({}) {
@@ -20,6 +20,7 @@ export default function CustomLogOut({}) {
   const toggleDiv = () => {
     setMostrarDiv(!mostrarDiv);
   };
+  const Name = users[0].name;
 
   const router = useRouter();
   const ruta = router.pathname.split("/").pop();
