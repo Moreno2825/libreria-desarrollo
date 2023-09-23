@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { users } from "@/constants";
 import {
   ChevronIcon,
   Container,
@@ -8,25 +11,19 @@ import {
   SignOutAlt,
 } from "./index.style";
 import { faChevronDown, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
-import { format } from "date-fns";
-import { users } from "@/constants";
 
 export default function CustomLogOut() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [mostrarDiv, setMostrarDiv] = useState(false);
   const toggleDiv = () => {
     setMostrarDiv(!mostrarDiv);
   };
-
   const Name = users[0].name;
 
-  const router = useRouter();
-  const ruta = router.pathname.split("/").pop();
-  const routeFixed = ruta.charAt(0).toUpperCase() + ruta.slice(1);
+  const routeFixed = "Your Route";
   const [fecha, setFecha] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
-  
+
   useEffect(() => {
     const today = () => {
       const fechaHoy = new Date();
@@ -36,10 +33,30 @@ export default function CustomLogOut() {
     today();
   }, []);
 
+  useEffect(() => {
+    //se  Agrega un evento para solicitar inicio de sesión aun despues de darle cerrar sesion" 
+    const handleBeforeUnload = (e) => {
+      if (!isLoggedIn) {
+        const confirmationMessage = "inicia sesion";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+      }
+    };
+    //este evento nos serivra para verificar el estado de inicio de sesion
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    //remueve el el estado al darle click en cerrar sesion "setisloggedin"
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isLoggedIn]);
+
   const handleLogout = () => {
-    toggleDiv(false);
-    router.push("/");
-  }
+    setIsLoggedIn(false);
+    // Redirige directamente a la página del login
+    window.location.href = "/";
+    // si no esta iniciada  la sesion no muestra la pagina anterior (dashboard)
+    window.history.replaceState(null, null, "/");
+  };
 
   return (
     <Container>
@@ -52,14 +69,18 @@ export default function CustomLogOut() {
         </NameWindow>
       </div>
       <div>
-        <NameUse onClick={toggleDiv} >
-          {Name}
-          <ChevronIcon icon={faChevronDown} />
-        </NameUse>
-        <LogOut mostrar={mostrarDiv}  onClick={handleLogout}>
-          <SignOutAlt icon={faSignOutAlt}/>
-          Log out
-        </LogOut>
+        {isLoggedIn ? ( 
+                <div>
+            <NameUse onClick={toggleDiv}>
+              {Name}
+              <ChevronIcon icon={faChevronDown} />
+            </NameUse>
+            <LogOut mostrar={mostrarDiv} onClick={handleLogout}>
+              <SignOutAlt icon={faSignOutAlt} />
+              Log out
+            </LogOut>
+          </div>
+        ) : null}
       </div>
     </Container>
   );
