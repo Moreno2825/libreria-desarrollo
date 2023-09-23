@@ -46,6 +46,8 @@ export default function Login() {
     const userExists = users.some((user) => user.email === data.email && user.password === data.password);
 
     if (userExists) {
+      sessionStorage.setItem("userLogged", JSON.stringify(userExists));
+      console.log(userExists);
       route.push("/home");
     }
   };
