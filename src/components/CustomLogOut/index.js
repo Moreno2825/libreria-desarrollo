@@ -11,7 +11,7 @@ import {
   SignOutAlt,
 } from "./index.style";
 import { faChevronDown, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-
+import { useRouter } from "next/router";
 
 export default function CustomLogOut({}) {
   const [userName, setUserName] = useState("");
