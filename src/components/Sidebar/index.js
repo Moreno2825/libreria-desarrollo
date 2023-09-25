@@ -22,7 +22,7 @@ export default function Sidebar() {
           <Link href="/books">
             <Select>
               <HouseIcon icon={faBook}/>
-              Libros
+              Cátalogo
             </Select>
           </Link>
           <Link href="/users">
