@@ -49,6 +49,8 @@ export default function Login() {
       sessionStorage.setItem("userLogged", JSON.stringify(userExists));
       console.log(userExists);
       route.push("/home");
+    }else {
+      window.alert("El usuario no existe o la contraseña es incorrecta");
     }
   };
 
