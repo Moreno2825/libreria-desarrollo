@@ -3,7 +3,6 @@ export const users = [
         name: "Mariana",
         email: "mariana@hotmail.com",
         password: "mariana123",
-        name: "Marianaaaa"
     },
     {
         name: "Rodrigo Careveo",
