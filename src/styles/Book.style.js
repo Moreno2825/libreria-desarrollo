@@ -1,10 +1,16 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div`
-  width:100%;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
+export const BooksContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 24px;
+`;
+
+export const RecentBooks = styled.span`
+  margin: 32px 0px;
+  color: #2a2a2a;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: 500;
 `;
