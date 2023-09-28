@@ -1,6 +1,7 @@
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import CustomModal from "@/components/CustomModal";
+import CustomTextArea from "@/components/CustomTextArea";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -30,14 +31,10 @@ const Home = () => {
       >
         <CustomInput label="Título" name="title" control={control} />
         <CustomInput label="Autor" name="autor" control={control} />
-        <CustomInput label="Sipnosis" name="sipnosis" control={control} />
+        <CustomTextArea label="Sipnosis" sipnosis="hshshsh"/>
         <div style={{ display: "flex", gap: "26px" }}>
           <CustomInput label="Sipnosis" name="sipnosis" control={control} />
           <CustomInput label="Sipnosis" name="sipnosis" control={control} />
-          <select>
-            <option>Hola</option>
-            <option>Como</option>
-          </select>
         </div>
       </CustomModal>
     </div>
