@@ -11,7 +11,7 @@ const CustomButton = ({
 }) => {
   const customStyle = {
     borderRadius: "10px",
-    background: "#FFF",
+    background: "#f4f4f4",
     color: "#7d6e83",
     border: "2px solid #7d6e83",
   };
