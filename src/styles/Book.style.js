@@ -14,3 +14,13 @@ export const RecentBooks = styled.span`
   font-size: 22px;
   font-weight: 500;
 `;
+
+export const AddContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const RowContainer = styled.div`
+  display: flex;
+  gap: 26px;
+`;
