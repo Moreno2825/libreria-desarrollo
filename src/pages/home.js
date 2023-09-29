@@ -22,6 +22,7 @@ const Home = () => {
       <CustomButton
         buttonText="Agrega un nuevo libro"
         onClick={toggleForgotPasswordModal}
+        style
       />
       <CustomModal
         open={isOpenForgotPassword}
