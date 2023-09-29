@@ -8,7 +8,7 @@ import {
   ImageContainer,
   ImageStyled,
 } from "./index.style";
-import CustomButton from "../CustomButton";
+import DeleteB from "../Delete";
 
 const CustomIndividualBook = ({
   image,
@@ -39,12 +39,25 @@ const CustomIndividualBook = ({
               <pan className="DetailsStyled">{category}</pan>
             </div>
             <div className="DetailOptionsStyled">
-              <span className="PriceOptionsStyled">{price ? `$${price}` : ""}</span>
+              <span className="PriceOptionsStyled">
+                {price ? `$${price}` : ""}
+              </span>
             </div>
-            <ContainerButtons>
+            {/* <ContainerButtons>
             <CustomButton buttonText="Editar"/>
-            <CustomButton buttonText="Eliminar"/>
-            </ContainerButtons>
+            <CustomButton
+            buttonText="Eliminar"
+            onClick={toggleForgotPasswordModal}
+            />
+            <CustomModal
+              open={isOpen}
+              title="Eliminar"
+              message="¿Deseas eliminar este libro?"
+            >
+      </CustomModal>
+      
+            </ContainerButtons> */}
+            <DeleteB></DeleteB>
           </BasicInformation>
         </div>
       </BasicInformationContainer>
