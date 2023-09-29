@@ -21,6 +21,7 @@ export default function DeleteB() {
         />
         <CustomModal
           open={isOpen}
+          onClose={toggleForgotPasswordModal}
           title="Eliminar"
           message="¿Deseas eliminar este libro?"
         >
