@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { book } from "@/constants";
 import CustomBook from "@/components/CustomBook";
-import { AddContainer, BooksContainer, RecentBooks } from "@/styles/Book.style";
+import {
+  AddContainer,
+  BooksContainer,
+  RecentBooks,
+  RowContainer,
+} from "@/styles/Book.style";
 import Link from "next/link";
 import CustomButton from "@/components/CustomButton";
 import CustomModal from "@/components/CustomModal";
 import CustomInput from "@/components/CustomInput";
 import CustomSelect from "@/components/CustomSelect";
+import CustomTextArea from "@/components/CustomTextArea";
 
 export default function ViewBook() {
   const [isAddModal, setAddModal] = useState(false);
 
-  const toggleAddModal = () =>
-    setAddModal((isAddModal) => !isAddModal);
+  const toggleAddModal = () => setAddModal((isAddModal) => !isAddModal);
 
   const {
     handleSubmit,
@@ -57,11 +62,19 @@ export default function ViewBook() {
       >
         <CustomInput label="Título" name="title" control={control} />
         <CustomInput label="Autor" name="autor" control={control} />
-        <CustomInput label="Sipnosis" name="sipnosis" control={control} />
-        <div style={{ display: "flex", gap: "26px" }}>
-          <CustomInput label="Precio" name="price" control={control} />
+        <CustomTextArea label="Sipnosis" />
+        <RowContainer>
+          <CustomInput
+            label="Precio"
+            name="price"
+            control={control}
+          />
           <CustomSelect label="Categorias"/>
-        </div>
+        </RowContainer>
+        <RowContainer>
+          <CustomButton specialStyle buttonText="Cancelar" fullWidth />
+          <CustomButton buttonText="Guardar" fullWidth />
+        </RowContainer>
       </CustomModal>
     </div>
   );
