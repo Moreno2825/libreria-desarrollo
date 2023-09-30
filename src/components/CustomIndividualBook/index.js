@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BasicInformation,
   BasicInformationContainer,
@@ -7,9 +7,12 @@ import {
   ContainerImageAndSpan,
   ImageContainer,
   ImageStyled,
+  Buttons,
+  ImagenD,
 } from "./index.style";
+import Image from "next/image";
 import CustomButton from "../CustomButton";
-import DeleteB from "../Delete";
+import CustomModal from "../CustomModal";
 
 const CustomIndividualBook = ({
   image,
@@ -19,6 +22,10 @@ const CustomIndividualBook = ({
   details,
   category,
 }) => {
+  const [isOpen, setOpenForgotPassword] = useState(false);
+
+  const toggleForgotPasswordModal = () =>
+    setOpenForgotPassword((isOpen) => !isOpen);
   return (
     <Container>
       <BasicInformationContainer>
@@ -40,13 +47,36 @@ const CustomIndividualBook = ({
               <pan className="DetailsStyled">{category}</pan>
             </div>
             <div className="DetailOptionsStyled">
-              <span className="PriceOptionsStyled">{price ? `$${price}` : ""}</span>
+              <span className="PriceOptionsStyled">
+                {price ? `$${price}` : ""}
+              </span>
             </div>
-            <DeleteB></DeleteB>
-            {/* <ContainerButtons>
-            <CustomButton buttonText="Editar"/>
-            <CustomButton buttonText="Eliminar"/>
-            </ContainerButtons> */}
+            <ContainerButtons>
+              <CustomButton buttonText="Editar" />
+              <CustomButton
+                buttonText="Eliminar"
+                onClick={toggleForgotPasswordModal}
+              />
+              <CustomModal
+                open={isOpen}
+                onClose={toggleForgotPasswordModal}
+                title="Eliminar"
+                message="¿Deseas eliminar este libro?"
+              >
+                <ImagenD>
+                  <Image
+                    src="/img/Delete.png"
+                    width={233}
+                    height={127}
+                    alt="logo"
+                  />
+                </ImagenD>
+                <Buttons>
+                  <CustomButton buttonText="Aceptar" />
+                  <CustomButton buttonText="Aceptar" />
+                </Buttons>
+              </CustomModal>
+            </ContainerButtons>
           </BasicInformation>
         </div>
       </BasicInformationContainer>
