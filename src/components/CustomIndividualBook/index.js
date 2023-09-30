@@ -9,10 +9,15 @@ import {
   ImageStyled,
   Buttons,
   ImagenD,
+  RowContainer,
 } from "./index.style";
 import Image from "next/image";
 import CustomButton from "../CustomButton";
 import CustomModal from "../CustomModal";
+import { useForm } from "react-hook-form";
+import CustomInput from "../CustomInput";
+import CustomTextArea from "../CustomTextArea";
+import CustomSelect from "../CustomSelect";
 
 const CustomIndividualBook = ({
   image,
@@ -22,10 +27,21 @@ const CustomIndividualBook = ({
   details,
   category,
 }) => {
-  const [isOpen, setOpenForgotPassword] = useState(false);
+  const [isOpen, setOpenDeletePassword] = useState(false);
+  const [isOpenUpdate, setOpenUpdatePassword] = useState(false);
 
-  const toggleForgotPasswordModal = () =>
-    setOpenForgotPassword((isOpen) => !isOpen);
+  const toggleDeletePasswordModal = () =>
+    setOpenDeletePassword((isOpen) => !isOpen);
+
+  const toggleUpdatePasswordModal = () =>
+    setOpenUpdatePassword((isOpenUpdate) => !isOpenUpdate);
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({});
+
   return (
     <Container>
       <BasicInformationContainer>
@@ -52,14 +68,36 @@ const CustomIndividualBook = ({
               </span>
             </div>
             <ContainerButtons>
-              <CustomButton buttonText="Editar" />
+              <CustomButton
+                buttonText="Editar"
+                onClick={toggleUpdatePasswordModal}
+              />
+              <CustomModal
+                open={isOpenUpdate}
+                onClose={toggleUpdatePasswordModal}
+                title="Editar"
+                message="Aquí puedes realizar modificaciones en los datos del libro."
+              >
+                <CustomInput label="Título" name="title" control={control} />
+                <CustomInput label="Autor" name="autor" control={control} />
+                <CustomTextArea label="Sipnosis" />
+                <RowContainer>
+                  <CustomInput label="Precio" name="price" control={control} />
+                  <CustomSelect label="Categorias" />
+                </RowContainer>
+                <RowContainer>
+                  <CustomButton specialStyle buttonText="Cancelar" fullWidth />
+                  <CustomButton buttonText="Guardar" fullWidth />
+                </RowContainer>
+              </CustomModal>
+
               <CustomButton
                 buttonText="Eliminar"
-                onClick={toggleForgotPasswordModal}
+                onClick={toggleDeletePasswordModal}
               />
               <CustomModal
                 open={isOpen}
-                onClose={toggleForgotPasswordModal}
+                onClose={toggleDeletePasswordModal}
                 title="Eliminar"
                 message="¿Deseas eliminar este libro?"
               >
@@ -72,7 +110,7 @@ const CustomIndividualBook = ({
                   />
                 </ImagenD>
                 <Buttons>
-                  <CustomButton buttonText="Cancelar" specialStyle/>
+                  <CustomButton buttonText="Cancelar" specialStyle />
                   <CustomButton buttonText="Aceptar" />
                 </Buttons>
               </CustomModal>

@@ -98,3 +98,8 @@ export const Buttons = styled.div`
         margin-right: 0; 
     }
 `;
+
+export const RowContainer = styled.div`
+  display: flex;
+  gap: 26px;
+`;
