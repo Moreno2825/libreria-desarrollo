@@ -103,3 +103,17 @@ export const RowContainer = styled.div`
   display: flex;
   gap: 26px;
 `;
+
+export const LabelStyled = styled.label`
+  color: #2a2a2a;
+  font-family: "Poppins", serif;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+export const ImageUpdateContainer = styled.div`
+  margin: 16px 0px;
+`;
+export const ImageContainerBehind = styled.div`
+  margin: 26px 0px 16px 0;
+`;

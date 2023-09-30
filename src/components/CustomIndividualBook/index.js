@@ -10,6 +10,9 @@ import {
   Buttons,
   ImagenD,
   RowContainer,
+  ImageUpdateContainer,
+  LabelStyled,
+  ImageContainerBehind,
 } from "./index.style";
 import Image from "next/image";
 import CustomButton from "../CustomButton";
@@ -18,6 +21,7 @@ import { useForm } from "react-hook-form";
 import CustomInput from "../CustomInput";
 import CustomTextArea from "../CustomTextArea";
 import CustomSelect from "../CustomSelect";
+import ImageInput from "../imageInput/ImageInput";
 
 const CustomIndividualBook = ({
   image,
@@ -29,12 +33,17 @@ const CustomIndividualBook = ({
 }) => {
   const [isOpen, setOpenDeletePassword] = useState(false);
   const [isOpenUpdate, setOpenUpdatePassword] = useState(false);
+  const [values, setValues] = useState();
 
   const toggleDeletePasswordModal = () =>
     setOpenDeletePassword((isOpen) => !isOpen);
 
   const toggleUpdatePasswordModal = () =>
     setOpenUpdatePassword((isOpenUpdate) => !isOpenUpdate);
+
+  const handleUpdateFiles = (pictures) => {
+    setValues({ ...values, foto: pictures });
+  };
 
   const {
     handleSubmit,
@@ -85,6 +94,14 @@ const CustomIndividualBook = ({
                   <CustomInput label="Precio" name="price" control={control} />
                   <CustomSelect label="Categorias" />
                 </RowContainer>
+                <ImageUpdateContainer>
+                  <LabelStyled>Portada del libro</LabelStyled>
+                  <ImageInput updateFilesCb={handleUpdateFiles} />
+                </ImageUpdateContainer>
+                <ImageContainerBehind>
+                  <LabelStyled>Contraportada del libro</LabelStyled>
+                  <ImageInput updateFilesCb={handleUpdateFiles} />
+                </ImageContainerBehind>
                 <RowContainer>
                   <CustomButton specialStyle buttonText="Cancelar" fullWidth />
                   <CustomButton buttonText="Guardar" fullWidth />
