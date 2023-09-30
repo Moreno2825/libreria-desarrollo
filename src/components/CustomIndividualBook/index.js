@@ -72,7 +72,7 @@ const CustomIndividualBook = ({
                   />
                 </ImagenD>
                 <Buttons>
-                  <CustomButton buttonText="Aceptar" />
+                  <CustomButton buttonText="Cancelar" specialStyle/>
                   <CustomButton buttonText="Aceptar" />
                 </Buttons>
               </CustomModal>
