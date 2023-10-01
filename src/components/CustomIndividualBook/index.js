@@ -87,12 +87,20 @@ const CustomIndividualBook = ({
                 title="Editar"
                 message="Aquí puedes realizar modificaciones en los datos del libro."
               >
-                <CustomInput label="Título" name="title" control={control} />
+                <CustomInput label="Título" name="name" control={control} />
                 <CustomInput label="Autor" name="autor" control={control} />
-                <CustomTextArea label="Sipnosis" />
+                <CustomTextArea
+                  label="Sipnosis"
+                  name="details"
+                  control={control}
+                />
                 <RowContainer>
                   <CustomInput label="Precio" name="price" control={control} />
-                  <CustomSelect label="Categorias" />
+                  <CustomSelect
+                    label="Categorias"
+                    name="category"
+                    control={control}
+                  />
                 </RowContainer>
                 <ImageUpdateContainer>
                   <LabelStyled>Portada del libro</LabelStyled>

@@ -12,7 +12,7 @@ export const users = [
     {
         name: "Cloe",
         email: "admi@hotmail.com",
-        password: "admi"
+        password: "admin"
     },
 ]
 

@@ -1,30 +1,48 @@
+import GetOneBookUseCase from "@/application/usecases/bookUseCase/GetOneBookUseCase";
 import CustomButton from "@/components/CustomButton";
 import CustomIndividualBook from "@/components/CustomIndividualBook";
-import { book } from "@/constants";
+import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
 import {
   ButtonContainer,
   ContainerBook,
   ContainerButtons,
 } from "@/styles/viewBook.style";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function View() {
   const router = useRouter();
   const { id } = router.query;
+  const [selectedBook, setSeletectedBook] = useState(null);
 
-  const selectedBook = book[id];
+  const bookRepo = new BookRepo();
+  const getOneBookUseCase = new GetOneBookUseCase(bookRepo);
+
+  const fetchBook = async () => {
+    if(id){
+      try{
+        const book = await getOneBookUseCase.run(id);
+        setSeletectedBook(book);
+      }catch(error){
+        console.log(error);
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchBook();
+  },[id]);
 
   if (!selectedBook) {
     return <div>Libro no encontrado</div>;
   }
 
-  const { name, author, image, details, category, price } = selectedBook;
+  const { name, author, frontImage, details, id_category:category, price } = selectedBook;
 
   return (
     <ContainerBook>
       <CustomIndividualBook
-        image={image}
+        image={frontImage.secureUrl}
         name={name}
         author={author}
         price={price}

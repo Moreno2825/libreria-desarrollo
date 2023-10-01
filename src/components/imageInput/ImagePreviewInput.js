@@ -17,8 +17,8 @@ const ImagePreviewInput = ({
         ...otherProps
 }) => {
 
-    const [files, setFiles] = useState({});
-    const [image, setImage] = useState(null);
+    const [files, setFiles] = useState<any>([]);
+    const [image, setImage] = useState<any>(null);
 
     const handleNewFileUpload = (e) => {
         const { files: newFiles } = e.target;
