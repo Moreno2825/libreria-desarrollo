@@ -9,7 +9,7 @@ import CategoryRepo from "@/infraestructure/implementation/httpRequest/axios/Cat
 import GetAllCategoryUseCase from "@/application/usecases/categoryUseCase/GetAllCategoryUseCase";
 import { useController } from "react-hook-form";
 
-const CustomSelect = ({ label, style, name, control }) => {
+const CustomSelect = ({ label, style, name, control, defaultValue }) => {
   const [categories, setCategories] = useState([]);
   const categoryRepo = new CategoryRepo();
 
@@ -42,7 +42,7 @@ const CustomSelect = ({ label, style, name, control }) => {
     <div style={{ width: "57%" }}>
       <LabelStyled>{label}</LabelStyled>
       <SelectWrapper>
-        <SelectStyled {...inputProps}>
+        <SelectStyled {...inputProps} >
           {categories.map((category) => (
             <OptionStyled key={category._id} value={category._id}>
               {category.name}

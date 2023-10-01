@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -31,8 +31,14 @@ const PreviewImage = styled.img`
   height: auto;
 `;
 
-const ImageUploader = ({ onFileChange, name }) => {
+const ImageUploader = ({ onFileChange, name,defaultValue }) => {
   const [previewImage, setPreviewImage] = useState(null);
+
+  useEffect(() => {
+    if (defaultValue) {
+      setPreviewImage(defaultValue);
+    }
+  }, [defaultValue]);
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];

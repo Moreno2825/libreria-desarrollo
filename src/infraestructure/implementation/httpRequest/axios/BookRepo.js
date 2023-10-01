@@ -34,7 +34,27 @@ class BookRepo extends IBookRepo {
     const response = await axios.post(this.urlCreate, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        id_user: "65186c69f0bf1bc236ea653c",
+        id_user: "65187698ff50a9627df3d089",
+      },
+    });
+    return response.data;
+  }
+
+  async update(book) {
+    const formData = new FormData();
+    formData.append("name", book.name);
+    formData.append("author", book.author);
+    formData.append("details", book.details);
+    formData.append("id_category", book.id_category);
+    formData.append("price", book.price);
+    formData.append("priceDiscount", book.priceDiscount);
+    formData.append("frontImage", book.frontImage);
+    formData.append("backImage", book.backImage);
+
+    const response = await axios.put(`${this.urlUpdate}${book._id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        id_user: "65187698ff50a9627df3d089",
       },
     });
     return response.data;

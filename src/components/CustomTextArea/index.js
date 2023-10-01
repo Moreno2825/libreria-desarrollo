@@ -2,7 +2,7 @@ import React from "react";
 import { useController } from "react-hook-form";
 import { LabelStyled, TextAreaStyled, TextAreatWrapper } from "./index.style";
 
-const CustomTextArea = ({ label, name, control }) => {
+const CustomTextArea = ({ label, name, control, defaultValue }) => {
   const {
     field,  
     fieldState: { error }, 
@@ -15,7 +15,7 @@ const CustomTextArea = ({ label, name, control }) => {
     <div>
       <LabelStyled>{label}</LabelStyled>
       <TextAreatWrapper>
-        <TextAreaStyled {...field} />
+        <TextAreaStyled {...field}  defaultValue={defaultValue}/>
       </TextAreatWrapper>
       {error && <p>{error.message}</p>}
     </div>
