@@ -13,17 +13,17 @@ import React, { useEffect, useState } from "react";
 export default function View() {
   const router = useRouter();
   const { id } = router.query;
-  const [selectedBook, setSeletectedBook] = useState(null);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   const bookRepo = new BookRepo();
   const getOneBookUseCase = new GetOneBookUseCase(bookRepo);
 
   const fetchBook = async () => {
-    if (id) {
-      try {
-        const book = await getOneBookUseCase.run(id);
-        setSeletectedBook(book);
-      } catch (error) {
+    if(id){
+      try{
+        const response = await getOneBookUseCase.run(id);
+        setSelectedBook(response.data);
+      }catch(error){
         console.log(error);
       }
     }
