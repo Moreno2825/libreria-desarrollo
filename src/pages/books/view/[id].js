@@ -19,30 +19,38 @@ export default function View() {
   const getOneBookUseCase = new GetOneBookUseCase(bookRepo);
 
   const fetchBook = async () => {
-    if(id){
-      try{
+    if (id) {
+      try {
         const book = await getOneBookUseCase.run(id);
         setSeletectedBook(book);
-      }catch(error){
+      } catch (error) {
         console.log(error);
       }
     }
-  }
+  };
 
   useEffect(() => {
     fetchBook();
-  },[id]);
+  }, [id]);
 
   if (!selectedBook) {
     return <div>Libro no encontrado</div>;
   }
 
-  const { name, author, frontImage, details, id_category:category, price } = selectedBook;
+  const {
+    name,
+    author,
+    frontImage,
+    details,
+    id_category: category,
+    price,
+  } = selectedBook;
 
   return (
     <ContainerBook>
       <CustomIndividualBook
-        image={frontImage.secureUrl}
+        id={id}
+        image={frontImage}
         name={name}
         author={author}
         price={price}
