@@ -27,6 +27,7 @@ import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRep
 import Book from "@/domain/entities/book";
 
 const CustomIndividualBook = ({
+  id,
   image,
   name,
   author,
@@ -38,7 +39,8 @@ const CustomIndividualBook = ({
 }) => {
   const [isOpen, setOpenDeletePassword] = useState(false);
   const [isOpenUpdate, setOpenUpdate] = useState(false);
-  const [values, setValues] = useState();
+  const [values, setValues] = useState([]);
+  const [files, setFiles] = useState({});
 
   const toggleDeletePasswordModal = () =>
     setOpenDeletePassword((isOpen) => !isOpen);
@@ -55,19 +57,20 @@ const CustomIndividualBook = ({
   };
 
   const {
+    setValue,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({});
 
   useEffect(() => {
-    if (name) setValues("name", name);
-    if (author) setValues("author", author);
-    if (details) setValues("details", details);
-    if (price) setValues("price", price);
-    if (category) setValues("category", category);
-    if (frontImage) setValues("frontImage", frontImage);
-    if (backImage) setValues("backImage", backImage);
+    setValue('name', name);
+    setValue('author', author);
+    setValue('details', details);
+    setValue('price', price);
+    setValue('category', category);
+    setValue('frontImage', frontImage);
+    setValue('backImage', backImage);
   }, [
     name,
     author,
@@ -76,30 +79,31 @@ const CustomIndividualBook = ({
     category,
     frontImage,
     backImage,
-    setValues,
+    setValue,
   ]);
 
   const onSubmit = async (data) => {
-    const bookRepo = new BookRepo();
-    const updateBookUseCase = new UpdateBookUseCase(bookRepo);
-
     const updatedBook = new Book(
-      bookId,
+      id,
       data.name,
       data.author,
       data.details,
       data.category,
       data.price,
-      data.priceDiscount,
-      values.frontImage,
-      values.backImage
+      null,
+      files.frontImage || values.frontImage,
+      files.backImage || values.backImage
     );
+
+    const bookRepo = new BookRepo();
+    const updateBookUseCase = new UpdateBookUseCase(bookRepo);
 
     try {
       const response = await updateBookUseCase.run(updatedBook);
-      console.log('Book updated successfully: ', response);
+      console.log("Book updated successfully: ", response);
+      toggleUpdateModal();
     } catch (error) {
-      console.error('Error updating book: ', error);
+      console.error("Error updating book: ", error);
     }
   };
 

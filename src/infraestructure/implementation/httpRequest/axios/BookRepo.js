@@ -41,23 +41,32 @@ class BookRepo extends IBookRepo {
   }
 
   async update(book) {
-    const formData = new FormData();
-    formData.append("name", book.name);
-    formData.append("author", book.author);
-    formData.append("details", book.details);
-    formData.append("id_category", book.id_category);
-    formData.append("price", book.price);
-    formData.append("priceDiscount", book.priceDiscount);
-    formData.append("frontImage", book.frontImage);
-    formData.append("backImage", book.backImage);
+    try {
+      const formData = new FormData();
+      formData.append("name", book.name);
+      formData.append("author", book.author);
+      formData.append("details", book.details);
+      formData.append("id_category", book.id_category);
+      formData.append("price", book.price);
+      formData.append("priceDiscount", book.priceDiscount);
+      formData.append("frontImage", book.frontImage);
+      formData.append("backImage", book.backImage);
 
-    const response = await axios.put(`${this.urlUpdate}${book._id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        id_user: "65187698ff50a9627df3d089",
-      },
-    });
-    return response.data;
+      const response = await axios.put(
+        `${this.urlUpdate}${book._id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            id_user: "65187698ff50a9627df3d089",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating book: ", error);
+      throw error;
+    }
   }
 }
 export default BookRepo;

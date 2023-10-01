@@ -35,14 +35,15 @@ const CustomSelect = ({ label, style, name, control, defaultValue }) => {
   } = useController({
     name,
     control,
-    defaultValue: "",
+    defaultValue: defaultValue || "",
   });
+  
 
   return (
     <div style={{ width: "57%" }}>
       <LabelStyled>{label}</LabelStyled>
       <SelectWrapper>
-        <SelectStyled {...inputProps}>
+        <SelectStyled {...inputProps} value={inputProps.value || defaultValue}>
           <OptionStyled value="" disabled hidden>Selecciona una categoria</OptionStyled>
           {categories.map((category) => (
             <OptionStyled key={category._id} value={category._id}>
