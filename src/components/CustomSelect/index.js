@@ -43,6 +43,7 @@ const CustomSelect = ({ label, style, name, control }) => {
       <LabelStyled>{label}</LabelStyled>
       <SelectWrapper>
         <SelectStyled {...inputProps}>
+          <OptionStyled value="" disabled hidden>Selecciona una categoria</OptionStyled>
           {categories.map((category) => (
             <OptionStyled key={category._id} value={category._id}>
               {category.name}
