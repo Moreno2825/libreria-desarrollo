@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 export default function View() {
   const router = useRouter();
   const { id } = router.query;
-  const [selectedBook, setSeletectedBook] = useState(null);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   const bookRepo = new BookRepo();
   const getOneBookUseCase = new GetOneBookUseCase(bookRepo);
@@ -21,8 +21,8 @@ export default function View() {
   const fetchBook = async () => {
     if(id){
       try{
-        const book = await getOneBookUseCase.run(id);
-        setSeletectedBook(book);
+        const response = await getOneBookUseCase.run(id);
+        setSelectedBook(response.data);
       }catch(error){
         console.log(error);
       }
@@ -42,7 +42,7 @@ export default function View() {
   return (
     <ContainerBook>
       <CustomIndividualBook
-        image={frontImage.secureUrl}
+        image={frontImage}
         name={name}
         author={author}
         price={price}
