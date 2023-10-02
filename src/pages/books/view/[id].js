@@ -55,7 +55,7 @@ export default function View() {
         author={author}
         price={price}
         details={details}
-        category={category}
+        category={category.id}
       />
     </ContainerBook>
   );

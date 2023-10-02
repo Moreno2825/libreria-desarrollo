@@ -7,11 +7,12 @@ import {
 } from "./index.style";
 import CategoryRepo from "@/infraestructure/implementation/httpRequest/axios/CategoryRepo";
 import GetAllCategoryUseCase from "@/application/usecases/categoryUseCase/GetAllCategoryUseCase";
-import { useController } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 const CustomSelect = ({ label, style, name, control, defaultValue }) => {
   const [categories, setCategories] = useState([]);
   const categoryRepo = new CategoryRepo();
+  const [selectedValue, setSelectedValue] = useState(defaultValue || "");
 
   const fetchCategories = async () => {
     try {
@@ -26,31 +27,37 @@ const CustomSelect = ({ label, style, name, control, defaultValue }) => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
-
-  const {
-    field: { ref, ...inputProps },
-    fieldState: { invalid, isTouched, isDirty },
-    formState: { errors },
-  } = useController({
-    name,
-    control,
-    defaultValue: defaultValue || "",
-  });
-  
+    setSelectedValue(defaultValue);
+  }, [defaultValue]);
 
   return (
     <div style={{ width: "57%" }}>
       <LabelStyled>{label}</LabelStyled>
       <SelectWrapper>
-        <SelectStyled {...inputProps} value={inputProps.value || defaultValue}>
-          <OptionStyled value="" disabled hidden>Selecciona una categoria</OptionStyled>
-          {categories.map((category) => (
-            <OptionStyled key={category._id} value={category._id}>
-              {category.name}
-            </OptionStyled>
-          ))}
-        </SelectStyled>
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={defaultValue || ""}
+          render={({ field }) => (
+            <SelectStyled
+              {...field}
+              value={selectedValue}
+              onChange={(e) => {
+                field.onChange(e);
+                setSelectedValue(e.target.value);
+              }}
+            >
+              <OptionStyled value="" disabled hidden>
+                Selecciona una categoria
+              </OptionStyled>
+              {categories.map((category) => (
+                <OptionStyled key={category._id} value={category._id}>
+                  {category.name}
+                </OptionStyled>
+              ))}
+            </SelectStyled>
+          )}
+        />
       </SelectWrapper>
     </div>
   );

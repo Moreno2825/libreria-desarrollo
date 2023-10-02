@@ -10,9 +10,6 @@ import {
   Buttons,
   ImagenD,
   RowContainer,
-  ImageUpdateContainer,
-  LabelStyled,
-  ImageContainerBehind,
 } from "./index.style";
 import Image from "next/image";
 import CustomButton from "../CustomButton";
@@ -21,10 +18,11 @@ import { useForm } from "react-hook-form";
 import CustomInput from "../CustomInput";
 import CustomTextArea from "../CustomTextArea";
 import CustomSelect from "../CustomSelect";
-import ImageUploader from "../imageUploader";
 import UpdateBookUseCase from "@/application/usecases/bookUseCase/UpdateBookUseCase";
 import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
 import Book from "@/domain/entities/book";
+import CategoryRepo from "@/infraestructure/implementation/httpRequest/axios/CategoryRepo";
+import GetOneCategoryUseCase from "@/application/usecases/categoryUseCase/GetOneCategoryUseCase";
 
 const CustomIndividualBook = ({
   id,
@@ -34,27 +32,16 @@ const CustomIndividualBook = ({
   price,
   details,
   category,
-  frontImage,
-  backImage,
 }) => {
   const [isOpen, setOpenDeletePassword] = useState(false);
   const [isOpenUpdate, setOpenUpdate] = useState(false);
-  const [values, setValues] = useState([]);
-  const [files, setFiles] = useState({});
+  const [categoryInfo, setCategoryInfo] = useState(null);
 
   const toggleDeletePasswordModal = () =>
     setOpenDeletePassword((isOpen) => !isOpen);
 
   const toggleUpdateModal = () =>
     setOpenUpdate((isOpenUpdate) => !isOpenUpdate);
-
-  const handleFileChange = (name, file) => {
-    console.log(name, file);
-    setFiles((prevFiles) => ({
-      ...prevFiles,
-      [name]: file,
-    }));
-  };
 
   const {
     setValue,
@@ -69,16 +56,12 @@ const CustomIndividualBook = ({
     setValue('details', details);
     setValue('price', price);
     setValue('category', category);
-    setValue('frontImage', frontImage);
-    setValue('backImage', backImage);
   }, [
     name,
     author,
     details,
     price,
     category,
-    frontImage,
-    backImage,
     setValue,
   ]);
 
@@ -90,11 +73,7 @@ const CustomIndividualBook = ({
       data.details,
       data.category,
       data.price,
-      null,
-      files.frontImage || values.frontImage,
-      files.backImage || values.backImage
     );
-
     const bookRepo = new BookRepo();
     const updateBookUseCase = new UpdateBookUseCase(bookRepo);
 
@@ -106,6 +85,26 @@ const CustomIndividualBook = ({
       console.error("Error updating book: ", error);
     }
   };
+
+  const categoryBook = new CategoryRepo();
+  const getOneCategoryUseCase = new GetOneCategoryUseCase(categoryBook);
+
+  const fetchCategory = async () => {
+    if(category){
+      console.log(category);
+      try{
+        const response = await getOneCategoryUseCase.run(category);
+        console.log('API response:', response);
+        setCategoryInfo(response);
+      }catch(error){
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, [category]); 
 
   return (
     <Container>
@@ -125,7 +124,7 @@ const CustomIndividualBook = ({
               <span className="DetailsStyled">{details}</span>
             </div>
             <div className="DetailOptionsStyled">
-              <pan className="DetailsStyled">{category}</pan>
+              <pan className="DetailsStyled">{categoryInfo ? categoryInfo.name : category}</pan>
             </div>
             <div className="DetailOptionsStyled">
               <span className="PriceOptionsStyled">
@@ -173,21 +172,6 @@ const CustomIndividualBook = ({
                       defaultValue={category}
                     />
                   </RowContainer>
-                  <ImageUpdateContainer>
-                    <LabelStyled>Portada del libro</LabelStyled>
-                    <ImageUploader
-                      name="frontImage"
-                      onFileChange={handleFileChange}
-                      defaultValue={frontImage ? frontImage.secureUrl : null}
-                    />
-                  </ImageUpdateContainer>
-                  <ImageContainerBehind>
-                    <LabelStyled>Contraportada del libro</LabelStyled>
-                    <ImageUploader
-                      name="backImage"
-                      onFileChange={handleFileChange}
-                    />
-                  </ImageContainerBehind>
                   <RowContainer>
                     <CustomButton
                       specialStyle
