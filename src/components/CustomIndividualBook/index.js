@@ -22,8 +22,12 @@ import CustomInput from "../CustomInput";
 import CustomTextArea from "../CustomTextArea";
 import CustomSelect from "../CustomSelect";
 import ImageInput from "../imageInput/ImageInput";
+import { useRouter } from "next/router";
+import DeleteBookUseCase from "@/application/usecases/bookUseCase/DeleteBookUseCase";
+import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
 
 const CustomIndividualBook = ({
+  bookId,
   image,
   name,
   author,
@@ -31,18 +35,40 @@ const CustomIndividualBook = ({
   details,
   category,
 }) => {
-  const [isOpen, setOpenDeletePassword] = useState(false);
+  const [isOpen, setOpenDelete] = useState(false);
   const [isOpenUpdate, setOpenUpdatePassword] = useState(false);
   const [values, setValues] = useState();
+  const [bookIdToDelete, setBookIdToDelete] = useState(null);
 
-  const toggleDeletePasswordModal = () =>
-    setOpenDeletePassword((isOpen) => !isOpen);
+  const route = useRouter();
+
+  const toggleDeleteModal = () => setOpenDelete((isOpen) => !isOpen);
 
   const toggleUpdatePasswordModal = () =>
     setOpenUpdatePassword((isOpenUpdate) => !isOpenUpdate);
 
   const handleUpdateFiles = (pictures) => {
     setValues({ ...values, foto: pictures });
+  };
+
+  const handleDeleteClick = (bookId) => {
+    setBookIdToDelete(bookId);
+    toggleDeleteModal();
+    console.log(bookId);
+  };
+
+  const handleDeleteConfirmation = async () => {
+    const bookRepo = new BookRepo();
+    const deleteBookUseCase = new DeleteBookUseCase(bookRepo);
+    try {
+      const result = await deleteBookUseCase.run(bookIdToDelete);
+      console.log(result.message);
+      setBookIdToDelete(null);
+      toggleDeleteModal();
+      route.push("/books");
+    } catch (error) {
+      console.error("Error al eliminar el libro", error);
+    }
   };
 
   const {
@@ -118,11 +144,11 @@ const CustomIndividualBook = ({
 
               <CustomButton
                 buttonText="Eliminar"
-                onClick={toggleDeletePasswordModal}
+                onClick={() => handleDeleteClick(bookId)}
               />
               <CustomModal
                 open={isOpen}
-                onClose={toggleDeletePasswordModal}
+                onClose={toggleDeleteModal}
                 title="Eliminar"
                 message="¿Deseas eliminar este libro?"
               >
@@ -135,8 +161,12 @@ const CustomIndividualBook = ({
                   />
                 </ImagenD>
                 <Buttons>
-                  <CustomButton buttonText="Cancelar" specialStyle />
-                  <CustomButton buttonText="Aceptar" />
+                  <CustomButton
+                    buttonText="Cancelar"
+                    specialStyle
+                    onClick={toggleDeleteModal}
+                  />
+                  <CustomButton buttonText="Aceptar" onClick={handleDeleteConfirmation}/>
                 </Buttons>
               </CustomModal>
             </ContainerButtons>

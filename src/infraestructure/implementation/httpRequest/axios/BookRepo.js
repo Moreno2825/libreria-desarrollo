@@ -8,6 +8,7 @@ class BookRepo extends IBookRepo {
     this.urlId = "http://localhost:3000/getOne/";
     this.urlCreate = "http://localhost:3000/create/books";
     this.urlUpdate = "http://localhost:3000/update/";
+    this.urlDelete = "http://localhost:3000/delete/";
   }
 
   async getAll() {
@@ -34,9 +35,14 @@ class BookRepo extends IBookRepo {
     const response = await axios.post(this.urlCreate, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        id_user: "65186c69f0bf1bc236ea653c",
+        id_user: "65187698ff50a9627df3d089",
       },
     });
+    return response.data;
+  }
+
+  async delete(_id) {
+    const response = await axios.delete(`${this.urlDelete}${_id}`);
     return response.data;
   }
 }
