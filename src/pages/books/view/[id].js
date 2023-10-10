@@ -19,11 +19,11 @@ export default function View() {
   const getOneBookUseCase = new GetOneBookUseCase(bookRepo);
 
   const fetchBook = async () => {
-    if(id){
-      try{
+    if (id) {
+      try {
         const response = await getOneBookUseCase.run(id);
         setSelectedBook(response.data);
-      }catch(error){
+      } catch (error) {
         console.log(error);
       }
     }
@@ -49,7 +49,7 @@ export default function View() {
   return (
     <ContainerBook>
       <CustomIndividualBook
-        id={id}
+        bookId={id}
         image={frontImage}
         name={name}
         author={author}

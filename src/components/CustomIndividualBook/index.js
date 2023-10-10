@@ -23,9 +23,13 @@ import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRep
 import Book from "@/domain/entities/book";
 import CategoryRepo from "@/infraestructure/implementation/httpRequest/axios/CategoryRepo";
 import GetOneCategoryUseCase from "@/application/usecases/categoryUseCase/GetOneCategoryUseCase";
+import ImageInput from "../imageInput/ImageInput";
+import { useRouter } from "next/router";
+import DeleteBookUseCase from "@/application/usecases/bookUseCase/DeleteBookUseCase";
+import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
 
 const CustomIndividualBook = ({
-  id,
+  bookId,
   image,
   name,
   author,
@@ -33,15 +37,40 @@ const CustomIndividualBook = ({
   details,
   category,
 }) => {
-  const [isOpen, setOpenDeletePassword] = useState(false);
-  const [isOpenUpdate, setOpenUpdate] = useState(false);
+  // const [isOpen, setOpenDeletePassword] = useState(false);
+  // const [isOpenUpdate, setOpenUpdate] = useState(false);
   const [categoryInfo, setCategoryInfo] = useState(null);
+  const [isOpen, setOpenDelete] = useState(false);
+  const [isOpenUpdate, setOpenUpdatePassword] = useState(false);
+  const [values, setValues] = useState();
+  const [bookIdToDelete, setBookIdToDelete] = useState(null);
 
-  const toggleDeletePasswordModal = () =>
-    setOpenDeletePassword((isOpen) => !isOpen);
+  const route = useRouter();
+
+  const toggleDeleteModal = () => setOpenDelete((isOpen) => !isOpen);
 
   const toggleUpdateModal = () =>
     setOpenUpdate((isOpenUpdate) => !isOpenUpdate);
+
+  const handleDeleteClick = (bookId) => {
+    setBookIdToDelete(bookId);
+    toggleDeleteModal();
+    console.log(bookId);
+  };
+
+  const handleDeleteConfirmation = async () => {
+    const bookRepo = new BookRepo();
+    const deleteBookUseCase = new DeleteBookUseCase(bookRepo);
+    try {
+      const result = await deleteBookUseCase.run(bookIdToDelete);
+      console.log(result.message);
+      setBookIdToDelete(null);
+      toggleDeleteModal();
+      route.push("/books");
+    } catch (error) {
+      console.error("Error al eliminar el libro", error);
+    }
+  };
 
   const {
     setValue,
@@ -190,11 +219,11 @@ const CustomIndividualBook = ({
 
               <CustomButton
                 buttonText="Eliminar"
-                onClick={toggleDeletePasswordModal}
+                onClick={() => handleDeleteClick(bookId)}
               />
               <CustomModal
                 open={isOpen}
-                onClose={toggleDeletePasswordModal}
+                onClose={toggleDeleteModal}
                 title="Eliminar"
                 message="¿Deseas eliminar este libro?"
               >
@@ -207,8 +236,12 @@ const CustomIndividualBook = ({
                   />
                 </ImagenD>
                 <Buttons>
-                  <CustomButton buttonText="Cancelar" specialStyle />
-                  <CustomButton buttonText="Aceptar" />
+                  <CustomButton
+                    buttonText="Cancelar"
+                    specialStyle
+                    onClick={toggleDeleteModal}
+                  />
+                  <CustomButton buttonText="Aceptar" onClick={handleDeleteConfirmation}/>
                 </Buttons>
               </CustomModal>
             </ContainerButtons>
