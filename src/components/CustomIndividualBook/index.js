@@ -26,7 +26,6 @@ import GetOneCategoryUseCase from "@/application/usecases/categoryUseCase/GetOne
 import ImageInput from "../imageInput/ImageInput";
 import { useRouter } from "next/router";
 import DeleteBookUseCase from "@/application/usecases/bookUseCase/DeleteBookUseCase";
-import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
 
 const CustomIndividualBook = ({
   bookId,
@@ -50,7 +49,7 @@ const CustomIndividualBook = ({
   const toggleDeleteModal = () => setOpenDelete((isOpen) => !isOpen);
 
   const toggleUpdateModal = () =>
-    setOpenUpdate((isOpenUpdate) => !isOpenUpdate);
+  setOpenUpdatePassword((isOpenUpdate) => !isOpenUpdate);
 
   const handleDeleteClick = (bookId) => {
     setBookIdToDelete(bookId);
@@ -96,7 +95,7 @@ const CustomIndividualBook = ({
 
   const onSubmit = async (data) => {
     const updatedBook = new Book(
-      id,
+      bookId,
       data.name,
       data.author,
       data.details,
