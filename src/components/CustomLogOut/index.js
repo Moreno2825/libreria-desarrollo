@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
+import { es } from 'date-fns/locale'; 
 import { users } from "@/constants";
 import {
   ChevronIcon,
@@ -28,15 +29,20 @@ export default function CustomLogOut({}) {
   const routeFixed = ruta.charAt(0).toUpperCase() + ruta.slice(1);
   const [fecha, setFecha] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
-
+  
   useEffect(() => {
     const today = () => {
       const fechaHoy = new Date();
-      const fechaFormateada = format(fechaHoy, "EEEE d ' ' MMMM ' ' y");
-      setFecha(fechaFormateada);
+      const fechaFormateada = format(fechaHoy, "EEEE d ' ' MMMM ' ' y", { locale: es });
+  
+      const fechaConPrimeraLetraMayuscula =
+        fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
+      setFecha(fechaConPrimeraLetraMayuscula);
     };
     today();
   }, []);
+  
+  
 
   const handleLogOut = () => {
     sessionStorage.clear('userLogged');

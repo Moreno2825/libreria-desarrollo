@@ -77,3 +77,43 @@ export const ContainerButtons = styled.div`
   gap: 32px;
   padding: 24px 0px;
 `;
+
+export const ImagenD = styled.div`
+    display: flex;     
+    justify-content: center;
+    align-items: center;
+`;
+
+export const Buttons = styled.div`
+    display: flex;     
+    justify-content: center;
+    margin-top: 30px;
+
+    & > button {
+        min-width: 225px; 
+        flex-basis: 0;
+        margin-right: 18px; 
+    }
+    & > button:last-child {
+        margin-right: 0; 
+    }
+`;
+
+export const RowContainer = styled.div`
+  display: flex;
+  gap: 26px;
+`;
+
+export const LabelStyled = styled.label`
+  color: #2a2a2a;
+  font-family: "Poppins", serif;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+export const ImageUpdateContainer = styled.div`
+  margin: 16px 0px;
+`;
+export const ImageContainerBehind = styled.div`
+  margin: 26px 0px 16px 0;
+`;
