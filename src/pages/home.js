@@ -54,12 +54,12 @@ const Home = () => {
 
   return (
     <div>
-      <ul>
+      {/* <ul>
         {categories.map(category => (
           <li key={category._id}>{category.name}</li>
         ))}
-      </ul>
-      <CustomButton
+      </ul> */}
+      {/* <CustomButton
         buttonText="Agrega un nuevo libro"
         onClick={toggleForgotPasswordModal}
       />
@@ -76,7 +76,7 @@ const Home = () => {
           <CustomInput label="Sipnosis" name="sipnosis" control={control} />
           <CustomInput label="Sipnosis" name="sipnosis" control={control} />
         </div>
-      </CustomModal>
+      </CustomModal> */}
     </div>
   );
 };
