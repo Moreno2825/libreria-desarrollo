@@ -19,6 +19,9 @@ import CustomButton from "@/components/CustomButton";
 import { users } from "@/constants";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import SignInUserUseCase from "@/application/usecases/userUseCase/SignInUserUseCase";
+import UserRepo from "@/infraestructure/implementation/httpRequest/axios/UserRepo";
+import User from "@/domain/entities/user";
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -44,16 +47,23 @@ export default function Login() {
 
   const route = useRouter();
 
-  const onSubmit = (data) => {
-    const userExists = users.find(
-      (user) => user.email === data.email && user.password === data.password
-    );
+  const onSubmit = async (data) => {
+    try {
+      const user = new User(null, null, null, data.email, data.password);
+      const userRepo = new UserRepo();
+      const signInUseCase = new SignInUserUseCase(userRepo);
+      const signInResponse = await signInUseCase.run(user);
 
-    if (userExists) {
-      sessionStorage.setItem("userLogged", JSON.stringify(userExists));
-      route.push("/home");
-    }else {
-      window.alert("El usuario no existe o la contraseña es incorrecta");
+      if (signInResponse && signInResponse._id) {
+        route.push("/home");
+      } else {
+        window.alert("El usuario no existe o la contraseña es incorrecta");
+      }
+    } catch (error) {
+      console.error("Error", error);
+      if (error.response && error.response.status === 400) {
+        window.alert("El usuario no existe o la contraseña es incorrecta");
+      }
     }
   };
 

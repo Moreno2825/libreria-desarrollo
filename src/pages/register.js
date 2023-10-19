@@ -18,6 +18,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
+import UserRepo from "@/infraestructure/implementation/httpRequest/axios/UserRepo";
+import SignUpUserUseCase from "@/application/usecases/userUseCase/SignUpUserUseCase";
+import User from "@/domain/entities/user";
 
 const registerSchema = yup.object().shape({
   name: yup.string().required("El nombre es requerido"),
@@ -26,7 +29,6 @@ const registerSchema = yup.object().shape({
     .email("Ingresa un correo electrónico válido")
     .required("El correo electrónico es requerido"),
   password: yup.string().required("La contraseña es requerida"),
-  confirmpassword: yup.string().required("La contraseña es requerida"),
 });
 
 export default function Register() {
@@ -41,15 +43,23 @@ export default function Register() {
       name: "",
       email: "",
       password: "",
-      confirmpassword: "",
     },
     resolver: yupResolver(registerSchema),
   });
 
   const route = useRouter();
 
-  const onSubmit = (data) => {
-    route.push("/");
+  const onSubmit = async (data) => {
+    const user = new User( null, data.name, null,  data.email, data.password);
+      const userRepo = new UserRepo();
+      const signUpUserUseCase = new SignUpUserUseCase(userRepo);
+    try{
+      const registeredUser = await signUpUserUseCase.run(user);
+      console.log("Usuario creado:", registeredUser);
+      route.push("/");
+    } catch (error) {
+      console.error("Error creando usuario:", error);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -73,7 +83,7 @@ export default function Register() {
         <GridForm>
           <LogoContainer>
           <Image src="/img/BookLogo.png" alt="logo" width={90} height={90}/>
-            <span>Bookstore</span>
+            <span>eBookCloud</span>
           </LogoContainer>
           <FormStyled onSubmit={handleSubmit(onSubmit)}>
             <h1>Registrate</h1>
@@ -114,7 +124,7 @@ export default function Register() {
                   )
                 }
               />
-              <CustomInput
+              {/* <CustomInput
                 label="Confirmar contraseña"
                 name="confirmpassword"
                 control={control}
@@ -131,7 +141,7 @@ export default function Register() {
                     <EyeIcon icon={faEye} onClick={togglePasswordVisibilityConfirm} />
                   )
                 }
-              />
+              /> */}
               <CustomButton buttonText="Registrarse" type="submit" onClick={handleSubmit(onSubmit)} fullWidth/>
             </DataContainer>
             <span>

@@ -1,10 +1,6 @@
 import React from "react";
 import { Modal } from "@mui/material";
-import {
-  ModalContent,
-  ModalHead,
-  ModalMain,
-} from "./index.style";
+import { ModalContent, ModalHead, ModalMain } from "./index.style";
 
 const CustomModal = ({ open, onClose, title, message, children }) => {
   return (
@@ -14,9 +10,7 @@ const CustomModal = ({ open, onClose, title, message, children }) => {
           <h1>{title}</h1>
         </ModalHead>
         <span>{message}</span>
-        <ModalMain>
-          {children}
-        </ModalMain>
+        <ModalMain>{children}</ModalMain>
       </ModalContent>
     </Modal>
   );
