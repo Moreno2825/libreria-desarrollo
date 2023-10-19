@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CustomButton from "@/components/CustomButton";
-import { users } from "@/constants";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import SignInUserUseCase from "@/application/usecases/userUseCase/SignInUserUseCase";
@@ -71,11 +70,10 @@ export default function Login() {
     setShowPassword(!isShowPassword);
   };
 
-  // Función para manejar la tecla "Enter" en los campos de entrada
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Evita que el formulario se envíe automáticamente al presionar "Enter" en un campo
-      handleSubmit(onSubmit)(); // Ejecuta la función de envío del formulario
+      e.preventDefault();
+      handleSubmit(onSubmit)();
     }
   };
 

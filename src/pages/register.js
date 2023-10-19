@@ -66,14 +66,10 @@ export default function Register() {
     setShowPassword(!isShowPassword);
   };
 
-  const togglePasswordVisibilityConfirm = () => {
-    setShowPasswordConfirm(!isShowPasswordConfirm);
-  };
-
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Evita que el formulario se envíe automáticamente al presionar "Enter" en un campo
-      handleSubmit(onSubmit)(); // Ejecuta la función de envío del formulario
+      e.preventDefault();
+      handleSubmit(onSubmit)();
     }
   };
 
@@ -124,24 +120,6 @@ export default function Register() {
                   )
                 }
               />
-              {/* <CustomInput
-                label="Confirmar contraseña"
-                name="confirmpassword"
-                control={control}
-                error={errors.confirmpassword?.message || ""}
-                type={isShowPasswordConfirm ? "text" : "password"}
-                onKeyDown={handleEnterKey}
-                icon={
-                  isShowPasswordConfirm ? (
-                    <EyeIcon
-                      icon={faEyeSlash}
-                      onClick={togglePasswordVisibilityConfirm}
-                    />
-                  ) : (
-                    <EyeIcon icon={faEye} onClick={togglePasswordVisibilityConfirm} />
-                  )
-                }
-              /> */}
               <CustomButton buttonText="Registrarse" type="submit" onClick={handleSubmit(onSubmit)} fullWidth/>
             </DataContainer>
             <span>
