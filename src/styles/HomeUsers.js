@@ -9,7 +9,11 @@ align-items: flex-start;
 gap: 26px;
 flex-shrink: 0;
 display: inline-block;
-margin-left: 100px;
+margin-left: 120px;
+
+display: inline-block;
+vertical-align: top;
+margin-top: 120px;
 `;
 
 export const Phrase = styled.div`
@@ -34,14 +38,20 @@ line-height: normal;
 
 export const Img = styled.div`
 display: inline-block;
-padding-top: 206px;
+vertical-align: top;
+margin-top: 85px;
 `;
 
 export const Line = styled.div`
-width: 100%;
-  height: 1px;
+width: 430px;
+  width: 300px; 
   background-color: black;
   margin-top: 26px;
   margin-bottom: 26px;
-  
+`;
+
+export const Why = styled.div`
+  width: 300px; 
+  width: 150px; 
+
 `;
