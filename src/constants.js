@@ -79,3 +79,16 @@ export const book = {
     price: 249.0,
   },
 };
+
+export const shopping = [
+  {
+    product: book["5f4b5f7e8f428c6e8a62d5a1"],
+    quantity: "2",
+    totalPrice: "$ 123.00"
+  },
+  {
+    product: book["5f4b5f7e8f428c6e8a62d5a2"],
+    quantity: "3",
+    totalPrice: "$ 334.00"
+  }
+];
