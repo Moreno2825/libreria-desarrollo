@@ -19,7 +19,7 @@ import React from "react";
 import { shopping } from "@/constants";
 import ShoppingCartBook from "@/components/ShoppingCartBook";
 
-export default function shoppingCart() {
+export default function ShoppingCart() {
   return (
     <div>
       <HeaderContainer>

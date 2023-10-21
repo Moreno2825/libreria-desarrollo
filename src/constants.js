@@ -92,3 +92,18 @@ export const shopping = [
     totalPrice: "$ 334.00"
   }
 ];
+
+export const history = [
+  {
+    product: book["5f4b5f7e8f428c6e8a62d5a1"],
+    date: "21 oct. 2023",
+    quantity: "2",
+    totalPrice: "$ 123.00"
+  },
+  {
+    product: book["5f4b5f7e8f428c6e8a62d5a2"],
+    date: "25 oct. 2023",
+    quantity: "3",
+    totalPrice: "$ 334.00"
+  }
+];
