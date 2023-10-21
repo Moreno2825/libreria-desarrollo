@@ -1,11 +1,8 @@
 import GetOneBookUseCase from "@/application/usecases/bookUseCase/GetOneBookUseCase";
-import CustomButton from "@/components/CustomButton";
 import CustomIndividualBook from "@/components/CustomIndividualBook";
 import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
 import {
-  ButtonContainer,
   ContainerBook,
-  ContainerButtons,
 } from "@/styles/viewBook.style";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -58,6 +55,7 @@ export default function View() {
         price={price}
         details={details}
         category={category.id}
+        onUpdated={fetchBook}
       />
     </ContainerBook>
   );
