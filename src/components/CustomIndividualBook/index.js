@@ -23,9 +23,9 @@ import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRep
 import Book from "@/domain/entities/book";
 import CategoryRepo from "@/infraestructure/implementation/httpRequest/axios/CategoryRepo";
 import GetOneCategoryUseCase from "@/application/usecases/categoryUseCase/GetOneCategoryUseCase";
-import ImageInput from "../imageInput/ImageInput";
 import { useRouter } from "next/router";
 import DeleteBookUseCase from "@/application/usecases/bookUseCase/DeleteBookUseCase";
+import { useSelector } from "react-redux";
 
 const CustomIndividualBook = ({
   bookId,
@@ -35,14 +35,14 @@ const CustomIndividualBook = ({
   price,
   details,
   category,
+  onUpdated
 }) => {
-  // const [isOpen, setOpenDeletePassword] = useState(false);
-  // const [isOpenUpdate, setOpenUpdate] = useState(false);
+  
   const [categoryInfo, setCategoryInfo] = useState(null);
   const [isOpen, setOpenDelete] = useState(false);
   const [isOpenUpdate, setOpenUpdatePassword] = useState(false);
-  const [values, setValues] = useState();
   const [bookIdToDelete, setBookIdToDelete] = useState(null);
+  const userId = useSelector(state => state.user._id);
 
   const route = useRouter();
 
@@ -54,11 +54,10 @@ const CustomIndividualBook = ({
   const handleDeleteClick = (bookId) => {
     setBookIdToDelete(bookId);
     toggleDeleteModal();
-    console.log(bookId);
   };
 
   const handleDeleteConfirmation = async () => {
-    const bookRepo = new BookRepo();
+    const bookRepo = new BookRepo(userId);
     const deleteBookUseCase = new DeleteBookUseCase(bookRepo);
     try {
       const result = await deleteBookUseCase.run(bookIdToDelete);
@@ -102,13 +101,14 @@ const CustomIndividualBook = ({
       data.category,
       data.price,
     );
-    const bookRepo = new BookRepo();
+    const bookRepo = new BookRepo(userId);
     const updateBookUseCase = new UpdateBookUseCase(bookRepo);
 
     try {
       const response = await updateBookUseCase.run(updatedBook);
       console.log("Book updated successfully: ", response);
       toggleUpdateModal();
+      onUpdated();
     } catch (error) {
       console.error("Error updating book: ", error);
     }
@@ -119,10 +119,8 @@ const CustomIndividualBook = ({
 
   const fetchCategory = async () => {
     if(category){
-      console.log(category);
       try{
         const response = await getOneCategoryUseCase.run(category);
-        console.log('API response:', response);
         setCategoryInfo(response);
       }catch(error){
         console.log(error);

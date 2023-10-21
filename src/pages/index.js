@@ -21,6 +21,8 @@ import Image from "next/image";
 import SignInUserUseCase from "@/application/usecases/userUseCase/SignInUserUseCase";
 import UserRepo from "@/infraestructure/implementation/httpRequest/axios/UserRepo";
 import User from "@/domain/entities/user";
+import { useDispatch } from "react-redux";
+import { setUser } from '@/actions/userActions';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -32,6 +34,7 @@ const loginSchema = yup.object().shape({
 
 export default function Login() {
   const [isShowPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -49,11 +52,12 @@ export default function Login() {
   const onSubmit = async (data) => {
     try {
       const user = new User(null, null, null, data.email, data.password);
-      const userRepo = new UserRepo();
+      const userRepo = new UserRepo(dispatch);
       const signInUseCase = new SignInUserUseCase(userRepo);
       const signInResponse = await signInUseCase.run(user);
 
       if (signInResponse && signInResponse._id) {
+        dispatch(setUser(signInResponse));
         route.push("/home");
       } else {
         window.alert("El usuario no existe o la contraseña es incorrecta");
