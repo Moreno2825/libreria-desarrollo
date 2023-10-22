@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import CustomButton from "../CustomButton";
 import CustomModal from "../CustomModal";
+import CustomAlert from "../CustomAlert";
 
 const CustomIndividualBook = ({
   image,
@@ -57,25 +58,21 @@ const CustomIndividualBook = ({
                 buttonText="Eliminar"
                 onClick={toggleForgotPasswordModal}
               />
-              <CustomModal
+              <CustomAlert
                 open={isOpen}
                 onClose={toggleForgotPasswordModal}
-                title="Eliminar"
-                message="¿Deseas eliminar este libro?"
+                title="Agregado correctamente"
+                text="Tu producto seleccionado se ha agregado correctamente a tu carrito de compras."
               >
                 <ImagenD>
                   <Image
-                    src="/img/Delete.png"
-                    width={233}
-                    height={127}
+                    src="/img/correcto.png"
+                    width={109}
+                    height={123}
                     alt="logo"
                   />
                 </ImagenD>
-                <Buttons>
-                  <CustomButton buttonText="Cancelar" specialStyle/>
-                  <CustomButton buttonText="Aceptar" />
-                </Buttons>
-              </CustomModal>
+              </CustomAlert>
             </ContainerButtons>
           </BasicInformation>
         </div>
