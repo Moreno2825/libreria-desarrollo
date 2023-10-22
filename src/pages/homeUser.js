@@ -22,7 +22,7 @@ import {
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Home = () => {
+const HomeUser = () => {
   return (
     <div>
       <Container>
@@ -75,4 +75,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeUser;

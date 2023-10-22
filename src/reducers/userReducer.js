@@ -1,5 +1,6 @@
 const initialState = {
   _id: null,
+  id_rol: null
 };
 
 const userReducer = (state = initialState, action) => {
