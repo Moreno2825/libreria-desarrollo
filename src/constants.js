@@ -18,22 +18,28 @@ export const users = [
 
 export const categories = [
   {
-    category: "Fantasy",
+    id: '1',
+    category: "Ficción",
   },
   {
-    category: "Terror",
+    id: '2',
+    category: "Clásicos",
   },
   {
-    category: "Drama",
+    id: '3',
+    category: "Thriller",
   },
   {
-    category: "Fairy tales",
-  },
-  {
-    category: "Classics",
-  },
-  {
+    id: '4',
     category: "Romance",
+  },
+  {
+    id: '5',
+    category: "Ciencia",
+  },
+  {
+    id: '6',
+    category: "Infantil",
   },
 ];
 
@@ -45,7 +51,7 @@ export const book = {
     image: "/img/harry_book.png",
     details:
       "El tercer año de estudios de Harry en Hogwarts se ve amenazado por la fuga de Sirius Black de la prisión de Azkaban. Al parecer, se trata de un peligroso mago que fue cómplice de Lord Voldemort y que intentará vengarse de Harry Potter.",
-    category: "Fantasia",
+    category: "Ficción",
     price: 322.0,
   },
   "5f4b5f7e8f428c6e8a62d5a2": {
@@ -55,7 +61,7 @@ export const book = {
     image: "/img/hary2_book.png",
     details:
       "Frodo Bolsón, un hobbit, hereda un anillo mágico con el poder de controlar el mundo. Junto con un grupo diverso, emprende un viaje para destruir el anillo y derrotar al malvado Sauron.",
-    category: "Fantasía Épica",
+    category: "Clásicos",
     price: 229.0,
   },
   "5f4b5f7e8f428c6e8a62d5a3": {
@@ -65,7 +71,7 @@ export const book = {
     image: "/img/juegos_book.png",
     details:
       "Katniss Everdeen se ofrece como voluntaria para participar en los Juegos del Hambre, un evento televisado en el que jóvenes de diferentes distritos luchan hasta la muerte. Su objetivo es sobrevivir y proteger a su familia.",
-    category: "Ciencia Ficción, Distopía",
+    category: "Thriller",
     price: 119.0,
   },
   "5f4b5f7e8f428c6e8a62d5a4": {
@@ -75,7 +81,7 @@ export const book = {
     image: "/img/senor_book.png",
     details:
       "Harry es seleccionado para participar en el Torneo de los Tres Magos, una competencia peligrosa que pone a prueba su valentía y habilidades mágicas. Mientras tanto, el regreso de Lord Voldemort se vuelve cada vez más inminente.",
-    category: "Fantasía",
+    category: "Romance",
     price: 249.0,
   },
 };
