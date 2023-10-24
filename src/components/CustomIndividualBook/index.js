@@ -226,7 +226,7 @@ const CustomIndividualBook = ({
               >
                 <ImagenD>
                   <Image
-                    src="/img/correcto.png"
+                    src="/img/delete.png"
                     width={109}
                     height={123}
                     alt="logo"
