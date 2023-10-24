@@ -13,6 +13,7 @@ import {
 } from "./index.style";
 import { faChevronDown, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
+import Search from "../Search";
 
 
 export default function CustomLogOut({}) {
@@ -70,6 +71,7 @@ export default function CustomLogOut({}) {
           </Dates>
         </NameWindow>
       </div>
+      <Search></Search>
       <div>
           <NameUse onClick={toggleDiv}>
           {userName}
