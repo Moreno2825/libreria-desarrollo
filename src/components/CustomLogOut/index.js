@@ -71,7 +71,7 @@ export default function CustomLogOut({}) {
           </Dates>
         </NameWindow>
       </div>
-      <Search></Search>
+      {/* <Search></Search> */}
       <div>
           <NameUse onClick={toggleDiv}>
           {userName}
