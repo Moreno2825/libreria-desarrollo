@@ -1,6 +1,5 @@
 import ButtonCategoy from "@/components/ButtonCategory";
-import React, { useState } from "react";
-import { categories, book } from "@/constants";
+import React, { useEffect, useState } from "react";
 import {
   BooksContainer,
   CategoriesContainer,
@@ -8,49 +7,95 @@ import {
   Text,
 } from "@/styles/BooksClient.style";
 import CustomBook from "@/components/CustomBook";
+import CategoryRepo from "@/infraestructure/implementation/httpRequest/axios/CategoryRepo";
+import GetAllCategoryUseCase from "@/application/usecases/categoryUseCase/GetAllCategoryUseCase";
+import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
+import GetAllBookUseCase from "@/application/usecases/bookUseCase/GetAllBookUseCase";
 
 export default function BooksClient() {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [books, setBooks] = useState([]);
 
-  const filteredBooks = selectedCategory
-    ? Object.values(book).filter((book) => book.category === selectedCategory)
-    : Object.values(book);
+  const categoryRepo  = new CategoryRepo();
+  const getAllCategoryUseCase = new GetAllCategoryUseCase(categoryRepo);
+
+  const fetchCategory = async () => {
+    try {
+      const categories = await getAllCategoryUseCase.run();
+      setCategories(categories.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
+  const bookRepo = new BookRepo();
+  const getAllBookUseCase = new GetAllBookUseCase(bookRepo);
+
+  const fecthBooks = async () => {
+    try {
+      const response = await getAllBookUseCase.run();
+      setBooks(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fecthBooks();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      setFilteredBooks(books.filter((bookItem) => bookItem.id_category === selectedCategory));
+      console.log(selectedCategory);
+    } else {
+      setFilteredBooks(books);
+    }
+  }, [books, selectedCategory]);
 
   const handleShowAllBooks = () => {
     setSelectedCategory(null);
   };
 
   return (
-    <div>
-      <div>
-        <NextImage src="/img/sale.png" width={1200} height={300} alt="sale" />
+    <div style={{}}>
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <NextImage src="/img/sale.png" width={1100} height={280} alt="sale" />
       </div>
       <Text>Categorías</Text>
       <CategoriesContainer>
         <ButtonCategoy category="Todos" onSelect={handleShowAllBooks} />
         {categories.map((category) => (
           <ButtonCategoy
-            key={category.id}
-            category={category.category}
-            onSelect={setSelectedCategory}
+            key={category.name}
+            category={category.name}
+            onSelect={() => setSelectedCategory(category.name)}
           />
         ))}
       </CategoriesContainer>
       <Text>Todos</Text>
       <BooksContainer>
-      {filteredBooks.length === 0 ? ( 
+      {
+        filteredBooks.length === 0 ? (
           <Text>No books in this category.</Text>
         ) : (
           filteredBooks.map((book) => (
             <CustomBook
-              key={book.id}
-              image={book.image}
+              key={book._id}
+              image={book.frontImage}
               name={book.name}
               author={book.author}
               price={book.price}
             />
           ))
-        )}
+        )
+      }
       </BooksContainer>
     </div>
   );

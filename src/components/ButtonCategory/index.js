@@ -12,7 +12,7 @@ import {
 
 export default function ButtonCategoy({ category, onSelect, icon }) {
   const CategoryIcons = {
-    Ficción: faHatWizard,
+    Fantasía: faHatWizard,
     Clásicos: faLandmark,
     Thriller: faGhost,
     Romance: faHeart,
