@@ -42,7 +42,14 @@ const CustomButton = ({
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "10px"}}>
+    <div style={{ display: "flex", alignItems: "center", gap: "40px"}}>
+      {showIncrementDecrement && (
+        <QuantityControlStyled>
+          <button onClick={handleDecrement}>-</button>
+          <span>{quantity}</span>
+          <button onClick={handleIncrement}>+</button>
+        </QuantityControlStyled>
+      )}
       <ButtonStyled
         fullWidth={fullWidth}
         onClick={handleClick}
@@ -52,13 +59,7 @@ const CustomButton = ({
       >
         {buttonText}
       </ButtonStyled>
-      {showIncrementDecrement && (
-        <QuantityControlStyled>
-          <button onClick={handleDecrement}>-</button>
-          <span>{quantity}</span>
-          <button onClick={handleIncrement}>+</button>
-        </QuantityControlStyled>
-      )}
+      
     </div>
   );
 };

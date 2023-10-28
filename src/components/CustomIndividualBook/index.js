@@ -231,6 +231,7 @@ const CustomIndividualBook = ({
                     height={123}
                     alt="logo"
                   />
+<<<<<<< Updated upstream
                 </ImagenD>
                 <Buttons>
                   <CustomButton
@@ -246,6 +247,75 @@ const CustomIndividualBook = ({
         </div>
       </BasicInformationContainer>
     </Container>
+=======
+                  <CustomModal
+                    open={isOpen}
+                    onClose={toggleDeleteModal}
+                    title="Eliminar"
+                    message="¿Deseas eliminar este libro?"
+                  >
+                    <ImagenD>
+                      <Image
+                        src="/img/delete.png"
+                        width={109}
+                        height={123}
+                        alt="logo"
+                      />
+                    </ImagenD>
+                    <Buttons>
+                      <CustomButton
+                        buttonText="Cancelar"
+                        specialStyle
+                        onClick={toggleDeleteModal}
+                      />
+                      <CustomButton
+                        buttonText="Aceptar"
+                        onClick={handleDeleteConfirmation}
+                      />
+                    </Buttons>
+                  </CustomModal>
+                </ContainerButtons>
+              </BasicInformation>
+            </div>
+          </BasicInformationContainer>
+        </Container>
+      ) : (
+        <Container>
+          <BasicInformationContainer>
+            <ContainerImageAndSpan>
+              <ImageContainer>
+                <ImageStyled src={image}></ImageStyled>
+              </ImageContainer>
+            </ContainerImageAndSpan>
+            <div>
+              <BasicInformationUser>
+                <div className="NameStyled">{name}</div>
+                <div className="DetailOptionsStyled">
+                  <span className="AutorStyled">{author}</span>
+                </div>
+                <div className="DetailOptionsStyled">
+                  <span className="DetailsStyled">{details}</span>
+                </div>
+                <div className="DetailOptionsStyled">
+                  <pan className="DetailsStyled">
+                    {categoryInfo ? categoryInfo.name : category}
+                  </pan>
+                </div>
+                <div className="DetailOptionsStyled">
+                  <span className="PriceOptionsStyled">
+                    {price ? `$${price}` : ""}
+                  </span>
+                </div>
+                <ContainerButtonsUser>
+                  <CustomButton buttonText="Agregar al carrito" showIncrementDecrement/>
+                </ContainerButtonsUser>
+              </BasicInformationUser>
+            </div>
+          </BasicInformationContainer>
+        </Container>
+      )}
+    </div>
+>>>>>>> Stashed changes
   );
 };
 
