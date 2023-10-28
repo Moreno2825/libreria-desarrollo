@@ -1,4 +1,4 @@
 class IHistoryUserRepo{
-    getAll(){ throw "not implemented"; }
+    getAll(_id){ throw "not implemented"; }
 }
 export default IHistoryUserRepo;
