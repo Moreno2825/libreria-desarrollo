@@ -1,12 +1,7 @@
 import {
-  CustomTable,
-  CustomThead,
   DescriptionText,
-  Icon,
   TitleText,
 } from "@/styles/History.style";
-import { FiShoppingCart } from "react-icons/fi";
-import { history } from "@/constants";
 import React from "react";
 import TableHistory from "@/components/TableHistory";
 
