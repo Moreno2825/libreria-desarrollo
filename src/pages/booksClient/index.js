@@ -11,6 +11,7 @@ import CategoryRepo from "@/infraestructure/implementation/httpRequest/axios/Cat
 import GetAllCategoryUseCase from "@/application/usecases/categoryUseCase/GetAllCategoryUseCase";
 import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
 import GetAllBookUseCase from "@/application/usecases/bookUseCase/GetAllBookUseCase";
+import Link from "next/link";
 
 export default function BooksClient() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -18,7 +19,7 @@ export default function BooksClient() {
   const [categories, setCategories] = useState([]);
   const [books, setBooks] = useState([]);
 
-  const categoryRepo  = new CategoryRepo();
+  const categoryRepo = new CategoryRepo();
   const getAllCategoryUseCase = new GetAllCategoryUseCase(categoryRepo);
 
   const fetchCategory = async () => {
@@ -28,7 +29,7 @@ export default function BooksClient() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchCategory();
@@ -52,7 +53,9 @@ export default function BooksClient() {
 
   useEffect(() => {
     if (selectedCategory) {
-      setFilteredBooks(books.filter((bookItem) => bookItem.id_category === selectedCategory));
+      setFilteredBooks(
+        books.filter((bookItem) => bookItem.id_category === selectedCategory)
+      );
       console.log(selectedCategory);
     } else {
       setFilteredBooks(books);
@@ -65,7 +68,7 @@ export default function BooksClient() {
 
   return (
     <div style={{}}>
-      <div style={{display: "flex", justifyContent: "center"}}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <NextImage src="/img/sale.png" width={1100} height={280} alt="sale" />
       </div>
       <Text>Categorías</Text>
@@ -81,21 +84,21 @@ export default function BooksClient() {
       </CategoriesContainer>
       <Text>Todos</Text>
       <BooksContainer>
-      {
-        filteredBooks.length === 0 ? (
+        {filteredBooks.length === 0 ? (
           <Text>No books in this category.</Text>
         ) : (
           filteredBooks.map((book) => (
-            <CustomBook
-              key={book._id}
-              image={book.frontImage}
-              name={book.name}
-              author={book.author}
-              price={book.price}
-            />
+            <Link key={book._id} href={`/booksClient/view/${book._id}`}>
+              <CustomBook
+                key={book._id}
+                image={book.frontImage}
+                name={book.name}
+                author={book.author}
+                price={book.price}
+              />
+            </Link>
           ))
-        )
-      }
+        )}
       </BooksContainer>
     </div>
   );

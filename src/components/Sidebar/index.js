@@ -42,12 +42,21 @@ export default function Sidebar() {
               </Select>
             </Link>
           )}
-          <Link href="/books">
+          {userRole === "admin" || userRole === "SuperAdmin" ? (
+            <Link href="/books">
             <Select>
               <HouseIcon icon={faBook} />
               Cátalogo
             </Select>
           </Link>
+          ) : (
+            <Link href="/booksClient">
+            <Select>
+              <HouseIcon icon={faBook} />
+              Cátalogo
+            </Select>
+          </Link>
+          )}
           {userRole === "admin" || userRole === "SuperAdmin" ? (
             <Link href="/users">
               <Select>
