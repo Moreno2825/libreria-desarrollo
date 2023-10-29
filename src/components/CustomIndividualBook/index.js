@@ -125,7 +125,7 @@ const CustomIndividualBook = ({
 
   useEffect(() => {
     fetchCategory();
-  }, [category]);
+  }, []);
 
   return (
     <div>
