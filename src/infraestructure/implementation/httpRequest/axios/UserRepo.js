@@ -41,7 +41,7 @@ class UserRepo extends IUserRepo {
     try {
       const response = await axios.post(this.urlSingUp, user, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
       });
       return response.data;

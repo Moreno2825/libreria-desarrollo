@@ -28,6 +28,9 @@ import GetOneCategoryUseCase from "@/application/usecases/categoryUseCase/GetOne
 import { useRouter } from "next/router";
 import DeleteBookUseCase from "@/application/usecases/bookUseCase/DeleteBookUseCase";
 import { useSelector } from "react-redux";
+import Order from "@/domain/entities/order";
+import OrderRepo from "@/infraestructure/implementation/httpRequest/axios/OrderRepo";
+import CreateOrderUseCase from "@/application/usecases/orderUseCase/CreateOrderUseCase";
 
 const CustomIndividualBook = ({
   bookId,
@@ -109,6 +112,36 @@ const CustomIndividualBook = ({
     }
   };
 
+  const onSubmitOrder = async ({ quantity, event }) => {
+    // Crear un objeto data con los valores necesarios
+    const data = {
+      book: bookId,
+      userId: userId,
+      quantity: quantity,
+    };
+  
+    // Crear una nueva instancia de Order usando el objeto data
+    const newOrder = new Order(
+      data.book,
+      data.userId,
+      data.quantity,
+    );
+  
+    // Crear una nueva instancia de OrderRepo y CreateOrderUseCase
+    const orderRepo = new OrderRepo(userId);
+    const createOrderUseCase = new CreateOrderUseCase(orderRepo);
+  
+    try {
+      // Intentar ejecutar el caso de uso y registrar el resultado
+      const createdOrder = await createOrderUseCase.run(newOrder);
+      console.log("Orden creada:", createdOrder);
+    } catch (error) {
+      // Si hay un error, captúralo y regístralo
+      console.error("Error creando orden", error);
+    }
+  };
+
+
   const categoryBook = new CategoryRepo();
   const getOneCategoryUseCase = new GetOneCategoryUseCase(categoryBook);
 
@@ -126,6 +159,7 @@ const CustomIndividualBook = ({
   useEffect(() => {
     fetchCategory();
   }, [category]);
+
 
   return (
     <div>
@@ -279,7 +313,11 @@ const CustomIndividualBook = ({
                   </span>
                 </div>
                 <ContainerButtonsUser>
-                  <CustomButton buttonText="Agregar al carrito"/>
+                  <CustomButton
+                    buttonText="Agregar al carrito"
+                    showIncrementDecrement
+                    onClick={onSubmitOrder}
+                  />
                 </ContainerButtonsUser>
               </BasicInformationUser>
             </div>
