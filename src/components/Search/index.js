@@ -9,6 +9,12 @@ export default function Search({ onSearch }) {
     onSearch(query);
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  }
+
   return (
     <div>
       <Buscador>
@@ -18,6 +24,7 @@ export default function Search({ onSearch }) {
          placeholder="Buscar..."
          value={query}
          onChange={(e) => setQuery(e.target.value)}
+         onKeyDown={handleKeyPress}
          />
       </Buscador>
     </div>

@@ -19,18 +19,24 @@ export const Text = styled.span`
   }
 `;
 
+export const ContainerSearch = styled.div`
+  left:100px;
+  top: -60px;
+  position: relative;
+`;
+
 export const NextImage = styled(Image)`
   border-radius: 15px;
   margin-bottom: 24px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
 
   @media (max-width: ${responsive.xl}) {
-    width: 1480px;
-    height: 300px;
+    width: 1360px;
+    height: 330px;
   }
 
   @media (max-width: ${responsive.lg}) {
-    width: 1100px;
+    width: 900px;
     height: 240px;
   }
 `;

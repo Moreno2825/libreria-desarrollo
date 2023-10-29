@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { format } from "date-fns";
-import { es } from 'date-fns/locale'; 
+import React, { useState, useEffect } from "react"; 
 import {
   ChevronIcon,
   Container,
@@ -13,6 +11,7 @@ import {
 import { faChevronDown, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import Search from "../Search";
+import { ContainerButton } from "../Search/index.style";
 
 
 export default function CustomLogOut({}) {
@@ -31,18 +30,6 @@ export default function CustomLogOut({}) {
   const [fecha, setFecha] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
   
-  useEffect(() => {
-    const today = () => {
-      const fechaHoy = new Date();
-      const fechaFormateada = format(fechaHoy, "EEEE d ' ' MMMM ' ' y", { locale: es });
-  
-      const fechaConPrimeraLetraMayuscula =
-        fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
-      setFecha(fechaConPrimeraLetraMayuscula);
-    };
-    today();
-  }, []);
-  
   const handleLogOut = () => {
     sessionStorage.clear('userLogged');
     router.push("/");
@@ -58,9 +45,7 @@ export default function CustomLogOut({}) {
 
   return (
     <Container>
-      {isBooksClientPage ? (
-        <Search />
-      ) : (
+      {isBooksClientPage ? null : (
         <div>
           <NameWindow>
             {routeFixed}
@@ -68,9 +53,10 @@ export default function CustomLogOut({}) {
               {diaSemana} {fecha}
             </Dates>
           </NameWindow>
+          <Search />
         </div>
       )}
-      <div>
+      <ContainerButton>
           <NameUse onClick={toggleDiv}>
           {userName}
           <ChevronIcon icon={faChevronDown} />
@@ -79,7 +65,7 @@ export default function CustomLogOut({}) {
           <SignOutAlt icon={faSignOutAlt} />
           Log out
         </LogOut>
-      </div>
+      </ContainerButton>
     </Container>
   );
 }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   BooksContainer,
   CategoriesContainer,
+  ContainerSearch,
   NextImage,
   Text,
 } from "@/styles/BooksClient.style";
@@ -12,15 +13,21 @@ import GetAllCategoryUseCase from "@/application/usecases/categoryUseCase/GetAll
 import BookRepo from "@/infraestructure/implementation/httpRequest/axios/BookRepo";
 import GetAllBookUseCase from "@/application/usecases/bookUseCase/GetAllBookUseCase";
 import Link from "next/link";
+import Search from "@/components/Search";
 
 export default function BooksClient() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [books, setBooks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const categoryRepo = new CategoryRepo();
   const getAllCategoryUseCase = new GetAllCategoryUseCase(categoryRepo);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
 
   const fetchCategory = async () => {
     try {
@@ -30,10 +37,6 @@ export default function BooksClient() {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    fetchCategory();
-  },[]);
 
   const bookRepo = new BookRepo();
   const getAllBookUseCase = new GetAllBookUseCase(bookRepo);
@@ -48,19 +51,24 @@ export default function BooksClient() {
   };
 
   useEffect(() => {
+    fetchCategory();
     fecthBooks();
-  },[]);
+  }, []);
 
   useEffect(() => {
+    let filtered = books;
     if (selectedCategory) {
-      setFilteredBooks(
-        books.filter((bookItem) => bookItem.id_category === selectedCategory)
+      filtered = filtered.filter(
+        (bookItem) => bookItem.id_category === selectedCategory
       );
-      console.log(selectedCategory);
-    } else {
-      setFilteredBooks(books);
     }
-  }, [books, selectedCategory]);
+    if (searchQuery) {
+      filtered = filtered.filter((bookItem) =>
+        bookItem.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    setFilteredBooks(filtered);
+  }, [books, selectedCategory, searchQuery]);
 
   const handleShowAllBooks = () => {
     setSelectedCategory(null);
@@ -68,9 +76,13 @@ export default function BooksClient() {
 
   return (
     <div>
+      <ContainerSearch>
+        <Search onSearch={handleSearch} />
+      </ContainerSearch>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <NextImage src="/img/sale.png" width={1100} height={280} alt="sale" />
+        <NextImage src="/img/sale.png" width={1300} height={280} alt="sale" />
       </div>
+
       <Text>Categorías</Text>
       <CategoriesContainer>
         <ButtonCategoy category="Todos" onSelect={handleShowAllBooks} />
