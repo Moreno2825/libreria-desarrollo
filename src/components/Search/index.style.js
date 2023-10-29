@@ -22,7 +22,8 @@ export const Buscador = styled.div`
 export const ContainerButton = styled.div`
     display: flex;
     justify-content: flex-end;
-    align-items: end;
+    align-items: center;
+    width: 100%;
 `;
 
 export const Write = styled.input`
