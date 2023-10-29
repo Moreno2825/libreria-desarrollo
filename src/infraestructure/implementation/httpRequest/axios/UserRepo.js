@@ -9,12 +9,23 @@ class UserRepo extends IUserRepo {
     this.dispatch = dispatch;
     this.url = "http://localhost:3000/getAll/users";
     this.urlMaster = "http://localhost:3000/getAll/acount";
+    this.urlUser = "http://localhost:3000/getSale/";
     this.urlSignIn = "http://localhost:3000/sigin";
     this.urlSingUp = "http://localhost:3000/signup";
   }
 
   async getAll(_id) {
     const response = await axios.get(this.url, {
+      headers: {
+        "Content-Type": "application/json",
+        id_user: this.id_user,
+      },
+    });
+    return response.data;
+  }
+
+  async getOne(_id) {
+    const response = await axios.get(`${this.urlUser}${_id}`, {
       headers: {
         "Content-Type": "application/json",
         id_user: this.id_user,
