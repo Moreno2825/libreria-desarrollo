@@ -33,7 +33,7 @@ export default function BooksClient() {
 
   useEffect(() => {
     fetchCategory();
-  },);
+  },[]);
 
   const bookRepo = new BookRepo();
   const getAllBookUseCase = new GetAllBookUseCase(bookRepo);
@@ -49,7 +49,7 @@ export default function BooksClient() {
 
   useEffect(() => {
     fecthBooks();
-  },);
+  },[]);
 
   useEffect(() => {
     if (selectedCategory) {
