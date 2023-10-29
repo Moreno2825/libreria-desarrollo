@@ -43,8 +43,6 @@ export default function BooksClient() {
     }
   };
 
-
-
   useEffect(() => {
     if (selectedCategory) {
       setFilteredBooks(

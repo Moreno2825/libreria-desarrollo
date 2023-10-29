@@ -103,3 +103,8 @@ export const TotalText = styled.span`
 export const Line = styled.div`
   border-bottom: 0.5px solid #CEC9D1;
 `;
+
+export const EmptyState = styled.div`
+  text-align: center;
+  padding: 20px;
+`;

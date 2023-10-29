@@ -7,9 +7,9 @@ class GetOrderUseCase{
         this.orderRepo = orderRepo;
     }
 
-    async run(){
-        const getOrder = await this.orderRepo.get();
-        return getOrder;
+    async run(userId){
+        const gotOrder = await this.orderRepo.get(userId);
+        return gotOrder;
     }
 }
 export default GetOrderUseCase;
