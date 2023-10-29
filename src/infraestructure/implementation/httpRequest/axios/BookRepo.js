@@ -2,9 +2,8 @@ import IBookRepo from "@/domain/repositories/IBookRepo";
 import axios from "axios";
 
 class BookRepo extends IBookRepo {
-  constructor(id_user) {
+  constructor() {
     super();
-    this.id_user = id_user;
     this.url = "http://localhost:3000/getAll/books";
     this.urlId = "http://localhost:3000/getOne/";
     this.urlCreate = "http://localhost:3000/create/books";
@@ -36,7 +35,7 @@ class BookRepo extends IBookRepo {
     const response = await axios.post(this.urlCreate, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        id_user: this.id_user,
+        id_user: "65186c69f0bf1bc236ea653c",
       },
     });
     return response.data;
@@ -44,6 +43,9 @@ class BookRepo extends IBookRepo {
 
   async update(book) {
     try {
+      console.log("Book ID:", book._id); // Agrega esta línea para imprimir el ID del libro
+      console.log("Update URL:", `${this.urlUpdate}${book._id}`);
+
       const formData = new FormData();
       formData.append("name", book.name);
       formData.append("author", book.author);
@@ -60,7 +62,7 @@ class BookRepo extends IBookRepo {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            id_user: this.id_user,
+            id_user: "65186c69f0bf1bc236ea653c",
           },
         }
       );

@@ -21,13 +21,11 @@ import GetAllBookUseCase from "@/application/usecases/bookUseCase/GetAllBookUseC
 import Book from "@/domain/entities/book";
 import CreateBookUseCase from "@/application/usecases/bookUseCase/CreateBookUseCase";
 import ImageUploader from "@/components/imageUploader";
-import { useSelector } from "react-redux";
 
 export default function ViewBook() {
   const [isAddModal, setAddModal] = useState(false);
   const [books, setBooks] = useState([]);
   const [files, setFiles] = useState({});
-  const userId = useSelector(state => state.user._id);
 
   const toggleAddModal = () => setAddModal((isAddModal) => !isAddModal);
 
@@ -65,7 +63,7 @@ export default function ViewBook() {
       files.frontImage,
       files.backImage
     );
-    const bookRepo = new BookRepo(userId);
+    const bookRepo = new BookRepo();
     const createBookUseCase = new CreateBookUseCase(bookRepo);
     try {
       const createdBook = await createBookUseCase.run(book);

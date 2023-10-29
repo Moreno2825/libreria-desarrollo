@@ -16,13 +16,9 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CustomButton from "@/components/CustomButton";
+import { users } from "@/constants";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import SignInUserUseCase from "@/application/usecases/userUseCase/SignInUserUseCase";
-import UserRepo from "@/infraestructure/implementation/httpRequest/axios/UserRepo";
-import User from "@/domain/entities/user";
-import { useDispatch } from "react-redux";
-import { setUser } from '@/actions/userActions';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -34,7 +30,6 @@ const loginSchema = yup.object().shape({
 
 export default function Login() {
   const [isShowPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -49,24 +44,16 @@ export default function Login() {
 
   const route = useRouter();
 
-  const onSubmit = async (data) => {
-    try {
-      const user = new User(null, null, null, data.email, data.password, null);
-      const userRepo = new UserRepo(dispatch);
-      const signInUseCase = new SignInUserUseCase(userRepo);
-      const signInResponse = await signInUseCase.run(user);
+  const onSubmit = (data) => {
+    const userExists = users.find(
+      (user) => user.email === data.email && user.password === data.password
+    );
 
-      if (signInResponse && signInResponse._id) {
-        dispatch(setUser(signInResponse));
-        route.push("/homeUser");
-      } else {
-        window.alert("El usuario no existe o la contraseña es incorrecta");
-      }
-    } catch (error) {
-      console.error("Error", error);
-      if (error.response && error.response.status === 400) {
-        window.alert("El usuario no existe o la contraseña es incorrecta");
-      }
+    if (userExists) {
+      sessionStorage.setItem("userLogged", JSON.stringify(userExists));
+      route.push("/home");
+    }else {
+      window.alert("El usuario no existe o la contraseña es incorrecta");
     }
   };
 
@@ -74,10 +61,11 @@ export default function Login() {
     setShowPassword(!isShowPassword);
   };
 
+  // Función para manejar la tecla "Enter" en los campos de entrada
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault();
-      handleSubmit(onSubmit)();
+      e.preventDefault(); // Evita que el formulario se envíe automáticamente al presionar "Enter" en un campo
+      handleSubmit(onSubmit)(); // Ejecuta la función de envío del formulario
     }
   };
 
