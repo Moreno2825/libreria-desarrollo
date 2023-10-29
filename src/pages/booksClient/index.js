@@ -33,7 +33,7 @@ export default function BooksClient() {
 
   useEffect(() => {
     fetchCategory();
-  }, []);
+  },);
 
   const bookRepo = new BookRepo();
   const getAllBookUseCase = new GetAllBookUseCase(bookRepo);
@@ -49,7 +49,7 @@ export default function BooksClient() {
 
   useEffect(() => {
     fecthBooks();
-  }, []);
+  },);
 
   useEffect(() => {
     if (selectedCategory) {
@@ -67,7 +67,7 @@ export default function BooksClient() {
   };
 
   return (
-    <div style={{}}>
+    <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <NextImage src="/img/sale.png" width={1100} height={280} alt="sale" />
       </div>

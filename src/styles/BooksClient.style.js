@@ -1,23 +1,43 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 
+const responsive = {
+  md: "768px",
+  lg: "1440px",
+  xl: "1920px",
+};
+
 export const Text = styled.span`
   color: #000;
   font-family: Poppins;
   font-size: 18px;
   font-weight: 500;
   padding: 16px;
+
+  @media (max-width: ${responsive.xl}) {
+    font-size: 24px;
+  }
 `;
 
 export const NextImage = styled(Image)`
   border-radius: 15px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
+
+  @media (max-width: ${responsive.xl}) {
+    width: 1480px;
+    height: 300px;
+  }
+
+  @media (max-width: ${responsive.lg}) {
+    width: 1100px;
+    height: 240px;
+  }
 `;
 
 export const CategoriesContainer = styled.div`
   display: flex;
-  gap: 56px;
+  gap: 60px;
   justify-content: center;
   padding: 24px;
 `;

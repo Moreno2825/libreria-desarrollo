@@ -58,7 +58,7 @@ export default function Login() {
 
       if (signInResponse && signInResponse._id) {
         dispatch(setUser(signInResponse));
-        route.push("/home");
+        route.push("/homeUser");
       } else {
         window.alert("El usuario no existe o la contraseña es incorrecta");
       }

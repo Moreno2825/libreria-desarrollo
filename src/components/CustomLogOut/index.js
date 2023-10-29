@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { es } from 'date-fns/locale'; 
-import { users } from "@/constants";
 import {
   ChevronIcon,
   Container,
@@ -23,9 +22,9 @@ export default function CustomLogOut({}) {
   const toggleDiv = () => {
     setMostrarDiv(!mostrarDiv);
   };
-  const Name = users[0].name;
 
   const router = useRouter();
+  const isBooksClientPage = router.pathname === "/booksClient";
   const ruta = router.pathname.split("/").pop();
 
   const routeFixed = ruta.charAt(0).toUpperCase() + ruta.slice(1);
@@ -44,8 +43,6 @@ export default function CustomLogOut({}) {
     today();
   }, []);
   
-  
-
   const handleLogOut = () => {
     sessionStorage.clear('userLogged');
     router.push("/");
@@ -59,19 +56,20 @@ export default function CustomLogOut({}) {
     }
   }, []);
 
-  
-
   return (
     <Container>
-      <div>
-        <NameWindow>
-          {routeFixed}
-          <Dates>
-            {diaSemana} {fecha}
-          </Dates>
-        </NameWindow>
-      </div>
-      {/* <Search></Search> */}
+      {isBooksClientPage ? (
+        <Search />
+      ) : (
+        <div>
+          <NameWindow>
+            {routeFixed}
+            <Dates>
+              {diaSemana} {fecha}
+            </Dates>
+          </NameWindow>
+        </div>
+      )}
       <div>
           <NameUse onClick={toggleDiv}>
           {userName}
