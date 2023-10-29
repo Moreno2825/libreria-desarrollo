@@ -20,8 +20,8 @@ export const Text = styled.span`
 `;
 
 export const ContainerSearch = styled.div`
-  left:100px;
-  top: -60px;
+  left:50px;
+  top: -70px;
   position: relative;
 `;
 
