@@ -6,6 +6,7 @@ class HistoryUserRepo extends IHistoryUserRepo {
         super();
         this.id_user = id_user;
         this.url = "http://localhost:3000/getAll/history/";
+        this.urlById = "http://localhost:3000/getbyId/history/";
     }
 
     async getAll(_id) {
@@ -17,7 +18,17 @@ class HistoryUserRepo extends IHistoryUserRepo {
                 },
             });
         return response.data;
-
+    }
+    
+    async getOne(_id) {
+        const response = await axios.get(`${this.urlById}${_id}`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    id_user: this.id_user,
+                },
+            });
+        return response.data;
     }
 
 }

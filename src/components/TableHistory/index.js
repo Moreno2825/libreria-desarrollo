@@ -13,6 +13,7 @@ import { fields, datas, books } from "./index.style";
 import HistoryUserRepo from "@/infraestructure/implementation/httpRequest/axios/HistoryUserRepo";
 import GetAllHistoryUserUseCase from "@/application/usecases/historyUserUseCase/GetAllHistoryUserUseCase";
 import { useSelector } from "react-redux";
+import GetOneHistoryUserUseCase from "@/application/usecases/historyUserUseCase/GetOneHistoryUserUseCase";
 
 function createData(_id, amount, date) {
   return {
@@ -23,12 +24,30 @@ function createData(_id, amount, date) {
 }
 
 function Row(props) {
-  const { row, compra } = props;
+  const { row, userId } = props;
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
 
-  if (!row || !row._id || !compra) {
+  const historyRepo = new HistoryUserRepo(userId);
+  const oneHistoryUserCase = new GetOneHistoryUserUseCase(historyRepo);
+  const fetchCompra = async () => {
+    try {
+      const response = await oneHistoryUserCase.run(row._id);
+      const data = response.data;
+      
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (!row || !row._id) {
     return null;
   }
+
+  useEffect(() => {
+    fetchCompra()
+  }, [])
 
   return (
     <React.Fragment>
@@ -50,17 +69,21 @@ function Row(props) {
         <TableCell align="center">{row.date}</TableCell>
         <TableCell align="center">{row.amount}</TableCell>
       </TableRow>
-      <TableRow style={books}>
+      <TableRow style={data}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
-                <TableHead></TableHead>
+                <TableHead>
+                </TableHead>
                 <TableBody>
-                  {compra
-                    .filter((compraItem) => compraItem.idUser === row._id)
-                    .map((historyRow, index) => (
+                <TableHead>
+                </TableHead>
+                  {
+                    data.books?.map((book, index) => (
                       <TableRow key={index}>
+                        <TableHead>
+                </TableHead>
                         <TableCell
                           align="left"
                           style={{
@@ -68,9 +91,10 @@ function Row(props) {
                             width: "475px",
                             padding: "10px",
                             textIndent: "50px",
+                            
                           }}
-                        >
-                          {historyRow.name}
+                        > 
+                          {book.name}
                         </TableCell>
                         <TableCell
                           align="left"
@@ -79,9 +103,16 @@ function Row(props) {
                             width: "500px",
                             padding: "10px",
                             textIndent: "50px",
+                            textAlign: "center",
+                            color: "#2A2A2A",
+                            fontFamily: "Poppins",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: "400",
+                            lineHeight: "normal", 
                           }}
                         >
-                          $ {historyRow.quantity}
+                          {book.quantity}
                         </TableCell>
                         <TableCell
                           align="left"
@@ -90,12 +121,14 @@ function Row(props) {
                             width: "500px",
                             padding: "10px",
                             textIndent: "50px",
+                            textAlign: "center"
                           }}
                         >
-                          $ {historyRow.totalAmount}
+                          $ {book.totalAmount}
                         </TableCell>
                       </TableRow>
-                    ))}
+                    )) 
+                  }
                 </TableBody>
               </Table>
             </Box>
@@ -119,14 +152,13 @@ export default function TableHistory() {
   // Inicializa lo que le estoy pasando a mi tabla
   const [rows, setRows] = useState([]);
 
-  const [compra, setCompra] = useState([]);
-
   // obtengo el id del usuario que inicio sesion
   const userId = useSelector((state) => state.user._id);
 
   /// DE CAJON PARA CONSUMIR
   const historyRepo = new HistoryUserRepo(userId);
   const historyUserCase = new GetAllHistoryUserUseCase(historyRepo);
+  const oneHistoryUserCase = new GetOneHistoryUserUseCase(historyRepo);
 
   const fetchHistory = async () => {
     try {
@@ -141,7 +173,7 @@ export default function TableHistory() {
   // ESTO ES PARA QUE HAGA EL EFFECT EN LA PAGINA
   useEffect(() => {
     fetchHistory();
-  },);
+  }, []);
 
   return (
     <TableContainer component={Paper}>
@@ -156,7 +188,7 @@ export default function TableHistory() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row._id} row={row} compra={compra}/>
+            <Row key={row._id} userId={userId} row={row} />
           ))}
         </TableBody>
       </Table>
