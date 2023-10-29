@@ -113,30 +113,28 @@ const CustomIndividualBook = ({
   };
 
   const onSubmitOrder = async ({ quantity, event }) => {
-    // Crear un objeto data con los valores necesarios
     const data = {
-      book: bookId,
+      productId: bookId,
       userId: userId,
       quantity: quantity,
+      percentDiscount: 0,
     };
   
-    // Crear una nueva instancia de Order usando el objeto data
     const newOrder = new Order(
-      data.book,
+      data.productId,
       data.userId,
       data.quantity,
+      data.percentDiscount,
     );
   
-    // Crear una nueva instancia de OrderRepo y CreateOrderUseCase
     const orderRepo = new OrderRepo(userId);
     const createOrderUseCase = new CreateOrderUseCase(orderRepo);
   
     try {
-      // Intentar ejecutar el caso de uso y registrar el resultado
       const createdOrder = await createOrderUseCase.run(newOrder);
+      console.log(newOrder);
       console.log("Orden creada:", createdOrder);
     } catch (error) {
-      // Si hay un error, captúralo y regístralo
       console.error("Error creando orden", error);
     }
   };
@@ -158,7 +156,7 @@ const CustomIndividualBook = ({
 
   useEffect(() => {
     fetchCategory();
-  }, [category]);
+  },[]);
 
 
   return (

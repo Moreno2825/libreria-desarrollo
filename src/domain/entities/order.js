@@ -1,12 +1,14 @@
 class Order {
     constructor(
-        book,
+        productId,
         userId,
         quantity,
+        percentDiscount,
     ) {
-        this.book = book;
+        this.productId = productId;
         this.userId = userId;
         this.quantity = quantity;
+        this.percentDiscount = percentDiscount;
     }
 }
 export default Order;

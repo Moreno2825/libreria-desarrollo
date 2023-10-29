@@ -16,7 +16,6 @@ class CategoryRepo extends ICategoryRepo {
 
   async getOne(_id) {
     const response = await axios.get(`${this.urlId}${_id}`);
-    console.log(response);
     return response.data;
   }
 }

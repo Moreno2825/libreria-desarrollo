@@ -11,14 +11,7 @@ class OrderRepo extends IOrderRepo {
         this.urlDeteleAll = "http://localhost:3000/user/";
     }
 
-    
-    async get() {
-        const response = await axios.get(`${this.url}${userId}`);
-        return response.data;
-    }
-
     async create(order) {
-        console.log(order);
         try {
             const response = await axios.post(this.urlCreate, order, {
                 headers: {

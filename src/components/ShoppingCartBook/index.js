@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import { book } from "@/constants";
 import { Container, Details } from './index.style';
 
 export default function ShoppingCartBook({image, name, author, price}) {

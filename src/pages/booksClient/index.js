@@ -31,10 +31,6 @@ export default function BooksClient() {
     }
   };
 
-  useEffect(() => {
-    fetchCategory();
-  }, []);
-
   const bookRepo = new BookRepo();
   const getAllBookUseCase = new GetAllBookUseCase(bookRepo);
 
@@ -47,16 +43,13 @@ export default function BooksClient() {
     }
   };
 
-  useEffect(() => {
-    fecthBooks();
-  }, []);
+
 
   useEffect(() => {
     if (selectedCategory) {
       setFilteredBooks(
         books.filter((bookItem) => bookItem.id_category === selectedCategory)
       );
-      console.log(selectedCategory);
     } else {
       setFilteredBooks(books);
     }
@@ -65,6 +58,11 @@ export default function BooksClient() {
   const handleShowAllBooks = () => {
     setSelectedCategory(null);
   };
+
+  useEffect(() => {
+    fecthBooks();
+    fetchCategory();
+  },[]);
 
   return (
     <div style={{}}>
