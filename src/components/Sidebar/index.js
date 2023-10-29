@@ -58,7 +58,7 @@ export default function Sidebar() {
           </Link>
           )}
           {userRole === "admin" || userRole === "SuperAdmin" ? (
-            <Link href="/users">
+            <Link href="/userAdmin">
               <Select>
                 <HouseIcon icon={faUsers} />
                 Usuarios
