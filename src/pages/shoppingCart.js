@@ -23,11 +23,21 @@ import CartRepo from "@/infraestructure/implementation/httpRequest/axios/CartRep
 import { useSelector } from "react-redux";
 import DeleteProductCartUseCase from "@/application/usecases/cartUseCase/DeleteProductCartUseCase";
 import DeleteAllCartUseCase from "@/application/usecases/cartUseCase/DeleteAllCartUseCase";
+import CustomAlert from "@/components/CustomAlert";
+import Image from "next/image";
 
 export default function ShoppingCart() {
+  const [isPurchaseSuccess, setPurchaseSuccess] = useState(false);
+
   const userId = useSelector((state) => state.user._id);
   const [order, setOrder] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const resetPurchaseAlert = () => {
+    setTimeout(() => {
+      setPurchaseSuccess(false);
+    }, 1000); 
+  };
 
   const cartRepo = new CartRepo(userId);
   const getCartUseCase = new GetCartUseCase(cartRepo);
@@ -38,6 +48,8 @@ export default function ShoppingCart() {
   const handleDeleteProduct = async (bookId) => {
     try {
       await deleteProductCartUseCase.run(userId, bookId);
+      setPurchaseSuccess(true);
+      resetPurchaseAlert();
       fetchOrder();
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -141,6 +153,19 @@ export default function ShoppingCart() {
           <CustomButton buttonText="Comprar ahora" fullWidth type="submit" />
         </ViewDetails>
       </ContainerView>
+      <CustomAlert
+        open={isPurchaseSuccess}
+        onClose={() => setPurchaseSuccess(false)}
+        title="Eliminado correctamente"
+        text="El producto se ha eliminado correctamente de tu carrito"
+      >
+        <Image
+          src="/img/correcto.png"
+          width={109}
+          height={123}
+          alt="ok"
+        ></Image>
+      </CustomAlert>
     </div>
   );
 }

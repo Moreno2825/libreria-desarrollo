@@ -31,6 +31,7 @@ import { useSelector } from "react-redux";
 import Order from "@/domain/entities/order";
 import OrderRepo from "@/infraestructure/implementation/httpRequest/axios/OrderRepo";
 import CreateOrderUseCase from "@/application/usecases/orderUseCase/CreateOrderUseCase";
+import CustomAlert from "../CustomAlert";
 
 const CustomIndividualBook = ({
   bookId,
@@ -42,6 +43,7 @@ const CustomIndividualBook = ({
   category,
   onUpdated,
 }) => {
+  const [isPurchaseSuccess, setPurchaseSuccess] = useState(false);
   const [categoryInfo, setCategoryInfo] = useState(null);
   const [isOpen, setOpenDelete] = useState(false);
   const [isOpenUpdate, setOpenUpdatePassword] = useState(false);
@@ -59,6 +61,12 @@ const CustomIndividualBook = ({
   const handleDeleteClick = (bookId) => {
     setBookIdToDelete(bookId);
     toggleDeleteModal();
+  };
+
+  const resetPurchaseAlert = () => {
+    setTimeout(() => {
+      setPurchaseSuccess(false);
+    }, 1000); 
   };
 
   const handleDeleteConfirmation = async () => {
@@ -119,7 +127,7 @@ const CustomIndividualBook = ({
       quantity: quantity,
       percentDiscount: 0,
     };
-  
+
     const newOrder = new Order(
       data.productId,
       data.userId,
@@ -128,19 +136,18 @@ const CustomIndividualBook = ({
       data.percentDiscount,
       null
     );
-  
+
     const orderRepo = new OrderRepo(userId);
     const createOrderUseCase = new CreateOrderUseCase(orderRepo);
-  
+
     try {
       const createdOrder = await createOrderUseCase.run(newOrder);
-      console.log(newOrder);
-      console.log("Orden creada:", createdOrder);
+      setPurchaseSuccess(true);
+      resetPurchaseAlert();
     } catch (error) {
       console.error("Error creando orden", error);
     }
   };
-
 
   const categoryBook = new CategoryRepo();
   const getOneCategoryUseCase = new GetOneCategoryUseCase(categoryBook);
@@ -158,8 +165,7 @@ const CustomIndividualBook = ({
 
   useEffect(() => {
     fetchCategory();
-  },[]);
-
+  }, []);
 
   return (
     <div>
@@ -324,6 +330,19 @@ const CustomIndividualBook = ({
           </BasicInformationContainer>
         </Container>
       )}
+      <CustomAlert
+        open={isPurchaseSuccess}
+        onClose={() => setPurchaseSuccess(false)}
+        title="Compra Exitosa"
+        text="Se ha agregado correctamente al carrito"
+      >
+        <Image
+          src="/img/correcto.png"
+          width={109}
+          height={123}
+          alt="ok"
+        ></Image>
+      </CustomAlert>
     </div>
   );
 };
