@@ -72,12 +72,6 @@ export default function Sidebar() {
               </Select>
             </Link>
           )}
-            <Link href="/users">
-              <Select>
-                <HouseIcon icon={faUsers} />
-                Usuarios
-              </Select>
-            </Link>
         </div>
       </Container>
     </div>
