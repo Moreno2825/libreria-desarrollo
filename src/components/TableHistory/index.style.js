@@ -1,8 +1,8 @@
 const fields = {
   background: "rgba(125, 110, 131, 0.20)",
-
   
 };
+
 
 const datas = {
   background: "rgba(125, 110, 131, 0.10)",
@@ -10,13 +10,11 @@ const datas = {
 };
 
 const books = {
-
-  background: "#efedf0",
+  background: "rgba(125, 110, 131, 0.15)",
 };
 
 const dataBook ={
   width: '500px',
-
 }
 
 

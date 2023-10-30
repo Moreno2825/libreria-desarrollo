@@ -13,6 +13,7 @@ import {
   faHome,
   faUsers,
   faCartShopping,
+  faList,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
@@ -72,6 +73,12 @@ export default function Sidebar() {
               </Select>
             </Link>
           )}
+          <Link href="/history">
+              <Select>
+                <HouseIcon icon={faList} />
+                Historial de compra
+              </Select>
+            </Link>
         </div>
       </Container>
     </div>
