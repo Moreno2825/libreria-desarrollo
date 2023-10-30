@@ -42,7 +42,7 @@ export const CustomTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   td {
-    border-bottom: 0.5px solid #7d6e83;
+    border-bottom: 0.1px solid #dfdfdf;
     padding: 16px 0px;
     text-align: center;
     color: #000;
@@ -60,7 +60,7 @@ export const CustomThead = styled.tr`
     font-family: Poppins;
     font-size: 16px;
     font-weight: 500;
-    border-bottom: 0.5px solid #7d6e83;
+    border-bottom: 0.1px solid #dfdfdf;
     padding: 8px;
   }
 `;

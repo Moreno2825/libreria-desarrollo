@@ -19,6 +19,7 @@ import GetAllUserUseCase from "@/application/usecases/userUseCase/GetAllUserUseC
 import GetAllUserAccountUseCase from "@/application/usecases/userUseCase/GetAllUserAccountUseCase";
 import { FaUser } from "react-icons/fa";
 import axios from "axios";
+import CollapsibleTable from "@/components/CollapsiTable";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -110,10 +111,7 @@ function Table({ users, refreshUsers, userRole }) {
               <th>Nombre</th>
               <th>Correo</th>
               <th>Rol</th>
-              {userRole === "SuperAdmin" && (
-                    <th>Acciones</th>
-                  )}
-              
+              {userRole === "SuperAdmin" && <th>Acciones</th>}
             </CustomThead>
           </thead>
           <tbody>
@@ -165,7 +163,6 @@ export default function FullWidthTabs() {
   const fetchUsersAccount = async () => {
     try {
       const response = await userAccountUseCase.run();
-      console.log(response.users);
       setUsers(response.users);
     } catch (error) {
       console.log(error);
@@ -210,7 +207,9 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
+          <StyledDiv>
+            <CollapsibleTable />
+          </StyledDiv>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <StyledDiv>
