@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Container,
-  HouseIcon,
-  Position,
-  Select,
-  Titule,
-} from "./index.style";
+import { Container, HouseIcon, Position, Select, Titule } from "./index.style";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,6 +7,7 @@ import {
   faHome,
   faUsers,
   faCartShopping,
+  faListCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
@@ -27,13 +22,13 @@ export default function Sidebar() {
           <Position>Bookstore</Position>
         </Titule>
         <div>
-        {userRole === "admin" || userRole === "SuperAdmin" ? (
+          {userRole === "admin" || userRole === "SuperAdmin" ? (
             <Link href="/home">
-            <Select>
-              <HouseIcon icon={faHome} />
-              Dashboard
-            </Select>
-          </Link>
+              <Select>
+                <HouseIcon icon={faHome} />
+                Dashboard
+              </Select>
+            </Link>
           ) : (
             <Link href="/homeUser">
               <Select>
@@ -44,18 +39,18 @@ export default function Sidebar() {
           )}
           {userRole === "admin" || userRole === "SuperAdmin" ? (
             <Link href="/books">
-            <Select>
-              <HouseIcon icon={faBook} />
-              Cátalogo
-            </Select>
-          </Link>
+              <Select>
+                <HouseIcon icon={faBook} />
+                Cátalogo
+              </Select>
+            </Link>
           ) : (
             <Link href="/booksClient">
-            <Select>
-              <HouseIcon icon={faBook} />
-              Cátalogo
-            </Select>
-          </Link>
+              <Select>
+                <HouseIcon icon={faBook} />
+                Cátalogo
+              </Select>
+            </Link>
           )}
           {userRole === "admin" || userRole === "SuperAdmin" ? (
             <Link href="/userAdmin">
@@ -72,12 +67,14 @@ export default function Sidebar() {
               </Select>
             </Link>
           )}
-            <Link href="/users">
+          {userRole === "admin" || userRole === "SuperAdmin" ? null : (
+            <Link href="/history">
               <Select>
-                <HouseIcon icon={faUsers} />
-                Usuarios
+                <HouseIcon icon={faListCheck} />
+                Historial de compras
               </Select>
             </Link>
+          )}
         </div>
       </Container>
     </div>

@@ -12,6 +12,7 @@ import {
   RowContainer,
   BasicInformationUser,
   ContainerButtonsUser,
+  HoverImage,
 } from "./index.style";
 import Image from "next/image";
 import CustomButton from "../CustomButton";
@@ -32,6 +33,7 @@ import { useSelector } from "react-redux";
 const CustomIndividualBook = ({
   bookId,
   image,
+  imageBack,
   name,
   author,
   price,
@@ -135,6 +137,7 @@ const CustomIndividualBook = ({
             <ContainerImageAndSpan>
               <ImageContainer>
                 <ImageStyled src={image}></ImageStyled>
+                <HoverImage src={imageBack}></HoverImage>
               </ImageContainer>
             </ContainerImageAndSpan>
             <div>
@@ -255,8 +258,9 @@ const CustomIndividualBook = ({
         <Container>
           <BasicInformationContainer>
             <ContainerImageAndSpan>
-              <ImageContainer>
+            <ImageContainer>
                 <ImageStyled src={image}></ImageStyled>
+                <HoverImage src={imageBack}></HoverImage>
               </ImageContainer>
             </ContainerImageAndSpan>
             <div>

@@ -28,9 +28,18 @@ export const ImageContainer = styled.div`
 `;
 
 export const ImageStyled = styled.img`
-  position: relative;
+  position: absolute;
   height: 100%;
   transition: opacity 0.3s ease-in-out;
+`;
+export const HoverImage = styled.img`
+  position: absolute;
+  height: 100%;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 export const ContainerImageAndSpan = styled.div`
