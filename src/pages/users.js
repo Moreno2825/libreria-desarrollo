@@ -1,9 +1,10 @@
+import CollapsibleTable from '@/components/CollapsiTable';
 import React from 'react';
 
 const Users = () => {
     return (
         <div>
-            USUARIOS
+            <CollapsibleTable></CollapsibleTable>
         </div>
     );
 }

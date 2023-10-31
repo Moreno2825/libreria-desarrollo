@@ -10,7 +10,7 @@ export default function Layout({ children }) {
   const hasSidebar = router.pathname !== "/" && router.pathname !== "/register";
 
   return (
-    <LayoutContainer>
+  <LayoutContainer>
       {hasSidebar && <Sidebar />}
       <Content hasSidebar={hasSidebar}>
         {hasSidebar && <CustomLogOut/>}

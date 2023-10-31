@@ -13,6 +13,7 @@ import {
   faHome,
   faUsers,
   faCartShopping,
+  faList,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
@@ -58,7 +59,7 @@ export default function Sidebar() {
           </Link>
           )}
           {userRole === "admin" || userRole === "SuperAdmin" ? (
-            <Link href="/users">
+            <Link href="/userAdmin">
               <Select>
                 <HouseIcon icon={faUsers} />
                 Usuarios
@@ -69,6 +70,14 @@ export default function Sidebar() {
               <Select>
                 <HouseIcon icon={faCartShopping} />
                 Carrito
+              </Select>
+            </Link>
+          )}
+          {(userRole !== "admin" && userRole !== "SuperAdmin") && (
+            <Link href="/history">
+              <Select>
+                <HouseIcon icon={faList} />
+                Historial de compra
               </Select>
             </Link>
           )}

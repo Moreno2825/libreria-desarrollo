@@ -1,11 +1,30 @@
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+const responsive = {
+  md: "768px",
+  lg: "1440px",
+  xl: "1920px",
+};
+
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 120px;
+  gap: 140px;
+
+  @media (max-width: ${responsive.xl}) {
+    gap: 140px;
+  }
+
+  @media (max-width: ${responsive.lg}) {
+    gap: 100px;
+  }
+
+  @media (max-width: ${responsive.md}) {
+    flex-direction: column;
+    gap: 60px;
+  }
 `;
 
 export const ContainerUs = styled.div`
@@ -15,34 +34,76 @@ export const ContainerUs = styled.div`
   flex-shrink: 0;
   display: inline-block;
   vertical-align: top;
+
+  @media (max-width: ${responsive.xl}) {
+    align-items: center;
+    text-align: center;
+    height: 100%;
+  }
+
+  @media (max-width: ${responsive.md}) {
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 export const Phrase = styled.div`
-  width: 437px;
+  width: 50%;
   color: #2a2a2a;
   font-family: Libre Baskerville;
   font-size: 26px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  @media (max-width: ${responsive.xl}) {
+    width: 100%;
+    font-size: 30px;
+  }
+
+  @media (max-width: ${responsive.lg}) {
+    width: 90%;
+    font-size: 24px;
+  }
+
+  @media (max-width: ${responsive.md}) {
+    font-size: 16px;
+  }
 `;
 
-export const Text = styled.div`
-  width: 532px;
+export const TextStyled = styled.div`
+  width: 580px;
   color: #414141;
   font-family: Poppins;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  text-align: justify;
+
+  @media (max-width: ${responsive.xl}) {
+    font-size: 20px;
+  }
+
+  @media (max-width: ${responsive.lg}) {
+    font-size: 16px;
+  }
+
+  @media (max-width: ${responsive.md}) {
+    font-size: 12px;
+  }
 `;
 
 export const Line = styled.div`
   width: 430px;
   height: 1px;
-  background-color: #2A2A2A;
+  background-color: #2a2a2a;
   margin-top: 24px;
   margin-bottom: 24px;
+
+  @media (max-width: ${responsive.xl}) {
+    width: 580px;
+  }
 `;
 
 export const Why = styled.div`
@@ -52,6 +113,13 @@ export const Why = styled.div`
   font-family: Poppins;
   font-size: 18px;
   font-weight: 600;
+
+  @media (max-width: ${responsive.xl}) {
+    width: 30%;
+    height: 150px;
+    font-size: 24px;
+  }
+
 `;
 
 export const TextWhy = styled.div`

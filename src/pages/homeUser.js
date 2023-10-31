@@ -1,8 +1,6 @@
 import {
   Container,
   ContainerUs,
-  Down,
-  Img,
   Inf,
   InfIcon,
   InfText,
@@ -10,11 +8,10 @@ import {
   Line,
   Phrase,
   Text,
+  TextStyled,
   TextWhy,
   Why,
 } from "@/styles/HomeUsers";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import Image from "next/image";
 import CustomButton from "@/components/CustomButton";
 import {
@@ -24,22 +21,22 @@ import {
 
 const HomeUser = () => {
   return (
-    <div>
+    <>
       <Container>
         <ContainerUs>
           <Phrase>Un mundo de historias en tu pantalla.</Phrase>
           <Line></Line>
-          <Text>
+          <TextStyled>
             Bienvenido a eBookCloud, tu destino literario virtual. En nuestra
             plataforma, te ofrecemos acceso a una amplia y diversa selección de
             libros de todos los géneros. Navega por nuestra biblioteca digital,
             donde cada página es una puerta a un mundo nuevo, una aventura por
             descubrir.
-          </Text>
+          </TextStyled>
           <CustomButton buttonText="Comenzar a descubrir" />
         </ContainerUs>
         <div>
-          <Image src="/img/PhotoRoom.png" width={300} height={270} alt="logo" />
+          <Image src="/img/PhotoRoom.png" width={300} height={270} alt="logo" layout="responsive"/>
         </div>
       </Container>
       <div style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "180px"}}>
@@ -50,7 +47,7 @@ const HomeUser = () => {
             horizontes literarios con nosotros.
           </TextWhy>
         </Why>
-        <div style={{ display: "flex", gap: "62px" }}>
+        <div style={{ display: "flex", gap: "68px" }}>
           <Inf>
             <InfIcon icon={faBookOpenReader} />
             <InfTitles>Variedad de títulos</InfTitles>
@@ -71,7 +68,7 @@ const HomeUser = () => {
           </Inf>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

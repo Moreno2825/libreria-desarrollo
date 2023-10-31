@@ -1,13 +1,9 @@
 import {
-  CustomTable,
-  CustomThead,
   DescriptionText,
-  Icon,
   TitleText,
 } from "@/styles/History.style";
-import { FiShoppingCart } from "react-icons/fi";
-import { history } from "@/constants";
 import React from "react";
+import TableHistory from "@/components/TableHistory";
 
 export default function History() {
   return (
@@ -15,35 +11,13 @@ export default function History() {
       <div>
         <TitleText>Historial de compras</TitleText>
         <DescriptionText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
+        He aquí el historial de la humanidad, escrito con la tinta de la sabiduría 
+        y encuadernado en las bibliotecas de la eternidad, donde cada página es un testigo silencioso de los pasajes más memorables de la historia.{" "}
         </DescriptionText>
       </div>
+      <TableHistory/>
       <div>
-        <CustomTable>
-          <thead>
-            <CustomThead>
-              <th></th>
-              <th>Producto</th>
-              <th>Fecha</th>
-              <th>Cantidad</th>
-              <th>Total</th>
-            </CustomThead>
-          </thead>
-          <tbody>
-            {history.map((item, index) => (
-              <tr key={index}>
-                <Icon>
-                  <FiShoppingCart size={20} />
-                </Icon>
-                <td>{item.product.name}</td>
-                <td>{item.date}</td>
-                <td>{item.quantity}</td>
-                <td>{item.totalPrice} MX</td>
-              </tr>
-            ))}
-          </tbody>
-        </CustomTable>
+
       </div>
     </div>
   );

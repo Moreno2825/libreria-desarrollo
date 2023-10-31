@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { es } from 'date-fns/locale'; 
+import { es } from "date-fns/locale";
 import { users } from "@/constants";
 import {
   ChevronIcon,
@@ -13,8 +13,6 @@ import {
 } from "./index.style";
 import { faChevronDown, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-import Search from "../Search";
-
 
 export default function CustomLogOut({}) {
   const [userName, setUserName] = useState("");
@@ -23,7 +21,6 @@ export default function CustomLogOut({}) {
   const toggleDiv = () => {
     setMostrarDiv(!mostrarDiv);
   };
-  const Name = users[0].name;
 
   const router = useRouter();
   const ruta = router.pathname.split("/").pop();
@@ -31,49 +28,47 @@ export default function CustomLogOut({}) {
   const routeFixed = ruta.charAt(0).toUpperCase() + ruta.slice(1);
   const [fecha, setFecha] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
-  
+
   useEffect(() => {
     const today = () => {
       const fechaHoy = new Date();
-      const fechaFormateada = format(fechaHoy, "EEEE d ' ' MMMM ' ' y", { locale: es });
-  
+      const fechaFormateada = format(fechaHoy, "EEEE d ' ' MMMM ' ' y", {
+        locale: es,
+      });
+
       const fechaConPrimeraLetraMayuscula =
         fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
       setFecha(fechaConPrimeraLetraMayuscula);
     };
     today();
   }, []);
-  
-  
 
   const handleLogOut = () => {
-    sessionStorage.clear('userLogged');
+    sessionStorage.clear("userLogged");
     router.push("/");
   };
 
   useEffect(() => {
-    const userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
+    const userLogged = JSON.parse(sessionStorage.getItem("userLogged"));
     if (userLogged && userLogged.name) {
-      const firstName = userLogged.name.split(' ')[0]; 
+      const firstName = userLogged.name.split(" ")[0];
       setUserName(firstName);
     }
   }, []);
-
-  
 
   return (
     <Container>
       <div>
         <NameWindow>
-          {routeFixed}
-          <Dates>
-            {diaSemana} {fecha}
-          </Dates>
+          {ruta !== "booksClient" && (
+            <Dates>
+              {diaSemana} {fecha}
+            </Dates>
+          )}
         </NameWindow>
       </div>
-      {/* <Search></Search> */}
       <div>
-          <NameUse onClick={toggleDiv}>
+        <NameUse onClick={toggleDiv}>
           {userName}
           <ChevronIcon icon={faChevronDown} />
         </NameUse>
