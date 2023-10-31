@@ -102,7 +102,7 @@ export default function ViewBook() {
         />
       </AddContainer>
       <div>
-        <RecentBooks>Añadidos recientemente</RecentBooks>
+        <RecentBooks>Todos</RecentBooks>
         <BooksContainer>
           {books.map((book) => (
             <Link key={book._id} href={`/books/view/${book._id}`}>

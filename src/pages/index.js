@@ -51,14 +51,14 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const user = new User(null, null, null, data.email, data.password);
+      const user = new User(null, null, null, data.email, data.password, null);
       const userRepo = new UserRepo(dispatch);
       const signInUseCase = new SignInUserUseCase(userRepo);
       const signInResponse = await signInUseCase.run(user);
 
       if (signInResponse && signInResponse._id) {
         dispatch(setUser(signInResponse));
-        route.push("/home");
+        route.push("/homeUser");
       } else {
         window.alert("El usuario no existe o la contraseña es incorrecta");
       }
