@@ -25,6 +25,7 @@ import DeleteProductCartUseCase from "@/application/usecases/cartUseCase/DeleteP
 import DeleteAllCartUseCase from "@/application/usecases/cartUseCase/DeleteAllCartUseCase";
 import CustomAlert from "@/components/CustomAlert";
 import Image from "next/image";
+import axios from "axios";
 
 export default function ShoppingCart() {
   const [isPurchaseSuccess, setPurchaseSuccess] = useState(false);
@@ -45,6 +46,7 @@ export default function ShoppingCart() {
     }, 1000);
   };
 
+
   const fetchOrder = async () => {
     try {
       const order = await getCartUseCase.run(userId);
@@ -52,6 +54,29 @@ export default function ShoppingCart() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  async function paymentMethod(userIdToPost) {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/cart/payment`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            id_user: userIdToPost,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handlePaymentClick = async () => {
+    await paymentMethod(userId);
+
   };
 
   const handleDeleteProduct = async (bookId) => {
@@ -156,7 +181,7 @@ export default function ShoppingCart() {
             <TotalText>Total</TotalText>
             <TotalText>$ {totalPrice}.00 MX</TotalText>
           </Row>
-          <CustomButton buttonText="Comprar ahora" fullWidth type="submit" />
+          <CustomButton buttonText="Comprar ahora" fullWidth type="submit" onClick={handlePaymentClick}/>
         </ViewDetails>
       </ContainerView>
       <CustomAlert

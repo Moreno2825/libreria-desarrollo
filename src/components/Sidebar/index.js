@@ -29,7 +29,7 @@ export default function Sidebar() {
         </Titule>
         <div>
         {userRole === "admin" || userRole === "SuperAdmin" ? (
-            <Link href="/home">
+            <Link href="/homeUser">
             <Select>
               <HouseIcon icon={faHome} />
               Dashboard

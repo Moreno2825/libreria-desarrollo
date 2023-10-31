@@ -14,7 +14,7 @@ import {
 } from "@/styles/userAdmin.style";
 import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import UserRepo from "@/infraestructure/implementation/httpRequest/axios/UserRepo";
+import UserRepo from "@/infraestructure/implementation/httpRequest/axios/UserRepo";               
 import GetAllUserUseCase from "@/application/usecases/userUseCase/GetAllUserUseCase";
 import GetAllUserAccountUseCase from "@/application/usecases/userUseCase/GetAllUserAccountUseCase";
 import { FaUser } from "react-icons/fa";
@@ -78,7 +78,6 @@ function UserIcon({ userId, refreshUsers, userRole }) {
   const loggedInUserId = useSelector((state) => state.user._id);
 
   const handleIconClick = async () => {
-    console.log("User ID:", userId);
     await updateUserRole(userId, loggedInUserId);
     await refreshUsers();
   };
@@ -163,6 +162,7 @@ export default function FullWidthTabs() {
   const fetchUsersAccount = async () => {
     try {
       const response = await userAccountUseCase.run();
+      console.log(response);
       setUsers(response.users);
     } catch (error) {
       console.log(error);
