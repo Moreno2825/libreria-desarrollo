@@ -33,36 +33,16 @@ export default function ShoppingCart() {
   const [order, setOrder] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const resetPurchaseAlert = () => {
-    setTimeout(() => {
-      setPurchaseSuccess(false);
-    }, 1000);
-  };
-
   const cartRepo = new CartRepo(userId);
   const getCartUseCase = new GetCartUseCase(cartRepo);
 
   const deleteProductCartUseCase = new DeleteProductCartUseCase(cartRepo);
   const deleteAllCartUseCase = new DeleteAllCartUseCase(cartRepo);
 
-  const handleDeleteProduct = async (bookId) => {
-    try {
-      await deleteProductCartUseCase.run(userId, bookId);
-      setPurchaseSuccess(true);
-      resetPurchaseAlert();
-      await fetchOrder();
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
-  };
-
-  const handleDeleteCart = async () => {
-    try {
-      await deleteAllCartUseCase.run(userId);
-      await fetchOrder();
-    } catch (error) {
-      console.error("Error deleting cart:", error);
-    }
+  const resetPurchaseAlert = () => {
+    setTimeout(() => {
+      setPurchaseSuccess(false);
+    }, 1000);
   };
 
   const fetchOrder = async () => {
@@ -74,9 +54,37 @@ export default function ShoppingCart() {
     }
   };
 
+  const handleDeleteProduct = async (bookId) => {
+    try {
+      await deleteProductCartUseCase.run(userId, bookId);
+      setPurchaseSuccess(true);
+      resetPurchaseAlert();
+      // establecer un nuevo array filtrado
+      setOrder(prevOrder => prevOrder.filter(item => item.bookId !== bookId));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+  const handleDeleteCart = async () => {
+    try {
+      await deleteAllCartUseCase.run(userId);
+      // mi lista vacia para que order.length === 0 se aplique
+      setOrder([]);
+    } catch (error) {
+      console.error("Error deleting cart:", error);
+    }
+  };
+
+  /// recordar dejar abajo los useEffect
   useEffect(() => {
     fetchOrder();
   }, [userId]);
+
+  useEffect(() => {
+    const total = order.reduce((acc, item) => acc + item.totalPrice, 0);
+    setTotalPrice(total);
+  }, [order]);
 
   return (
     <div>
