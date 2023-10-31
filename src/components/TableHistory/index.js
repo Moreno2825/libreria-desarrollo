@@ -31,6 +31,11 @@ function Row(props) {
   const historyRepo = new HistoryUserRepo(userId);
   const oneHistoryUserCase = new GetOneHistoryUserUseCase(historyRepo);
   const fetchCompra = async () => {
+
+    if (!row || !row._id) {
+      return null;
+    }
+    
     try {
       const response = await oneHistoryUserCase.run(row._id);
       const data = response.data;
@@ -41,13 +46,9 @@ function Row(props) {
     }
   }
 
-  if (!row || !row._id) {
-    return null;
-  }
-
   useEffect(() => {
     fetchCompra()
-  }, [])
+  },[])
 
   return (
     <React.Fragment>
