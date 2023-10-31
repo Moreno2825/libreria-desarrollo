@@ -46,21 +46,13 @@ export default function ShoppingCart() {
     }, 1000);
   };
 
-
-  const fetchOrder = async () => {
-    try {
-      const order = await getCartUseCase.run(userId);
-      setOrder(order.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   async function paymentMethod(userIdToPost) {
     try {
       const response = await axios.post(
         `http://localhost:3000/cart/payment`,
-        {},
+        {
+          userId: userIdToPost
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -73,6 +65,15 @@ export default function ShoppingCart() {
       console.error(error);
     }
   }
+
+  const fetchOrder = async () => {
+    try {
+      const order = await getCartUseCase.run(userId);
+      setOrder(order.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handlePaymentClick = async () => {
     await paymentMethod(userId);
