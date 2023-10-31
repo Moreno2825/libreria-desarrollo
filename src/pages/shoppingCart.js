@@ -26,9 +26,11 @@ import DeleteAllCartUseCase from "@/application/usecases/cartUseCase/DeleteAllCa
 import CustomAlert from "@/components/CustomAlert";
 import Image from "next/image";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function ShoppingCart() {
   const [isPurchaseSuccess, setPurchaseSuccess] = useState(false);
+  const route = useRouter();
 
   const userId = useSelector((state) => state.user._id);
   const [order, setOrder] = useState([]);
@@ -51,7 +53,7 @@ export default function ShoppingCart() {
       const response = await axios.post(
         `http://localhost:3000/cart/payment`,
         {
-          userId: userIdToPost
+          userId: userIdToPost,
         },
         {
           headers: {
@@ -60,12 +62,17 @@ export default function ShoppingCart() {
           },
         }
       );
-      return response.data;
+      if (response.status >= 200 && response.status < 300) {
+        return true;  
+      }
+      console.error('Error:', response.statusText);
+      return false; 
     } catch (error) {
       console.error(error);
+      return false; 
     }
   }
-
+  
   const fetchOrder = async () => {
     try {
       const order = await getCartUseCase.run(userId);
@@ -76,9 +83,12 @@ export default function ShoppingCart() {
   };
 
   const handlePaymentClick = async () => {
-    await paymentMethod(userId);
+    const success = await paymentMethod(userId);
+    if (success) {
+      route.push("/history"); 
+    }
+  };  
 
-  };
 
   const handleDeleteProduct = async (bookId) => {
     try {
@@ -86,7 +96,9 @@ export default function ShoppingCart() {
       setPurchaseSuccess(true);
       resetPurchaseAlert();
       // establecer un nuevo array filtrado
-      setOrder(prevOrder => prevOrder.filter(item => item.bookId !== bookId));
+      setOrder((prevOrder) =>
+        prevOrder.filter((item) => item.bookId !== bookId)
+      );
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -120,7 +132,7 @@ export default function ShoppingCart() {
       </HeaderContainer>
       {order.length === 0 ? (
         <div>
-          <CustomTable >
+          <CustomTable>
             <thead>
               <CustomThead>
                 <th>Producto</th>
@@ -182,7 +194,12 @@ export default function ShoppingCart() {
             <TotalText>Total</TotalText>
             <TotalText>$ {totalPrice}.00 MX</TotalText>
           </Row>
-          <CustomButton buttonText="Comprar ahora" fullWidth type="submit" onClick={handlePaymentClick}/>
+          <CustomButton
+            buttonText="Comprar ahora"
+            fullWidth
+            type="submit"
+            onClick={handlePaymentClick}
+          />
         </ViewDetails>
       </ContainerView>
       <CustomAlert
