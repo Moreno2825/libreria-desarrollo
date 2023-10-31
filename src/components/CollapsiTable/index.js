@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -9,16 +9,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { users, compra } from "@/constants";
 import { fields, datas, books } from './index.style';
+import UserRepo from '@/infraestructure/implementation/httpRequest/axios/UserRepo';
+import GetOneUserUseCase from '@/application/usecases/userUseCase/GetOneUserUseCase';
+import GetAllUserUseCase from '@/application/usecases/userUseCase/GetAllUserUseCase';
+import { useSelector } from 'react-redux';
 
-function createData(id, name, email, libros, lastName) {
+function createData(id, name, email, countBooks) {
   return {
     id,
     name,
     email,
-    libros,
-    lastName,
+    countBooks,
   };
 }
 
@@ -26,9 +28,24 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = useState(false);
 
-  if (!row || !row.id || !compra) {
-    return null; // Devolver nada si los datos no son válidos
-  }
+  const [compra, setCompra] = useState([]);
+
+  const userId = useSelector((state) => state.user._id);
+  const userRepo = new UserRepo(null, userId);
+  const getOneUserUseCase = new GetOneUserUseCase(userRepo);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await getOneUserUseCase.run(row.id);
+      setCompra(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [row.id]);
 
   return (
     <React.Fragment>
@@ -36,10 +53,10 @@ function Row(props) {
         <TableCell>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name} {row.lastName}
+          {row.name}
         </TableCell>
         <TableCell align="center">{row.email}</TableCell>
-        <TableCell align="center">{row.libros}</TableCell>
+        <TableCell align="center">{row.countBooks}</TableCell>
       </TableRow>
       <TableRow  style={books} >
         <TableCell  style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -49,17 +66,38 @@ function Row(props) {
                 <TableHead>
                 </TableHead>
                 <TableBody>
-                  {compra
-                    .filter((compraItem) => compraItem.idUser === row.id)
-                    .map((historyRow, index) => (
-                      <TableRow  key={index}>
-                        <TableCell align="left" style={{border: 'none', width: '475px', padding:'10px',  textIndent: '50px' }}>
-                          {historyRow.book}</TableCell>
-
-                        <TableCell align="left" style={{border: 'none', width: '500px', padding:'10px',  textIndent: '50px' }}>
-                          $ {historyRow.price}</TableCell>
-                      </TableRow>
-                    ))}
+                  {compra.map((historyRow, index) => (
+                    <TableRow key={index}>
+                      <TableCell
+                        align="left"
+                        style={{
+                          border: "none",
+                          display: "flex",
+                          justifyContent: "center",
+                          textAlign: "center",
+                          padding: "10px",
+                        }}
+                      >
+                        {historyRow.name}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          border: "none",
+                        }}
+                      >
+                        {historyRow.quantity}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          border: "none",
+                        }}
+                      >
+                        $ {historyRow.price}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </Box>
@@ -72,19 +110,33 @@ function Row(props) {
 
 Row.propTypes = {
   row: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    email: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    libros: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-  }),
+    email: PropTypes.string.isRequired,
+    countBooks: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
-const rows = users.map((user) =>
-  createData(user.id, user.name, user.email, user.libros, user.lastName)
-);
-
 export default function CollapsibleTable() {
+  const [users, setUsers] = useState([]);
+  const userId = useSelector((state) => state.user._id);
+  const userRepo = new UserRepo(null, userId);
+  const userUseCase = new GetAllUserUseCase(userRepo);
+  const fetchUsers = async () => {
+    try {
+      const response = await userUseCase.run();
+      setUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+  const rows = users.map((user) =>
+    createData(user._id, user.name, user.email, user.countBooks)
+  );
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

@@ -73,12 +73,14 @@ export default function Sidebar() {
               </Select>
             </Link>
           )}
-          <Link href="/history">
+          {(userRole !== "admin" && userRole !== "SuperAdmin") && (
+            <Link href="/history">
               <Select>
                 <HouseIcon icon={faList} />
                 Historial de compra
               </Select>
             </Link>
+          )}
         </div>
       </Container>
     </div>
