@@ -20,7 +20,6 @@ export default function View() {
       try {
         const response = await getOneBookUseCase.run(id);
         setSelectedBook(response.data);
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -43,7 +42,6 @@ export default function View() {
     id_category: category,
     price,
   } = selectedBook;
-  console.log(selectedBook);
 
   return (
     <ContainerBook>

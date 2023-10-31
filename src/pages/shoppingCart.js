@@ -36,7 +36,7 @@ export default function ShoppingCart() {
   const resetPurchaseAlert = () => {
     setTimeout(() => {
       setPurchaseSuccess(false);
-    }, 1000); 
+    }, 1000);
   };
 
   const cartRepo = new CartRepo(userId);
@@ -50,7 +50,7 @@ export default function ShoppingCart() {
       await deleteProductCartUseCase.run(userId, bookId);
       setPurchaseSuccess(true);
       resetPurchaseAlert();
-      fetchOrder();
+      await fetchOrder();
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -59,24 +59,22 @@ export default function ShoppingCart() {
   const handleDeleteCart = async () => {
     try {
       await deleteAllCartUseCase.run(userId);
-      fetchOrder();
+      await fetchOrder();
     } catch (error) {
       console.error("Error deleting cart:", error);
     }
   };
 
-
   const fetchOrder = async () => {
     try {
       const order = await getCartUseCase.run(userId);
       setOrder(order.data);
-      setTotalPrice(order.totalPriceOfCart);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {  
+  useEffect(() => {
     fetchOrder();
   }, [userId]);
 
@@ -88,7 +86,7 @@ export default function ShoppingCart() {
       </HeaderContainer>
       {order.length === 0 ? (
         <div>
-          <CustomTable>
+          <CustomTable >
             <thead>
               <CustomThead>
                 <th>Producto</th>
