@@ -8,16 +8,18 @@ export const BooksContainer = styled.div`
 `;
 
 export const RecentBooks = styled.span`
-  margin: 32px 0px;
+  margin: 16px 0px;
   color: #2a2a2a;
   font-family: Poppins;
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 500;
 `;
 
 export const AddContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  height: 0px;
+  margin-bottom: 8px;
 `;
 
 export const RowContainer = styled.div`

@@ -9,7 +9,7 @@ export default function ShoppingCartBook({image, name, author, price}) {
         <Details>
             <div>{name}</div>
             <div>{author}</div>
-            <div>$ {price}</div>
+            <div className='price'>$ {price}.00 MX</div>
         </Details>
     </Container>
   )

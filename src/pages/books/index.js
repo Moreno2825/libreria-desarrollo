@@ -22,12 +22,17 @@ import Book from "@/domain/entities/book";
 import CreateBookUseCase from "@/application/usecases/bookUseCase/CreateBookUseCase";
 import ImageUploader from "@/components/imageUploader";
 import { useSelector } from "react-redux";
+import Image from "next/image";
+import CustomAlert from "@/components/CustomAlert";
 
 export default function ViewBook() {
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showAlertForOneSecond, setShowAlertForOneSecond] = useState(false);
+
   const [isAddModal, setAddModal] = useState(false);
   const [books, setBooks] = useState([]);
   const [files, setFiles] = useState({});
-  const userId = useSelector(state => state.user._id);
+  const userId = useSelector((state) => state.user._id);
 
   const toggleAddModal = () => setAddModal((isAddModal) => !isAddModal);
 
@@ -72,6 +77,11 @@ export default function ViewBook() {
       console.log("Libro creado:", createdBook);
       fecthBooks();
       toggleAddModal();
+      setShowSuccessAlert(true); 
+    setShowAlertForOneSecond(true); 
+    setTimeout(() => {
+      setShowAlertForOneSecond(false); 
+    }, 1000);
     } catch (error) {
       console.error("Error creando libro:", error);
     }
@@ -102,7 +112,7 @@ export default function ViewBook() {
         />
       </AddContainer>
       <div>
-        <RecentBooks>Todos</RecentBooks>
+        <RecentBooks>Libros en el cátalogo:</RecentBooks>
         <BooksContainer>
           {books.map((book) => (
             <Link key={book._id} href={`/books/view/${book._id}`}>
@@ -126,7 +136,7 @@ export default function ViewBook() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <CustomInput label="Título" name="name" control={control} />
           <CustomInput label="Autor" name="author" control={control} />
-          <CustomTextArea label="Sipnosis" name="details" control={control}/>
+          <CustomTextArea label="Sipnosis" name="details" control={control} />
           <RowContainer>
             <CustomInput label="Precio" name="price" control={control} />
             <CustomSelect
@@ -144,16 +154,35 @@ export default function ViewBook() {
             <ImageUploader name="backImage" onFileChange={handleFileChange} />
           </ImageContainerBehind>
           <RowContainer>
-            <CustomButton
-              specialStyle
-              buttonText="Cancelar"
-              fullWidth
-              onClick={toggleAddModal}
-            />
-            <CustomButton buttonText="Guardar" fullWidth type="submit"/>
+            <div style={{ width: "100%" }}>
+              <CustomButton
+                specialStyle
+                buttonText="Cancelar"
+                fullWidth
+                onClick={toggleAddModal}
+              />
+            </div>
+            <div style={{ width: "100%" }}>
+              <CustomButton buttonText="Guardar" fullWidth type="submit" />
+            </div>
           </RowContainer>
         </form>
       </CustomModal>
+      {showSuccessAlert && (
+        <CustomAlert
+          open={showAlertForOneSecond}
+          onClose={() => setShowSuccessAlert(false)}
+          title="Libro agregado exitosamente"
+          text="El libro se ha agregado correctamente a tu cátalogo."
+        >
+          <Image
+            src="/img/correcto.png"
+            width={109}
+            height={123}
+            alt="ok"
+          ></Image>
+        </CustomAlert>
+      )}
     </div>
   );
 }

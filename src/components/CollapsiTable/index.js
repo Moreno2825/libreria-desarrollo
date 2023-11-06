@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { fields, datas, books } from './index.style';
-import UserRepo from '@/infraestructure/implementation/httpRequest/axios/UserRepo';
-import GetOneUserUseCase from '@/application/usecases/userUseCase/GetOneUserUseCase';
-import GetAllUserUseCase from '@/application/usecases/userUseCase/GetAllUserUseCase';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { fields, datas, books } from "./index.style";
+import UserRepo from "@/infraestructure/implementation/httpRequest/axios/UserRepo";
+import GetOneUserUseCase from "@/application/usecases/userUseCase/GetOneUserUseCase";
+import GetAllUserUseCase from "@/application/usecases/userUseCase/GetAllUserUseCase";
+import { useSelector } from "react-redux";
 
 function createData(id, name, email, countBooks) {
   return {
@@ -49,34 +49,43 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow onClick={() => setOpen(!open)} style={datas} sx={{ '& > *': { borderBottom: 'unset', "line-height": 20, border: 'px solid transparent' } }}>
-        <TableCell>
-        </TableCell>
-        <TableCell component="th" scope="row">
+      <TableRow
+        onClick={() => setOpen(!open)}
+        style={datas}
+        sx={{
+          "& > *": {
+            borderBottom: "unset",
+            "line-height": 20,
+            border: "px solid transparent",
+            backgroundColor: "#7D6E83100",
+          },
+        }}
+      >
+        <TableCell></TableCell>
+        <TableCell component="th" scope="row" sx={{fontFamily:'Poppins', fontSize: '16px'}}>
           {row.name}
         </TableCell>
-        <TableCell align="center">{row.email}</TableCell>
-        <TableCell align="center">{row.countBooks}</TableCell>
+        <TableCell align="center" sx={{fontFamily:'Poppins', fontSize: '16px'}}>{row.email}</TableCell>
+        <TableCell align="center" sx={{fontFamily:'Poppins', fontSize: '16px'}}>{row.countBooks}</TableCell>
       </TableRow>
-      <TableRow  style={books} >
-        <TableCell  style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      <TableRow style={books}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="purchases">
-                <TableHead>
-                </TableHead>
-                <TableBody>
+                <TableHead></TableHead>
+                <TableBody >
                   {compra.map((historyRow, index) => (
-                    <TableRow key={index}>
+                    <TableRow key={index} >
                       <TableCell
-                        align="left"
                         style={{
                           border: "none",
                           display: "flex",
                           justifyContent: "center",
                           textAlign: "center",
-                          padding: "10px",
+                          padding: "8px",
                         }}
+                        sx={{ fontFamily: "Poppins", fontSize: '12px'}}
                       >
                         {historyRow.name}
                       </TableCell>
@@ -85,6 +94,7 @@ function Row(props) {
                         style={{
                           border: "none",
                         }}
+                        sx={{ fontFamily: "Poppins", fontSize: '12px'}}
                       >
                         {historyRow.quantity}
                       </TableCell>
@@ -93,6 +103,7 @@ function Row(props) {
                         style={{
                           border: "none",
                         }}
+                        sx={{ fontFamily: "Poppins", fontSize: '12px'}}
                       >
                         $ {historyRow.price}
                       </TableCell>
@@ -141,14 +152,26 @@ export default function CollapsibleTable() {
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
-          <TableRow sx={{border: 'none'}} style={fields}>
+          <TableRow sx={{ border: "none" }} style={fields}>
             <TableCell />
-            <TableCell>Nombre</TableCell>
-            <TableCell align="center">Correo</TableCell>
-            <TableCell align="center">Cantidad de compra</TableCell>
+            <TableCell sx={{ fontFamily: "Poppins", fontSize: "18px" }}>
+              Nombre
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{ fontFamily: "Poppins", fontSize: "18px" }}
+            >
+              Correo
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{ fontFamily: "Poppins", fontSize: "18px" }}
+            >
+              Cantidad de compra
+            </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody >
           {rows.map((row) => (
             <Row key={row.id} row={row} />
           ))}

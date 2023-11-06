@@ -70,9 +70,14 @@ class BookRepo extends IBookRepo {
       throw error;
     }
   }
-  
+
   async delete(_id) {
-    const response = await axios.delete(`${this.urlDelete}${_id}`);
+    const response = await axios.delete(`${this.urlDelete}${_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        id_user: this.id_user,
+      },
+    });
     return response.data;
   }
 }

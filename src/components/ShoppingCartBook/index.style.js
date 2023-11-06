@@ -13,4 +13,9 @@ export const Details = styled.div`
   color: #2a2a2a;
   font-family: Poppins;
   font-weight: 400;
+  font-size: 16px;
+  .price {
+    font-size: 16px;
+    font-weight: 500;
+  }
 `;

@@ -70,7 +70,7 @@ export const Icon = styled.td`
   padding-left: 70px !important;
   cursor: pointer;
   & > svg:hover {
-    color: #7D9D9C;
+    color: #7D6E83;
   }
 `;
 

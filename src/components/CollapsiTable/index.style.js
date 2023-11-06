@@ -1,11 +1,9 @@
 const fields = {
-  background: "rgba(125, 110, 131, 0.20)",
-
-  
+  background: "rgba(125, 110, 131, 0.25)",
 };
 
 const datas = {
-  background: "rgba(125, 110, 131, 0.10)",
+  background: "backgroundColor: '#7D6E83100'",
   
 };
 

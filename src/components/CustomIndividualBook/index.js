@@ -12,6 +12,7 @@ import {
   RowContainer,
   BasicInformationUser,
   ContainerButtonsUser,
+  HoverImage,
 } from "./index.style";
 import Image from "next/image";
 import CustomButton from "../CustomButton";
@@ -36,6 +37,7 @@ import CustomAlert from "../CustomAlert";
 const CustomIndividualBook = ({
   bookId,
   image,
+  imageBack,
   name,
   author,
   price,
@@ -43,6 +45,9 @@ const CustomIndividualBook = ({
   category,
   onUpdated,
 }) => {
+  const [isEditSuccessAlert, setEditSuccessAlert] = useState(false);
+  const [showEditAlertForOneSecond, setShowEditAlertForOneSecond] =
+    useState(false);
   const [isPurchaseSuccess, setPurchaseSuccess] = useState(false);
   const [categoryInfo, setCategoryInfo] = useState(null);
   const [isOpen, setOpenDelete] = useState(false);
@@ -58,30 +63,14 @@ const CustomIndividualBook = ({
   const toggleUpdateModal = () =>
     setOpenUpdatePassword((isOpenUpdate) => !isOpenUpdate);
 
-  const handleDeleteClick = (bookId) => {
-    setBookIdToDelete(bookId);
-    toggleDeleteModal();
-  };
-
   const resetPurchaseAlert = () => {
     setTimeout(() => {
       setPurchaseSuccess(false);
-    }, 1000); 
+    }, 1000);
   };
 
-  const handleDeleteConfirmation = async () => {
-    const bookRepo = new BookRepo(userId);
-    const deleteBookUseCase = new DeleteBookUseCase(bookRepo);
-    try {
-      const result = await deleteBookUseCase.run(bookIdToDelete);
-      console.log(result.message);
-      setBookIdToDelete(null);
-      toggleDeleteModal();
-      route.push("/books");
-    } catch (error) {
-      console.error("Error al eliminar el libro", error);
-    }
-  };
+  const bookRepo = new BookRepo(userId);
+  const deleteBookUseCase = new DeleteBookUseCase(bookRepo);
 
   const {
     setValue,
@@ -115,6 +104,11 @@ const CustomIndividualBook = ({
       console.log("Book updated successfully: ", response);
       toggleUpdateModal();
       onUpdated();
+      setEditSuccessAlert(true);
+      setShowEditAlertForOneSecond(true);
+      setTimeout(() => {
+        setShowEditAlertForOneSecond(false);
+      }, 1000);
     } catch (error) {
       console.error("Error updating book: ", error);
     }
@@ -163,6 +157,23 @@ const CustomIndividualBook = ({
     }
   };
 
+  const handleDeleteClick = (bookId) => {
+    setBookIdToDelete(bookId);
+    toggleDeleteModal();
+  };
+
+  const handleDeleteConfirmation = async () => {
+    try {
+      const result = await deleteBookUseCase.run(bookIdToDelete);
+      console.log(result.message);
+      setBookIdToDelete(null);
+      toggleDeleteModal();
+      route.push("/books");
+    } catch (error) {
+      console.error("Error al eliminar el libro", error);
+    }
+  };
+
   useEffect(() => {
     fetchCategory();
   }, []);
@@ -175,6 +186,7 @@ const CustomIndividualBook = ({
             <ContainerImageAndSpan>
               <ImageContainer>
                 <ImageStyled src={image}></ImageStyled>
+                <HoverImage src={imageBack}></HoverImage>
               </ImageContainer>
             </ContainerImageAndSpan>
             <div>
@@ -241,17 +253,21 @@ const CustomIndividualBook = ({
                         />
                       </RowContainer>
                       <RowContainer>
-                        <CustomButton
-                          specialStyle
-                          buttonText="Cancelar"
-                          fullWidth
-                          onClick={toggleUpdateModal}
-                        />
-                        <CustomButton
-                          buttonText="Guardar"
-                          fullWidth
-                          type="submit"
-                        />
+                        <div style={{ width: "100%" }}>
+                          <CustomButton
+                            specialStyle
+                            buttonText="Cancelar"
+                            fullWidth
+                            onClick={toggleUpdateModal}
+                          />
+                        </div>
+                        <div style={{ width: "100%" }}>
+                          <CustomButton
+                            buttonText="Guardar"
+                            fullWidth
+                            type="submit"
+                          />
+                        </div>
                       </RowContainer>
                     </form>
                   </CustomModal>
@@ -269,22 +285,28 @@ const CustomIndividualBook = ({
                     <ImagenD>
                       <Image
                         src="/img/delete.png"
-                        width={109}
-                        height={123}
+                        width={200}
+                        height={130}
                         alt="logo"
                       />
                     </ImagenD>
-                    <Buttons>
-                      <CustomButton
-                        buttonText="Cancelar"
-                        specialStyle
-                        onClick={toggleDeleteModal}
-                      />
-                      <CustomButton
-                        buttonText="Aceptar"
-                        onClick={handleDeleteConfirmation}
-                      />
-                    </Buttons>
+                    <RowContainer>
+                      <div style={{ width: "100%" }}>
+                        <CustomButton
+                          buttonText="Cancelar"
+                          fullWidth
+                          specialStyle
+                          onClick={toggleDeleteModal}
+                        />
+                      </div>
+                      <div style={{ width: "100%" }}>
+                        <CustomButton
+                          fullWidth
+                          buttonText="Aceptar"
+                          onClick={handleDeleteConfirmation}
+                        />
+                      </div>
+                    </RowContainer>
                   </CustomModal>
                 </ContainerButtons>
               </BasicInformation>
@@ -297,6 +319,7 @@ const CustomIndividualBook = ({
             <ContainerImageAndSpan>
               <ImageContainer>
                 <ImageStyled src={image}></ImageStyled>
+                <HoverImage src={imageBack}></HoverImage>
               </ImageContainer>
             </ContainerImageAndSpan>
             <div>
@@ -343,6 +366,21 @@ const CustomIndividualBook = ({
           alt="ok"
         ></Image>
       </CustomAlert>
+      {isEditSuccessAlert && (
+        <CustomAlert
+          open={showEditAlertForOneSecond}
+          onClose={() => setEditSuccessAlert(false)}
+          title="Edición Exitosa"
+          text="El libro se ha editado correctamente."
+        >
+          <Image
+            src="/img/correcto.png"
+            width={109}
+            height={123}
+            alt="ok"
+          ></Image>
+        </CustomAlert>
+      )}
     </div>
   );
 };

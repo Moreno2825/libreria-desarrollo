@@ -84,8 +84,8 @@ export default function BooksClient() {
       <ContainerSearch>
         <Search onSearch={handleSearch} />
       </ContainerSearch>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <NextImage src="/img/sale.png" width={1300} height={280} alt="sale" />
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <NextImage src="/img/sale.png" width={1200} height={280} alt="sale" />
       </div>
 
       <Text>Categorías</Text>

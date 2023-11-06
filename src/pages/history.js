@@ -8,7 +8,7 @@ import TableHistory from "@/components/TableHistory";
 export default function History() {
   return (
     <div>
-      <div>
+      <div style={{marginBottom: "26px"}}>
         <TitleText>Historial de compras</TitleText>
         <DescriptionText>
         He aquí el historial de la humanidad, escrito con la tinta de la sabiduría 

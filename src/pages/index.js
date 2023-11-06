@@ -139,7 +139,9 @@ export default function Login() {
             </span>
           </FormStyled>
         </GridForm>
-        <GridImage></GridImage>
+        <GridImage>
+          <Image src="/img/image.png" width={768} height={703}></Image>
+        </GridImage>
       </GridContainer>
     </Container>
   );

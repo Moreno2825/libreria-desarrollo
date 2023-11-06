@@ -25,7 +25,7 @@ export default function Sidebar() {
       <Container>
         <Titule>
           <Image src="/img/BookLogo.png" width={100} height={100} alt="logo" />
-          <Position>Bookstore</Position>
+          <Position>eBookCloud</Position>
         </Titule>
         <div>
         {userRole === "admin" || userRole === "SuperAdmin" ? (

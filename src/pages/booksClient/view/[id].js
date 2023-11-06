@@ -35,6 +35,7 @@ export default function ViewClient() {
     name,
     author,
     frontImage,
+    backImage,
     details,
     id_category: category,
     price,
@@ -45,6 +46,7 @@ export default function ViewClient() {
       <CustomIndividualBook 
       bookId={id}
       image={frontImage}
+      imageBack={backImage}
       name={name}
       author={author}
       price={price}

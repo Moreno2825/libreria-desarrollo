@@ -20,7 +20,7 @@ export const Text = styled.span`
 `;
 
 export const ContainerSearch = styled.div`
-  left:50px;
+  left: 0px;
   top: -70px;
   position: relative;
 `;
@@ -49,8 +49,16 @@ export const CategoriesContainer = styled.div`
 `;
 
 export const BooksContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 32px;
-  justify-content: center;
   padding: 24px;
+
+  @media (min-width: ${responsive.md}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: ${responsive.lg}) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;

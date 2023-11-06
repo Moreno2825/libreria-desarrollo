@@ -13,9 +13,11 @@ import {
 } from "./index.style";
 import { faChevronDown, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 export default function CustomLogOut({}) {
   const [userName, setUserName] = useState("");
+  const name = useSelector((state) => state.user.name);
 
   const [mostrarDiv, setMostrarDiv] = useState(false);
   const toggleDiv = () => {
@@ -69,7 +71,7 @@ export default function CustomLogOut({}) {
       </div>
       <div>
         <NameUse onClick={toggleDiv}>
-          {userName}
+          {name}
           <ChevronIcon icon={faChevronDown} />
         </NameUse>
         <LogOut mostrar={mostrarDiv} onClick={handleLogOut}>

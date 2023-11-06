@@ -38,6 +38,7 @@ export default function View() {
     name,
     author,
     frontImage,
+    backImage,
     details,
     id_category: category,
     price,
@@ -48,6 +49,7 @@ export default function View() {
       <CustomIndividualBook
         bookId={id}
         image={frontImage}
+        imageBack={backImage}
         name={name}
         author={author}
         price={price}
