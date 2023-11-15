@@ -27,10 +27,24 @@ import CustomAlert from "@/components/CustomAlert";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/router";
+import * as yup from "yup";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-export default function ShoppingCart() {
+const stripePromise = loadStripe(
+  "pk_test_51O9VOUIFwFx6YJHYQKFypXZA429JQNbbMY15cisOcYLDjfUAVPJBcIiG0YIW3z06fuXyZBTr8ltjVR3z6DcyvzCZ00GMmm74Bn"
+);
+
+const paymentSchema = yup.object().shape({
+  cardName: yup.string().required("Este dato es requerido"),
+});
+
+const ShoppingCart = () => {
   const [isPurchaseSuccess, setPurchaseSuccess] = useState(false);
   const route = useRouter();
+  const stripe = useStripe();
+  const elements = useElements();
 
   const userId = useSelector((state) => state.user._id);
   const [order, setOrder] = useState([]);
@@ -63,16 +77,64 @@ export default function ShoppingCart() {
         }
       );
       if (response.status >= 200 && response.status < 300) {
-        return true;  
+        return true;
       }
-      console.error('Error:', response.statusText);
-      return false; 
+      console.error("Error:", response.statusText);
+      return false;
     } catch (error) {
       console.error(error);
-      return false; 
+      return false;
     }
   }
-  
+
+  const onSubmit = async (data) => {
+    if (!stripe || !elements) {
+      return;
+    }
+    const CARD_ELEMENT_OPTIONS = {
+      hidePostalCode: true,
+    };
+
+    const postData = {
+      id,
+      amount: totalPrice * 100,
+    };
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement, CARD_ELEMENT_OPTIONS),
+      billing_details: {
+        name: data.cardName,
+      },
+    });
+    console.log("pago:", paymentMethod);
+
+    if (error) {
+      console.log("Error al crear el método de pago:", error);
+    } else {
+      try {
+        const response = await axios.post("/api/stripe", postData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+          const success = await paymentMethod(userId);
+          if (success) {
+            route.push("/history");
+          }
+        } else {
+          throw new Error('El pago no fue exitoso.');
+        }
+      } catch (error) {
+        console.error("Error al realizar la solicitud:", error);
+      }
+    }
+  };
+
   const fetchOrder = async () => {
     try {
       const order = await getCartUseCase.run(userId);
@@ -85,10 +147,9 @@ export default function ShoppingCart() {
   const handlePaymentClick = async () => {
     const success = await paymentMethod(userId);
     if (success) {
-      route.push("/history"); 
+      route.push("/history");
     }
-  };  
-
+  };
 
   const handleDeleteProduct = async (bookId) => {
     try {
@@ -182,7 +243,7 @@ export default function ShoppingCart() {
           </CustomTable>
         </div>
       )}
-      <ContainerView>
+      <ContainerView onSubmit={onSubmit}>
         <ViewDetails>
           <TitleDetails>Total de la compra</TitleDetails>
           <Row>
@@ -194,11 +255,11 @@ export default function ShoppingCart() {
             <TotalText>Total</TotalText>
             <TotalText>$ {totalPrice}.00 MX</TotalText>
           </Row>
+          <CardElement/>
           <CustomButton
             buttonText="Comprar ahora"
             fullWidth
             type="submit"
-            onClick={handlePaymentClick}
           />
         </ViewDetails>
       </ContainerView>
@@ -216,5 +277,13 @@ export default function ShoppingCart() {
         ></Image>
       </CustomAlert>
     </div>
+  );
+};
+
+export default function PaymentMethod() {
+  return (
+    <Elements stripe={stripePromise}>
+      <ShoppingCart />
+    </Elements>
   );
 }
