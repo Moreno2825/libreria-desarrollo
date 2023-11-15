@@ -65,7 +65,6 @@ class UserRepo extends IUserRepo {
 
       if (response.data && response.data._id) {
         this.dispatch(setUser(response.data));
-        console.log(response.data);
         return response.data;
       } else {
         throw new Error("Invalid credentials or unexpected server response");
