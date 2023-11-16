@@ -5,47 +5,29 @@ const GrafficCategory = ({ data, style }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (data && data.length) {
-      const transformedData = data.map((item) => ({
-        value: item.totalSoldCount,
-        name: item.name,
-      }));
+if (data && data.length) {
+  const transformedData = data.map((item) => ({
+    value: item.totalSoldCount,
+    name: item._id,
+  }));
 
       const myChart = echarts.init(chartRef.current);
-      const option = {
-        tooltip: {
-          trigger: "item",
+      const option = 
+      {
+        tooltip:{
+          show:true,
         },
-        legend: {
-          top: "5%",
-          left: "center",
+        xAxis: {
+          type: 'category',
+          data: transformedData.map((item) => item.name),
+        },
+        yAxis: {
+          type: 'value',
         },
         series: [
           {
-            name: "Access From",
-            type: "pie",
-            radius: ["40%", "70%"],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 10,
-              borderColor: "#fff",
-              borderWidth: 2,
-            },
-            label: {
-              show: false,
-              position: "center",
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: "40",
-                fontWeight: "bold",
-              },
-            },
-            labelLine: {
-              show: false,
-            },
-            data: transformedData,
+            data: transformedData.map((item) => item.value),
+            type: 'bar', // Puedes ajustar el tipo de gráfico según tus necesidades
           },
         ],
       };

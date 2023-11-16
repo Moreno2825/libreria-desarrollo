@@ -14,40 +14,34 @@ const GrafficLower = ({ data, style }) => {
       const myChart = echarts.init(chartRef.current);
       const option = {
         tooltip: {
-          trigger: "item",
+          trigger: 'item'
         },
         legend: {
-          top: "5%",
-          left: "center",
+          top: 'bottom'
+        },
+        
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
         },
         series: [
           {
-            name: "Access From",
-            type: "pie",
-            radius: ["40%", "70%"],
-            avoidLabelOverlap: false,
+            name: 'Nightingale Chart',
+            type: 'pie',
+            radius: [50, 150],
+            center: ['50%', '50%'],
+            roseType: 'area',
             itemStyle: {
-              borderRadius: 10,
-              borderColor: "#fff",
-              borderWidth: 2,
-            },
-            label: {
-              show: false,
-              position: "center",
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: "40",
-                fontWeight: "bold",
-              },
-            },
-            labelLine: {
-              show: false,
+              borderRadius: 8
             },
             data: transformedData,
-          },
-        ],
+          }
+        ]
       };
 
       myChart.setOption(option);
