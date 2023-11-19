@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { users } from "@/constants";
 import {
   ChevronIcon,
   Container,
@@ -16,20 +15,24 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
 export default function CustomLogOut({}) {
-  const [userName, setUserName] = useState("");
+
   const name = useSelector((state) => state.user.name);
+  const [isClient, setIsClient] = useState(false);
+  const [diaSemana, setDiaSemana] = useState("");
+  const [userName, setUserName] = useState("");
+  const [fecha, setFecha] = useState("");
+  const router = useRouter();
+  const ruta = router.pathname.split("/").pop();
 
   const [mostrarDiv, setMostrarDiv] = useState(false);
   const toggleDiv = () => {
     setMostrarDiv(!mostrarDiv);
   };
 
-  const router = useRouter();
-  const ruta = router.pathname.split("/").pop();
-
-  const routeFixed = ruta.charAt(0).toUpperCase() + ruta.slice(1);
-  const [fecha, setFecha] = useState("");
-  const [diaSemana, setDiaSemana] = useState("");
+  const handleLogOut = () => {
+    sessionStorage.clear("userLogged");
+    router.push("/");
+  };
 
   useEffect(() => {
     const today = () => {
@@ -45,12 +48,8 @@ export default function CustomLogOut({}) {
     today();
   }, []);
 
-  const handleLogOut = () => {
-    sessionStorage.clear("userLogged");
-    router.push("/");
-  };
-
   useEffect(() => {
+    setIsClient(true);
     const userLogged = JSON.parse(sessionStorage.getItem("userLogged"));
     if (userLogged && userLogged.name) {
       const firstName = userLogged.name.split(" ")[0];
@@ -71,7 +70,7 @@ export default function CustomLogOut({}) {
       </div>
       <div>
         <NameUse onClick={toggleDiv}>
-          {name}
+          {isClient ? name : "Cargando..."}
           <ChevronIcon icon={faChevronDown} />
         </NameUse>
         <LogOut mostrar={mostrarDiv} onClick={handleLogOut}>
