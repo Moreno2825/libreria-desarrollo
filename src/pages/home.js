@@ -35,19 +35,24 @@ const Home = () => {
   }, [loggedInUserId]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', height: '95vh' }}>
       {graphicData && graphicLowData && GrafficCategoryData ? (
         <>
-          <CustomGraphic data={graphicData} style={{ flex: 1, height: '400px' }} />
-          <GrafficLower data={graphicLowData} style={{ flex: 1, height: '400px',  }} />
-          <div style={{ lineHeight: 2}}> <br/> </div>
-          <GrafficCategory data={GrafficCategoryData} style={{ flex: 2, height: '400px'}} />
+          <div style={{ display: 'flex', width: '100%', justifyContent: 'space-around', alignItems: 'center', height: '70%' }}>
+            <CustomGraphic data={graphicData} style={{ width: '40%', height: '70%' }} />
+            <GrafficLower data={graphicLowData} style={{ width: '50%', height: '100%' }} />
+          </div>
+          <div style={{ width: '100%', height: '50%' }}>
+            <GrafficCategory data={GrafficCategoryData} style={{ height: '90%' }} />
+          </div>
         </>
       ) : (
         <p>Loading...</p>
       )}
     </div>
   );
+  
+  
 };
 
 export default Home;
