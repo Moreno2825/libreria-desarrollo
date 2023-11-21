@@ -27,7 +27,6 @@ import CustomAlert from "@/components/CustomAlert";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/router";
-import * as yup from "yup";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
@@ -36,13 +35,11 @@ const stripePromise = loadStripe(
   "pk_test_51O9VOUIFwFx6YJHYQKFypXZA429JQNbbMY15cisOcYLDjfUAVPJBcIiG0YIW3z06fuXyZBTr8ltjVR3z6DcyvzCZ00GMmm74Bn"
 );
 
-const paymentSchema = yup.object().shape({
-  cardName: yup.string().required("Este dato es requerido"),
-});
-
 const ShoppingCart = () => {
   const [isPurchaseSuccess, setPurchaseSuccess] = useState(false);
+  const [isPurchaseSuccessPayment, setPurchaseSuccessPayment] = useState(false);
   const route = useRouter();
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -61,8 +58,13 @@ const ShoppingCart = () => {
       setPurchaseSuccess(false);
     }, 1000);
   };
+  const resetPurchaseAlertPayment = () => {
+    setTimeout(() => {
+      setPurchaseSuccessPayment(false);
+    }, 1000);
+  };
 
-  async function paymentMethod(userIdToPost) {
+  async function paymentMethodFunction(userIdToPost) {
     try {
       const response = await axios.post(
         `http://localhost:3000/cart/payment`,
@@ -87,51 +89,44 @@ const ShoppingCart = () => {
     }
   }
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
     if (!stripe || !elements) {
       return;
     }
-    const CARD_ELEMENT_OPTIONS = {
-      hidePostalCode: true,
-    };
 
-    const postData = {
-      id,
-      amount: totalPrice * 100,
-    };
+    try {
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement),
+      });
+      console.log("Payment Method:", paymentMethod);
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement, CARD_ELEMENT_OPTIONS),
-      billing_details: {
-        name: data.cardName,
-      },
-    });
-    console.log("pago:", paymentMethod);
-
-    if (error) {
-      console.log("Error al crear el método de pago:", error);
-    } else {
-      try {
-        const response = await axios.post("/api/stripe", postData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        console.log(response.data);
-
+      if (error) {
+        console.error(error);
+      } else {
+        const { id } = paymentMethod;
+        const response = await axios.post(
+          "/api/stripe", // Your API endpoint
+          {
+            id,
+            amount: totalPrice * 100, // You need to define totalPrice
+          }
+        );
         if (response.status === 200) {
-          const success = await paymentMethod(userId);
+          await setPurchaseSuccessPayment(true);
+          await resetPurchaseAlertPayment();
+          const success = await paymentMethodFunction(userId);
           if (success) {
-            route.push("/history");
+            route.push("/booksClient");
           }
         } else {
-          throw new Error('El pago no fue exitoso.');
+          console.error("Payment failed:", response.data.message);
         }
-      } catch (error) {
-        console.error("Error al realizar la solicitud:", error);
       }
+    } catch (error) {
+      console.error("Payment error:", error);
     }
   };
 
@@ -141,13 +136,6 @@ const ShoppingCart = () => {
       setOrder(order.data);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const handlePaymentClick = async () => {
-    const success = await paymentMethod(userId);
-    if (success) {
-      route.push("/history");
     }
   };
 
@@ -186,7 +174,7 @@ const ShoppingCart = () => {
   }, [order]);
 
   return (
-    <div>
+    <form onSubmit={onSubmit}>
       <HeaderContainer>
         <TitleText>Carrito de compra</TitleText>
         <ClearText onClick={handleDeleteCart}>Limpiar carrito</ClearText>
@@ -243,7 +231,7 @@ const ShoppingCart = () => {
           </CustomTable>
         </div>
       )}
-      <ContainerView onSubmit={onSubmit}>
+      <ContainerView>
         <ViewDetails>
           <TitleDetails>Total de la compra</TitleDetails>
           <Row>
@@ -255,12 +243,8 @@ const ShoppingCart = () => {
             <TotalText>Total</TotalText>
             <TotalText>$ {totalPrice}.00 MX</TotalText>
           </Row>
-          <CardElement/>
-          <CustomButton
-            buttonText="Comprar ahora"
-            fullWidth
-            type="submit"
-          />
+          <CardElement />
+          <CustomButton buttonText="Comprar ahora" fullWidth type="submit" />
         </ViewDetails>
       </ContainerView>
       <CustomAlert
@@ -276,7 +260,20 @@ const ShoppingCart = () => {
           alt="ok"
         ></Image>
       </CustomAlert>
-    </div>
+      <CustomAlert
+        open={isPurchaseSuccessPayment}
+        onClose={() => setPurchaseSuccessPayment(false)}
+        title="Pago realizado con éxito"
+        text="Tu pago se ha procesado correctamente."
+      >
+        <Image
+          src="/img/correcto.png"
+          width={109}
+          height={123}
+          alt="okpayment"
+        />
+      </CustomAlert>
+    </form>
   );
 };
 

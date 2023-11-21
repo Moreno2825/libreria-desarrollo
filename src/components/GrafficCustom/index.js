@@ -17,7 +17,6 @@ const CustomGraphic = ({ data, style }) => {
           trigger: "item",
         },
         legend: {
-          top: "5%",
           left: "center",
         },
         series: [

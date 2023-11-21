@@ -13,8 +13,14 @@ export default async (req, res) => {
         currency: "MXN",
         payment_method: id,
         confirm: true,
+        automatic_payment_methods: {
+          enabled: true,
+          allow_redirects: "never",
+        },
       });
-
+      
+      const handlePurchaseHistory = req.body.userId;
+      await handlePurchaseHistory
       console.log(payment);
 
       return res.status(200).json({ message: "Pago exitoso" });

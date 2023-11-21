@@ -29,7 +29,7 @@ const Home = () => {
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       {graphicData && graphicLowData ? (
         <>
-          <CustomGraphic data={graphicData} style={{ flex: 1, height: '400px' }} />
+          <CustomGraphic data={graphicData} style={{ flex: 1, height: '400px' }}/>
           <CustomGraphic data={graphicLowData} style={{ flex: 1, height: '400px' }} />
         </>
       ) : (

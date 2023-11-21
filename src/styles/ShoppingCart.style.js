@@ -58,7 +58,7 @@ export const Icon = styled(FontAwesomeIcon)`
   cursor: pointer;
 `;
 
-export const ContainerView = styled.form`
+export const ContainerView = styled.div`
   display: flex;
   justify-content: end;
   margin: 48px 0px;
