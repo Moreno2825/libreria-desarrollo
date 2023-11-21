@@ -33,5 +33,19 @@ class GraficRepo extends IGraficRepo {
     });
     return response.data; 
   }
+
+
+  async getCategoryBooks(_id) {
+    const response = await axios.get(this.url, {
+      headers: {
+        "Content-Type": "application/json",
+        id_user: this.id_user,
+      },
+      params: {
+        graphic: "Category"
+      }
+    });
+    return response.data; 
+  }
 }
 export default GraficRepo;

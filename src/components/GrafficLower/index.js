@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 
-const CustomGraphic = ({ data, style }) => {
+const GrafficLower = ({ data, style }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -14,39 +14,34 @@ const CustomGraphic = ({ data, style }) => {
       const myChart = echarts.init(chartRef.current);
       const option = {
         tooltip: {
-          trigger: "item",
+          trigger: 'item'
         },
         legend: {
-          left: "center",
+          top: 'bottom'
+        },
+        
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
         },
         series: [
           {
-            name: "Access From",
-            type: "pie",
-            radius: ["40%", "70%"],
-            avoidLabelOverlap: false,
+            name: 'Nightingale Chart',
+            type: 'pie',
+            radius: [50, 150],
+            center: ['50%', '50%'],
+            roseType: 'area',
             itemStyle: {
-              borderRadius: 10,
-              borderColor: "#fff",
-              borderWidth: 2,
-            },
-            label: {
-              show: false,
-              position: "center",
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: "20",
-                fontWeight: "bold",
-              },
-            },
-            labelLine: {
-              show: false,
+              borderRadius: 8
             },
             data: transformedData,
-          },
-        ],
+          }
+        ]
       };
 
       myChart.setOption(option);
@@ -63,4 +58,4 @@ const CustomGraphic = ({ data, style }) => {
   );
 };
 
-export default CustomGraphic;
+export default GrafficLower;
