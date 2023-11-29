@@ -34,7 +34,6 @@ const loginSchema = yup.object().shape({
 
 export default function Login() {
   const [isShowPassword, setShowPassword] = useState(false);
-  const userRole = useSelector((state) => state.user.rol);
   const dispatch = useDispatch();
   const userRole = useSelector((state) => state.user.rol);
   

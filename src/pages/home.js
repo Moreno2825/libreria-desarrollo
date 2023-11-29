@@ -37,19 +37,25 @@ const Home = () => {
 
   return (
     <>
-    <Title>Bienvenido de vuelta!</Title>
-    <span>Aquí encontrarás las gráficas más relevantes que te ayudarán a visualizar y entender los datos de manera rápida y efectiva.</span>
+      <Title>Bienvenido de vuelta!</Title>
+      <span>
+        Aquí encontrarás las gráficas más relevantes que te ayudarán a
+        visualizar y entender los datos de manera rápida y efectiva.
+      </span>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-around",
-          height: "95vh",
+          height: "100vh",
         }}
       >
         {graphicData && graphicLowData && GrafficCategoryData ? (
           <>
+            <div style={{ display: "flex", gap: "400px", justifyContent: "center", alignContent: "center", padding: "16px"}}>
+              <h4>Libros más comprados:</h4>
+              <h4>Libros menos comprados:</h4>
+            </div>
             <div
               style={{
                 display: "flex",
@@ -61,17 +67,20 @@ const Home = () => {
             >
               <CustomGraphic
                 data={graphicData}
-                style={{ width: "40%", height: "70%" }}
+                style={{ width: "50%", height: "100%" }}
               />
               <GrafficLower
                 data={graphicLowData}
-                style={{ width: "50%", height: "100%" }}
+                style={{ width: "50%", height: "120%" }}
               />
             </div>
-            <div style={{ width: "100%", height: "50%" }}>
+            <div style={{ display: "flex", justifyContent: "center", alignContent: "center", padding: "0px"}}>
+              <h4>Mejores categorías:</h4>
+            </div>
+            <div style={{ width: "100%", height: "40%" }}>
               <GrafficCategory
                 data={GrafficCategoryData}
-                style={{ height: "90%" }}
+                style={{ height: "250%" }}
               />
             </div>
           </>

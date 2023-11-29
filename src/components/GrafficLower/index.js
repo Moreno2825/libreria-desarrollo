@@ -10,7 +10,7 @@ const GrafficLower = ({ data, style }) => {
         value: item.totalSoldCount,
         name: item.name,
       }));
-
+      
       const myChart = echarts.init(chartRef.current);
       const option = {
         tooltip: {
@@ -33,7 +33,7 @@ const GrafficLower = ({ data, style }) => {
           {
             name: 'Nightingale Chart',
             type: 'pie',
-            radius: [50, 150],
+            radius: [30, 120],
             center: ['50%', '50%'],
             roseType: 'area',
             itemStyle: {

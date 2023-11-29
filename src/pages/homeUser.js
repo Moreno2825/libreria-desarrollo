@@ -18,8 +18,14 @@ import {
   faBookOpenReader,
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
+
 
 const HomeUser = () => {
+  const route = useRouter();
+  const handleClick = () => {
+    route.push("/booksClient")
+  };
   return (
     <>
       <Container>
@@ -33,7 +39,7 @@ const HomeUser = () => {
             donde cada página es una puerta a un mundo nuevo, una aventura por
             descubrir.
           </TextStyled>
-          <CustomButton buttonText="Comenzar a descubrir" />
+          <CustomButton buttonText="Comenzar a descubrir" onClick={handleClick} />
         </ContainerUs>
         <div>
           <Image src="/img/PhotoRoom.png" width={300} height={270} alt="logo" layout="responsive"/>

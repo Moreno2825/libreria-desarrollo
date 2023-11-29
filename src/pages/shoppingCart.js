@@ -61,6 +61,7 @@ const ShoppingCart = () => {
   const resetPurchaseAlertPayment = () => {
     setTimeout(() => {
       setPurchaseSuccessPayment(false);
+      route.push("/booksClient");
     }, 1000);
   };
 
@@ -116,14 +117,13 @@ const ShoppingCart = () => {
         );
         if (response.status === 200) {
           await setPurchaseSuccessPayment(true);
-          await resetPurchaseAlertPayment();
-          const success = await paymentMethodFunction(userId);
-          if (success) {
-            route.push("/booksClient");
-          }
+          resetPurchaseAlertPayment();
+
         } else {
           console.error("Payment failed:", response.data.message);
         }
+
+        await paymentMethodFunction(userId);
       }
     } catch (error) {
       console.error("Payment error:", error);

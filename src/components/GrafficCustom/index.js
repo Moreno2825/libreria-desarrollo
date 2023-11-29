@@ -37,7 +37,7 @@ const CustomGraphic = ({ data, style }) => {
             emphasis: {
               label: {
                 show: true,
-                fontSize: "20",
+                fontSize: "16",
                 fontWeight: "bold",
               },
             },
